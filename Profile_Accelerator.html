@@ -1,0 +1,1011 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Profile Accelerator — Stand Out Before Day 1</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Fira+Code:wght@400;500;600&display=swap');
+
+  :root {
+    --bg: #080c14;
+    --surface: #0f1623;
+    --surface2: #151e2e;
+    --surface3: #1c2840;
+    --border: rgba(255,255,255,0.06);
+    --border2: rgba(255,255,255,0.1);
+    --text: #e2e8f4;
+    --muted: #6b7fa0;
+    --muted2: #8a9fc0;
+    --accent: #6366f1;
+    --accent2: #818cf8;
+    --green: #10b981;
+    --green2: #34d399;
+    --amber: #f59e0b;
+    --amber2: #fbbf24;
+    --red: #ef4444;
+    --blue: #3b82f6;
+    --blue2: #60a5fa;
+    --cyan: #06b6d4;
+    --cyan2: #22d3ee;
+    --pink: #ec4899;
+    --orange: #f97316;
+    --purple: #a855f7;
+    --radius: 16px;
+    --radius-sm: 10px;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    font-family: 'Inter', sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    line-height: 1.6;
+  }
+
+  /* ═══ HERO ═══ */
+  .hero {
+    background: linear-gradient(135deg, #080c14 0%, #0e1526 40%, #12103a 80%, #080c14 100%);
+    padding: 56px 40px 48px;
+    position: relative; overflow: hidden;
+    border-bottom: 1px solid var(--border);
+  }
+  .hero::before {
+    content: '';
+    position: absolute; inset: 0;
+    background: radial-gradient(ellipse at 15% 60%, rgba(99,102,241,0.18) 0%, transparent 55%),
+                radial-gradient(ellipse at 85% 20%, rgba(16,185,129,0.10) 0%, transparent 50%),
+                radial-gradient(ellipse at 50% 90%, rgba(6,182,212,0.07) 0%, transparent 50%);
+  }
+  .hero-inner { position: relative; max-width: 980px; margin: 0 auto; }
+  .hero-tag {
+    display: inline-flex; align-items: center; gap: 8px;
+    background: rgba(16,185,129,0.12); border: 1px solid rgba(16,185,129,0.3);
+    border-radius: 100px; padding: 5px 14px; font-size: 11px;
+    font-weight: 700; color: #6ee7b7; letter-spacing: 0.8px;
+    text-transform: uppercase; margin-bottom: 20px;
+  }
+  .hero h1 {
+    font-size: clamp(26px, 4.5vw, 44px); font-weight: 900;
+    line-height: 1.12; margin-bottom: 14px;
+    background: linear-gradient(135deg, #ffffff 20%, #a5b4fc 60%, #34d399 100%);
+    -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+  .hero-sub { font-size: 15px; color: var(--muted2); max-width: 620px; margin-bottom: 28px; line-height: 1.7; }
+  .hero-sub strong { color: #c7d2fe; }
+  .hero-chips { display: flex; flex-wrap: wrap; gap: 10px; }
+  .chip {
+    display: inline-flex; align-items: center; gap: 7px;
+    padding: 7px 14px; border-radius: 100px; font-size: 12px; font-weight: 600;
+    border: 1px solid transparent;
+  }
+  .chip-g { background: rgba(16,185,129,0.1); border-color: rgba(16,185,129,0.25); color: #6ee7b7; }
+  .chip-b { background: rgba(99,102,241,0.1); border-color: rgba(99,102,241,0.25); color: #a5b4fc; }
+  .chip-a { background: rgba(245,158,11,0.1); border-color: rgba(245,158,11,0.25); color: #fcd34d; }
+  .chip-r { background: rgba(239,68,68,0.1);  border-color: rgba(239,68,68,0.25);  color: #fca5a5; }
+  .chip-c { background: rgba(6,182,212,0.1);  border-color: rgba(6,182,212,0.25);  color: #67e8f9; }
+
+  /* ═══ LAYOUT ═══ */
+  .wrap { max-width: 980px; margin: 0 auto; padding: 0 24px 80px; }
+
+  /* ═══ SECTION HEADER ═══ */
+  .sh { display: flex; align-items: center; gap: 14px; margin: 52px 0 22px; }
+  .sh-icon {
+    width: 46px; height: 46px; border-radius: 13px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 21px; flex-shrink: 0;
+  }
+  .sh h2 { font-size: 21px; font-weight: 800; color: #fff; }
+  .sh p  { font-size: 13px; color: var(--muted); margin-top: 2px; }
+  .hr   { height: 1px; background: var(--border); margin-bottom: 26px; }
+
+  /* ═══ GRIDS ═══ */
+  .g2 { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+  .g3 { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 14px; }
+  @media(max-width:700px) { .g2,.g3 { grid-template-columns: 1fr; } }
+
+  /* ═══ CARD ═══ */
+  .card {
+    background: var(--surface); border: 1px solid var(--border);
+    border-radius: var(--radius); padding: 22px;
+    transition: transform 0.2s, border-color 0.2s;
+  }
+  .card:hover { transform: translateY(-2px); border-color: rgba(99,102,241,0.25); }
+  .ct { font-size: 14px; font-weight: 700; display: flex; align-items: center; gap: 8px; margin-bottom: 12px; }
+  .ct .em { font-size: 18px; }
+
+  /* ═══ IMPACT HIERARCHY (the "what matters" visual) ═══ */
+  .pyramid-row {
+    display: flex; align-items: stretch; gap: 14px; margin-bottom: 12px;
+  }
+  .pyramid-rank {
+    width: 44px; min-height: 80px; border-radius: 10px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 20px; font-weight: 900; flex-shrink: 0;
+    font-family: 'Fira Code', monospace;
+  }
+  .pyramid-body {
+    flex: 1; background: var(--surface); border: 1px solid var(--border);
+    border-radius: 12px; padding: 16px 18px;
+    transition: border-color 0.2s;
+  }
+  .pyramid-body:hover { border-color: rgba(255,255,255,0.12); }
+  .pyramid-title { font-size: 14px; font-weight: 700; color: #fff; margin-bottom: 5px; }
+  .pyramid-sub   { font-size: 12.5px; color: var(--muted); line-height: 1.6; }
+  .pyramid-sub strong { color: var(--text); }
+  .pyramid-weight {
+    display: inline-block; padding: 2px 9px; border-radius: 20px;
+    font-size: 10px; font-weight: 800; text-transform: uppercase; letter-spacing: 0.5px;
+    margin-bottom: 7px;
+  }
+
+  /* ═══ YOUR PROJECTS ANALYSIS ═══ */
+  .proj-eval {
+    background: var(--surface); border: 1px solid var(--border);
+    border-radius: var(--radius); padding: 22px; margin-bottom: 14px;
+    transition: border-color 0.2s, transform 0.2s;
+  }
+  .proj-eval:hover { border-color: rgba(99,102,241,0.3); transform: translateY(-2px); }
+  .proj-eval-header {
+    display: flex; justify-content: space-between; align-items: flex-start;
+    margin-bottom: 14px; flex-wrap: wrap; gap: 10px;
+  }
+  .proj-name { font-size: 15px; font-weight: 800; color: #fff; }
+  .proj-score-wrap { display: flex; gap: 8px; align-items: center; }
+  .proj-score {
+    font-size: 13px; font-weight: 700; padding: 4px 12px; border-radius: 20px;
+  }
+  .score-s  { background: rgba(16,185,129,0.15); color: #6ee7b7; border: 1px solid rgba(16,185,129,0.25); }
+  .score-a  { background: rgba(99,102,241,0.15); color: #a5b4fc; border: 1px solid rgba(99,102,241,0.25); }
+  .score-b  { background: rgba(245,158,11,0.15); color: #fcd34d; border: 1px solid rgba(245,158,11,0.25); }
+  .score-c  { background: rgba(239,68,68,0.15);  color: #fca5a5; border: 1px solid rgba(239,68,68,0.25); }
+  .proj-current, .proj-upgrade {
+    border-radius: 10px; padding: 12px 14px; font-size: 12.5px; margin-bottom: 10px;
+    line-height: 1.65;
+  }
+  .proj-current {
+    background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.06);
+    color: var(--muted2);
+  }
+  .proj-current strong { color: #fff; }
+  .proj-upgrade {
+    background: rgba(16,185,129,0.07); border: 1px solid rgba(16,185,129,0.18);
+    color: #a7f3d0;
+  }
+  .proj-upgrade strong { color: #6ee7b7; }
+  .proj-tags { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 10px; }
+  .ptag {
+    display: inline-block; padding: 3px 9px; border-radius: 6px;
+    font-size: 11px; font-weight: 600; font-family: 'Fira Code', monospace;
+    background: rgba(99,102,241,0.1); color: #a5b4fc; border: 1px solid rgba(99,102,241,0.18);
+  }
+  .ptag.hot { background: rgba(239,68,68,0.1); color: #fca5a5; border-color: rgba(239,68,68,0.2); }
+  .ptag.new { background: rgba(16,185,129,0.1); color: #6ee7b7; border-color: rgba(16,185,129,0.2); }
+  .ptag.big { background: rgba(245,158,11,0.1); color: #fcd34d; border-color: rgba(245,158,11,0.2); }
+
+  /* ═══ FOCUS AREAS ═══ */
+  .focus-card {
+    background: var(--surface); border: 1px solid var(--border);
+    border-radius: var(--radius); padding: 22px; margin-bottom: 14px;
+    transition: border-color 0.2s;
+    position: relative; overflow: hidden;
+  }
+  .focus-card::before {
+    content: ''; position: absolute; top: 0; left: 0; bottom: 0;
+    width: 3px; border-radius: 0 2px 2px 0;
+  }
+  .focus-card.primary::before   { background: var(--green); }
+  .focus-card.secondary::before { background: var(--accent); }
+  .focus-card.tertiary::before  { background: var(--amber); }
+  .focus-title { font-size: 15px; font-weight: 800; color: #fff; margin-bottom: 6px; }
+  .focus-why   { font-size: 13px; color: var(--muted2); margin-bottom: 14px; line-height: 1.65; }
+  .focus-why strong { color: var(--text); }
+  .focus-actions { list-style: none; }
+  .focus-actions li {
+    font-size: 12.5px; color: var(--muted); padding: 6px 0;
+    border-bottom: 1px solid var(--border);
+    display: flex; gap: 10px; align-items: flex-start;
+  }
+  .focus-actions li:last-child { border-bottom: none; }
+  .fa-bullet {
+    width: 20px; height: 20px; border-radius: 5px; flex-shrink: 0;
+    display: flex; align-items: center; justify-content: center; font-size: 10px;
+    margin-top: 1px;
+  }
+  .fa-bullet.g { background: rgba(16,185,129,0.15); color: #6ee7b7; }
+  .fa-bullet.b { background: rgba(99,102,241,0.15); color: #a5b4fc; }
+  .fa-bullet.a { background: rgba(245,158,11,0.15); color: #fcd34d; }
+
+  /* ═══ ACCELERATION PLAN ═══ */
+  .accel-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; margin-bottom: 20px; }
+  @media(max-width:700px) { .accel-grid { grid-template-columns: 1fr; } }
+  .accel-card {
+    background: var(--surface); border: 1px solid var(--border);
+    border-radius: 14px; padding: 20px; text-align: center;
+    transition: transform 0.2s, border-color 0.2s;
+  }
+  .accel-card:hover { transform: translateY(-2px); }
+  .accel-day  { font-size: 26px; font-weight: 900; font-family: 'Fira Code', monospace; }
+  .accel-label{ font-size: 12px; color: var(--muted); margin: 4px 0 10px; font-weight: 600; text-transform: uppercase; }
+  .accel-desc { font-size: 12px; color: var(--muted2); line-height: 1.6; }
+  .accel-if { font-size: 11px; margin-top: 8px; font-weight: 600; padding: 4px 8px; border-radius: 6px; display: inline-block; }
+
+  /* ═══ RESEARCH PAPER STRATEGY ═══ */
+  .paper-row {
+    background: var(--surface); border: 1px solid var(--border);
+    border-radius: 12px; padding: 16px 18px; margin-bottom: 10px;
+    display: flex; gap: 14px; align-items: flex-start;
+    transition: border-color 0.2s;
+  }
+  .paper-row:hover { border-color: rgba(6,182,212,0.25); }
+  .paper-icon {
+    width: 38px; height: 38px; border-radius: 10px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 18px; flex-shrink: 0;
+  }
+  .paper-body { flex: 1; }
+  .paper-title { font-size: 13.5px; font-weight: 700; color: #fff; margin-bottom: 4px; }
+  .paper-desc  { font-size: 12.5px; color: var(--muted); line-height: 1.6; }
+  .paper-desc strong { color: var(--text); }
+  .paper-tag {
+    display: inline-block; padding: 2px 8px; border-radius: 4px;
+    font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.4px;
+    margin-top: 6px;
+  }
+
+  /* ═══ COMPARISON TABLE ═══ */
+  .compare-table { width: 100%; border-collapse: collapse; font-size: 13px; }
+  .compare-table th {
+    padding: 12px 16px; text-align: left; font-size: 11px; font-weight: 700;
+    text-transform: uppercase; letter-spacing: 0.6px; color: var(--muted);
+    border-bottom: 1px solid var(--border2); background: rgba(255,255,255,0.02);
+  }
+  .compare-table td {
+    padding: 12px 16px; border-bottom: 1px solid var(--border);
+    color: var(--text); vertical-align: top; line-height: 1.55;
+  }
+  .compare-table tr:last-child td { border-bottom: none; }
+  .compare-table tr:hover td { background: rgba(255,255,255,0.015); }
+  .tbl-wrap {
+    background: var(--surface); border: 1px solid var(--border);
+    border-radius: var(--radius); overflow: hidden;
+  }
+  .yes { color: #6ee7b7; font-weight: 600; }
+  .no  { color: #fca5a5; font-weight: 600; }
+  .maybe { color: #fcd34d; font-weight: 600; }
+
+  /* ═══ PROFILE SCORE METER ═══ */
+  .score-meter {
+    background: var(--surface); border: 1px solid var(--border);
+    border-radius: var(--radius); padding: 28px; margin-bottom: 20px;
+  }
+  .meter-title { font-size: 16px; font-weight: 800; color: #fff; margin-bottom: 20px; text-align: center; }
+  .meter-row {
+    display: flex; align-items: center; gap: 14px; margin-bottom: 14px;
+  }
+  .meter-label { font-size: 12px; font-weight: 600; color: var(--muted2); min-width: 160px; }
+  .meter-bar   { flex: 1; height: 6px; background: rgba(255,255,255,0.06); border-radius: 3px; overflow: hidden; }
+  .meter-fill  { height: 100%; border-radius: 3px; transition: width 1s ease; }
+  .meter-score { font-size: 12px; font-weight: 700; font-family: 'Fira Code', monospace; min-width: 50px; text-align: right; }
+  .meter-note  { font-size: 11px; color: var(--muted); }
+
+  /* ═══ BANNER ═══ */
+  .banner {
+    border-radius: 12px; padding: 16px 20px;
+    display: flex; align-items: flex-start; gap: 12px; margin-bottom: 16px;
+    border: 1px solid transparent;
+  }
+  .banner.green  { background: rgba(16,185,129,0.08); border-color: rgba(16,185,129,0.2); }
+  .banner.blue   { background: rgba(99,102,241,0.08); border-color: rgba(99,102,241,0.2); }
+  .banner.amber  { background: rgba(245,158,11,0.08); border-color: rgba(245,158,11,0.2); }
+  .banner.red    { background: rgba(239,68,68,0.08);  border-color: rgba(239,68,68,0.2); }
+  .banner.cyan   { background: rgba(6,182,212,0.08);  border-color: rgba(6,182,212,0.2); }
+  .bl { font-size: 10px; font-weight: 800; text-transform: uppercase; letter-spacing: 0.8px;
+    padding: 2px 8px; border-radius: 4px; white-space: nowrap; margin-top: 2px; }
+  .banner.green .bl  { background: rgba(16,185,129,0.2); color: #6ee7b7; }
+  .banner.blue .bl   { background: rgba(99,102,241,0.2); color: #a5b4fc; }
+  .banner.amber .bl  { background: rgba(245,158,11,0.2); color: #fcd34d; }
+  .banner.red .bl    { background: rgba(239,68,68,0.2);  color: #fca5a5; }
+  .banner.cyan .bl   { background: rgba(6,182,212,0.2);  color: #67e8f9; }
+  .bt { font-size: 13px; color: var(--text); line-height: 1.65; }
+  .bt strong { color: #fff; }
+
+  /* ═══ STORY BUILDER ═══ */
+  .story-block {
+    background: var(--surface); border: 1px solid var(--border);
+    border-radius: 14px; padding: 20px; margin-bottom: 12px;
+  }
+  .story-block.highlight { border-color: rgba(16,185,129,0.25); background: rgba(16,185,129,0.04); }
+  .sb-label { font-size: 11px; font-weight: 800; color: var(--muted); text-transform: uppercase; letter-spacing: 0.7px; margin-bottom: 8px; }
+  .sb-text  { font-size: 13.5px; color: var(--text); line-height: 1.75; font-style: italic; }
+  .sb-note  { font-size: 12px; color: var(--muted); margin-top: 10px; line-height: 1.55; }
+  .sb-note strong { color: var(--amber); }
+
+  /* ═══ TIMELINE SPRINT ═══ */
+  .sprint-track { position: relative; padding-left: 28px; }
+  .sprint-track::before {
+    content: ''; position: absolute; left: 8px; top: 0; bottom: 0;
+    width: 2px; background: var(--border2); border-radius: 1px;
+  }
+  .sprint-item {
+    position: relative; margin-bottom: 20px;
+  }
+  .sprint-item::before {
+    content: ''; position: absolute; left: -24px; top: 8px;
+    width: 10px; height: 10px; border-radius: 50%; border: 2px solid var(--bg);
+  }
+  .sprint-day   { font-size: 11px; font-weight: 700; color: var(--muted); text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 4px; }
+  .sprint-title { font-size: 14px; font-weight: 700; color: #fff; margin-bottom: 6px; }
+  .sprint-tasks { list-style: none; }
+  .sprint-tasks li {
+    font-size: 12.5px; color: var(--muted2); padding: 3px 0;
+    display: flex; gap: 8px;
+  }
+  .sprint-tasks li::before { content: '→'; color: var(--accent2); flex-shrink: 0; }
+
+  /* Colors for sprint dots */
+  .c-green  .sprint-item::before { background: var(--green); }
+  .c-blue   .sprint-item::before { background: var(--accent); }
+  .c-amber  .sprint-item::before { background: var(--amber); }
+  .c-cyan   .sprint-item::before { background: var(--cyan); }
+  .c-purple .sprint-item::before { background: var(--purple); }
+
+  /* ═══ BADGES ═══ */
+  .bx {
+    display: inline-block; padding: 3px 9px; border-radius: 6px;
+    font-size: 11px; font-weight: 600; font-family: 'Fira Code', monospace;
+  }
+  .bx-g { background: rgba(16,185,129,0.12); color: #6ee7b7; border: 1px solid rgba(16,185,129,0.2); }
+  .bx-b { background: rgba(99,102,241,0.12); color: #a5b4fc; border: 1px solid rgba(99,102,241,0.2); }
+  .bx-a { background: rgba(245,158,11,0.12); color: #fcd34d; border: 1px solid rgba(245,158,11,0.2); }
+  .bx-r { background: rgba(239,68,68,0.12);  color: #fca5a5; border: 1px solid rgba(239,68,68,0.2); }
+  .bx-c { background: rgba(6,182,212,0.12);  color: #67e8f9; border: 1px solid rgba(6,182,212,0.2); }
+  .bx-p { background: rgba(168,85,247,0.12); color: #d8b4fe; border: 1px solid rgba(168,85,247,0.2); }
+
+  /* NAV PILLS */
+  .nav { background: var(--surface); border: 1px solid var(--border); border-radius: 12px; padding: 16px 20px; margin: 28px 0; display: flex; flex-wrap: wrap; gap: 8px; }
+  .nav a { color: var(--muted); text-decoration: none; font-size: 12px; font-weight: 600; padding: 5px 12px; border-radius: 6px; border: 1px solid var(--border); background: rgba(255,255,255,0.02); transition: all 0.2s; white-space: nowrap; }
+  .nav a:hover { color: #a5b4fc; border-color: rgba(99,102,241,0.3); background: rgba(99,102,241,0.06); }
+
+  /* FOOTER */
+  .footer {
+    margin-top: 50px; padding: 24px; border-radius: 14px;
+    background: linear-gradient(135deg, rgba(16,185,129,0.06), rgba(99,102,241,0.06));
+    border: 1px solid rgba(99,102,241,0.15);
+    font-size: 13px; color: var(--muted); text-align: center; line-height: 1.7;
+  }
+  .footer strong { color: #a5b4fc; }
+
+  /* UTILITY */
+  .mt12 { margin-top: 12px; }
+  .mt20 { margin-top: 20px; }
+  .mb12 { margin-bottom: 12px; }
+  .mb20 { margin-bottom: 20px; }
+</style>
+</head>
+<body>
+
+<!-- ═══ HERO ═══ -->
+<div class="hero">
+  <div class="hero-inner">
+    <div class="hero-tag">⚡ Profile Accelerator — Stand Out Before Day 1</div>
+    <h1>What Actually Gets You Hired<br>at FAANG — And How Fast</h1>
+    <p class="hero-sub">
+      A deep analysis of <strong>your existing profile</strong>, your GenAI + Big Data projects, and a precision strategy 
+      to make you the candidate recruiters <em>remember</em> — not just another resume in the pile.
+    </p>
+    <div class="hero-chips">
+      <span class="chip chip-g">✓ GenAI Projects (Gemini API)</span>
+      <span class="chip chip-b">✓ Big Data Certified</span>
+      <span class="chip chip-a">✓ FAU M.S. Data Science</span>
+      <span class="chip chip-c">✓ Image Recognition System Built</span>
+      <span class="chip chip-r">⚡ Acceleration Mode ON</span>
+    </div>
+  </div>
+</div>
+
+<div class="wrap">
+
+  <div class="nav">
+    <a href="#scoring">📊 Profile Scoring</a>
+    <a href="#hierarchy">🏆 What Matters Most</a>
+    <a href="#your-projects">🔬 Your Projects Evaluated</a>
+    <a href="#focus">🎯 Focus Areas</a>
+    <a href="#acceleration">⚡ Acceleration Plan</a>
+    <a href="#story">✍️ Telling Your Story</a>
+    <a href="#papers">📄 Research Papers</a>
+    <a href="#sprint">🚀 Pre-Application Sprint</a>
+  </div>
+
+  <!-- ═══════════ PROFILE SCORE ═══════════ -->
+  <div id="scoring" class="sh" style="margin-top:20px">
+    <div class="sh-icon" style="background:linear-gradient(135deg,rgba(16,185,129,0.25),rgba(6,182,212,0.15))">📊</div>
+    <div><h2>Your Current Profile Score</h2><p>Honest assessment against what FAANG DS teams look for</p></div>
+  </div>
+  <div class="hr"></div>
+
+  <div class="score-meter">
+    <div class="meter-title">Profile Strength vs. FAANG Data Scientist Bar</div>
+    <div class="meter-row">
+      <span class="meter-label">Academic Credentials</span>
+      <div class="meter-bar"><div class="meter-fill" style="width:85%;background:linear-gradient(90deg,#10b981,#34d399)"></div></div>
+      <span class="meter-score" style="color:#6ee7b7">85 / 100</span>
+    </div>
+    <div class="meter-note mb12">M.S. in DS + Big Data Cert from FAU is strong. Would improve to 95+ with any publication.</div>
+    <div class="meter-row">
+      <span class="meter-label">GenAI / LLM Skills</span>
+      <div class="meter-bar"><div class="meter-fill" style="width:80%;background:linear-gradient(90deg,#6366f1,#818cf8)"></div></div>
+      <span class="meter-score" style="color:#a5b4fc">80 / 100</span>
+    </div>
+    <div class="meter-note mb12">Gemini API experience is rare and valuable right now. Needs polish — show production-quality implementation.</div>
+    <div class="meter-row">
+      <span class="meter-label">Big Data Engineering</span>
+      <div class="meter-bar"><div class="meter-fill" style="width:78%;background:linear-gradient(90deg,#f59e0b,#fbbf24)"></div></div>
+      <span class="meter-score" style="color:#fcd34d">78 / 100</span>
+    </div>
+    <div class="meter-note mb12">Certification is good but needs a deployed, measurable big-data project to prove it beyond coursework.</div>
+    <div class="meter-row">
+      <span class="meter-label">Interview Readiness (Now)</span>
+      <div class="meter-bar"><div class="meter-fill" style="width:38%;background:linear-gradient(90deg,#ef4444,#f87171)"></div></div>
+      <span class="meter-score" style="color:#fca5a5">38 / 100</span>
+    </div>
+    <div class="meter-note mb12">This is where the gap is. Your credentials are excellent but LeetCode, SQL drills, and case study practice need to start NOW.</div>
+    <div class="meter-row">
+      <span class="meter-label">Portfolio Visibility</span>
+      <div class="meter-bar"><div class="meter-fill" style="width:30%;background:linear-gradient(90deg,#ec4899,#f9a8d4)"></div></div>
+      <span class="meter-score" style="color:#f9a8d4">30 / 100</span>
+    </div>
+    <div class="meter-note mb12">Your projects exist but aren't publicly deployed, documented, or discoverable. This is the fastest win — fix this in Week 1.</div>
+    <div class="meter-row">
+      <span class="meter-label">Overall FAANG Readiness</span>
+      <div class="meter-bar"><div class="meter-fill" style="width:60%;background:linear-gradient(90deg,#6366f1,#10b981)"></div></div>
+      <span class="meter-score" style="color:#a5b4fc">60 / 100</span>
+    </div>
+    <div class="meter-note">Target: 85+ before sending first FAANG application. You can get there in 60–90 days with focused effort.</div>
+  </div>
+
+  <div class="banner green">
+    <span class="bl">Key Insight</span>
+    <div class="bt">Your academic profile is <strong>above average for DS candidates</strong> — the gap isn't credentials, it's <strong>visibility and interview execution</strong>. You can close that gap fast. Most candidates take 6–12 months to reach your credential level; you're already there.</div>
+  </div>
+
+  <!-- ═══════════ WHAT MATTERS HIERARCHY ═══════════ -->
+  <div id="hierarchy" class="sh">
+    <div class="sh-icon" style="background:linear-gradient(135deg,rgba(245,158,11,0.25),rgba(249,115,22,0.15))">🏆</div>
+    <div><h2>What Actually Matters — Ranked by Hiring Impact</h2><p>Not all credentials are created equal. Here's what moves the needle.</p></div>
+  </div>
+  <div class="hr"></div>
+
+  <!-- Rank 1 -->
+  <div class="pyramid-row">
+    <div class="pyramid-rank" style="background:rgba(16,185,129,0.15);color:#6ee7b7">1</div>
+    <div class="pyramid-body" style="border-color:rgba(16,185,129,0.2)">
+      <div><span class="pyramid-weight" style="background:rgba(16,185,129,0.2);color:#6ee7b7">HIGHEST IMPACT · 40% Weight</span></div>
+      <div class="pyramid-title">🔬 Deployed, Measurable Projects (Especially GenAI & Big Data)</div>
+      <div class="pyramid-sub">
+        FAANG interviewers care most about <strong>what you built, how it performs, and whether it's real</strong>. 
+        "I built an image recognition system using Gemini API that returns dynamic descriptions" is 10× more powerful than 
+        "I studied computer vision in my masters." A GitHub repo with a live demo, README, architecture diagram, 
+        and quantified results (accuracy %, latency, scale) is the single biggest profile booster you can build. 
+        <strong>Your GenAI projects are a massive asset right now</strong> — LLM/multimodal AI skills are the hottest demand in 2025–2026 DS hiring.
+      </div>
+    </div>
+  </div>
+
+  <!-- Rank 2 -->
+  <div class="pyramid-row">
+    <div class="pyramid-rank" style="background:rgba(99,102,241,0.15);color:#a5b4fc">2</div>
+    <div class="pyramid-body" style="border-color:rgba(99,102,241,0.2)">
+      <div><span class="pyramid-weight" style="background:rgba(99,102,241,0.2);color:#a5b4fc">HIGH IMPACT · 25% Weight</span></div>
+      <div class="pyramid-title">💼 Work Experience & Quantified Impact (Your 3.8 Years)</div>
+      <div class="pyramid-sub">
+        This is your secret weapon. <strong>Even non-DS work experience matters enormously</strong> if you frame it with data. 
+        Any time you used data to make a decision, built a report, improved a process, or worked with large datasets — 
+        that is DS-relevant experience. FAANG distinguishes between fresh grads and experienced hires. 
+        You're in the experienced tier, which means higher comp AND less scrutiny on education brand. 
+        <strong>Quantify everything:</strong> "reduced report generation time by 40%", "analyzed 2M+ records", "increased accuracy by 12%".
+      </div>
+    </div>
+  </div>
+
+  <!-- Rank 3 -->
+  <div class="pyramid-row">
+    <div class="pyramid-rank" style="background:rgba(6,182,212,0.15);color:#67e8f9">3</div>
+    <div class="pyramid-body" style="border-color:rgba(6,182,212,0.2)">
+      <div><span class="pyramid-weight" style="background:rgba(6,182,212,0.2);color:#67e8f9">SOLID IMPACT · 15% Weight</span></div>
+      <div class="pyramid-title">🎓 Academic Credentials (Your M.S. + Big Data Cert)</div>
+      <div class="pyramid-sub">
+        Your M.S. from FAU gets you <strong>past the ATS and into the recruiter's inbox</strong>. 
+        Most FAANG DS JDs say "B.S. required, M.S. preferred" — you're already preferred. 
+        The Big Data Analytics Certification is a bonus credibility signal, especially for roles involving Spark/distributed systems. 
+        However, a master's alone without projects is just a piece of paper to a technical interviewer. 
+        The degree opens the door — <strong>your projects are what close the interview loop.</strong>
+      </div>
+    </div>
+  </div>
+
+  <!-- Rank 4 -->
+  <div class="pyramid-row">
+    <div class="pyramid-rank" style="background:rgba(168,85,247,0.15);color:#d8b4fe">4</div>
+    <div class="pyramid-body" style="border-color:rgba(168,85,247,0.2)">
+      <div><span class="pyramid-weight" style="background:rgba(168,85,247,0.2);color:#d8b4fe">STRONG DIFFERENTIATOR · 10% Weight</span></div>
+      <div class="pyramid-title">📄 Research Papers & Academic Publications</div>
+      <div class="pyramid-sub">
+        A published paper (even at a smaller conference or arXiv preprint) <strong>sets you apart from 90% of applicants</strong> 
+        at the same experience level. It signals rigorous thinking, writing ability, and domain expertise. 
+        For AI/ML roles specifically, FAANG researchers look at publications. You don't need a top-tier venue — 
+        even a <strong>well-written arXiv paper on your GenAI/image recognition work</strong> is more than most candidates have. 
+        This is a 60–90 day project but the ROI is enormous.
+      </div>
+    </div>
+  </div>
+
+  <!-- Rank 5 -->
+  <div class="pyramid-row">
+    <div class="pyramid-rank" style="background:rgba(245,158,11,0.15);color:#fcd34d">5</div>
+    <div class="pyramid-body" style="border-color:rgba(245,158,11,0.2)">
+      <div><span class="pyramid-weight" style="background:rgba(245,158,11,0.2);color:#fcd34d">SUPPORTING SIGNAL · 10% Weight</span></div>
+      <div class="pyramid-title">🏅 Kaggle Medals, Hackathons, Open Source Contributions</div>
+      <div class="pyramid-sub">
+        Kaggle medals (especially Silver and Gold Expert) are instantly recognized by FAANG DS recruiters. 
+        They prove you can solve real-world problems competitively. Open source contributions to known repos 
+        (scikit-learn, HuggingFace, etc.) are rare and extremely impressive. Hackathon wins are good. 
+        These aren't make-or-break but they <strong>add up to make your profile undeniable.</strong>
+      </div>
+    </div>
+  </div>
+
+  <!-- ═══════════ YOUR PROJECTS EVALUATED ═══════════ -->
+  <div id="your-projects" class="sh">
+    <div class="sh-icon" style="background:linear-gradient(135deg,rgba(99,102,241,0.25),rgba(168,85,247,0.15))">🔬</div>
+    <div><h2>Your Existing Projects — Honest Evaluation & Upgrade Path</h2><p>What you've built is good. Here's how to make it FAANG-worthy.</p></div>
+  </div>
+  <div class="hr"></div>
+
+  <div class="banner cyan mb12">
+    <span class="bl">Your Advantage</span>
+    <div class="bt"><strong>You're already ahead of most candidates.</strong> Having a Gemini API-integrated system and a library orchestration tool as a master's student is genuinely impressive. The issue is framing, depth of documentation, and measurable outcomes — not the work itself. Let's fix that.</div>
+  </div>
+
+  <!-- Project 1: GenAI Library Orchestration -->
+  <div class="proj-eval">
+    <div class="proj-eval-header">
+      <div>
+        <div class="proj-name">📚 GenAI Orchestration System for Library</div>
+        <div style="font-size:12px;color:var(--muted);margin-top:3px">Master's Project — Built with Generative AI</div>
+      </div>
+      <div class="proj-score-wrap">
+        <span class="proj-score score-a">A-Grade Project</span>
+        <span style="font-size:20px">🔥</span>
+      </div>
+    </div>
+    <div class="proj-current">
+      <strong>What you have:</strong> An orchestration system for a library, built with GenAI. Likely involves automated cataloging, 
+      query handling, content summarization, or intelligent search — powered by a large language model pipeline.
+    </div>
+    <div class="proj-upgrade">
+      <strong>🚀 How to upgrade it to S-Tier:</strong><br>
+      (1) Add a <strong>RAG (Retrieval-Augmented Generation)</strong> pipeline — this is the hottest LLM architecture in industry right now. 
+      Connect the library catalog to a vector database (Pinecone / ChromaDB / Weaviate) and let users query it with natural language.<br>
+      (2) Deploy it as a <strong>live web app</strong> with FastAPI backend + React or Streamlit frontend. Make it publicly accessible.<br>
+      (3) Add <strong>evaluation metrics</strong>: response relevance score, hallucination rate, latency benchmarks. FAANG interviewers love rigor.<br>
+      (4) Write a <strong>system architecture diagram</strong> (use Excalidraw) — LLM → Orchestrator → Vector DB → Response pipeline.<br>
+      (5) Frame it in the README as: <em>"Intelligent Library Assistant — RAG-powered knowledge retrieval system achieving 87% query relevance"</em>
+    </div>
+    <div class="proj-tags">
+      <span class="ptag hot">GenAI 🔥</span>
+      <span class="ptag hot">RAG Pipeline 🔥</span>
+      <span class="ptag new">Vector DB</span>
+      <span class="ptag">LLM Orchestration</span>
+      <span class="ptag">FastAPI</span>
+      <span class="ptag new">Gemini API</span>
+      <span class="ptag big">High Demand</span>
+    </div>
+  </div>
+
+  <!-- Project 2: Image Recognition with Gemini -->
+  <div class="proj-eval">
+    <div class="proj-eval-header">
+      <div>
+        <div class="proj-name">🖼️ Multimodal Image Recognition + Description System (Gemini API)</div>
+        <div style="font-size:12px;color:var(--muted);margin-top:3px">Master's Project — Gemini Vision API + Dynamic Classification</div>
+      </div>
+      <div class="proj-score-wrap">
+        <span class="proj-score score-s">S-Tier Potential ⭐</span>
+        <span style="font-size:20px">💎</span>
+      </div>
+    </div>
+    <div class="proj-current">
+      <strong>What you have:</strong> An image recognition system that uses Gemini API to dynamically identify images and 
+      generate natural language descriptions. This is multimodal AI — a cutting-edge area that very few 2026 DS candidates 
+      have hands-on experience with. <strong>This is your crown jewel.</strong>
+    </div>
+    <div class="proj-upgrade">
+      <strong>🚀 How to make this legendary:</strong><br>
+      (1) Expand it into a <strong>full multimodal search engine</strong> — users upload images, system identifies + tags + retrieves similar items from a database using CLIP/FAISS embeddings.<br>
+      (2) Add <strong>fine-tuning</strong> — take Gemini or an open-source vision model (LLaVA, CLIP) and fine-tune on a domain-specific dataset (medical images, e-commerce products, etc.).<br>
+      (3) Build a <strong>REST API</strong> with rate limiting, error handling, and logging — shows production engineering thinking.<br>
+      (4) Create a <strong>demo video</strong> (2 min Loom walkthrough) — embed in GitHub README. Recruiters watch these.<br>
+      (5) <strong>Benchmark it:</strong> Compare Gemini API vs GPT-4V vs open-source LLaVA on accuracy/cost/latency — this kind of analysis is what data scientists do at FAANG.
+    </div>
+    <div class="proj-tags">
+      <span class="ptag hot">Multimodal AI 🔥</span>
+      <span class="ptag hot">Gemini Vision 🔥</span>
+      <span class="ptag hot">Computer Vision 🔥</span>
+      <span class="ptag new">CLIP Embeddings</span>
+      <span class="ptag new">FAISS / Vector Search</span>
+      <span class="ptag">Model Benchmarking</span>
+      <span class="ptag big">2026's Hottest Skill</span>
+    </div>
+  </div>
+
+  <!-- Additional projects placeholder -->
+  <div class="proj-eval" style="border-style:dashed;border-color:rgba(255,255,255,0.08)">
+    <div class="proj-eval-header">
+      <div>
+        <div class="proj-name">📦 Your Other Masters Projects (Not Yet Described)</div>
+        <div style="font-size:12px;color:var(--muted);margin-top:3px">Share them — each one likely has S-tier potential with the right framing</div>
+      </div>
+      <span class="proj-score score-b">Pending Eval</span>
+    </div>
+    <div class="proj-current">
+      <strong>Universal upgrade rule:</strong> Every project you built in your masters needs 4 things to become FAANG-worthy:
+      <br><br>
+      <strong>1. Quantified outcome</strong> — Accuracy %, performance improvement, users served, data volume<br>
+      <strong>2. Public GitHub repo</strong> — Clean README with architecture + setup + results<br>
+      <strong>3. Live deployment</strong> — Even a free Hugging Face Space or Streamlit Cloud is enough<br>
+      <strong>4. A story</strong> — What problem did it solve? Why did you choose this approach? What would you do next?
+    </div>
+  </div>
+
+  <!-- ═══════════ FOCUS AREAS ═══════════ -->
+  <div id="focus" class="sh">
+    <div class="sh-icon" style="background:linear-gradient(135deg,rgba(239,68,68,0.25),rgba(236,72,153,0.15))">🎯</div>
+    <div><h2>Where to Focus to Be More Valuable Than Everyone Else</h2><p>3 strategic focus zones that make you undeniable in 2026's DS hiring market</p></div>
+  </div>
+  <div class="hr"></div>
+
+  <div class="banner amber mb12">
+    <span class="bl">Strategic Reality</span>
+    <div class="bt">The DS market in 2026 has <strong>split into two camps:</strong> traditional ML scientists (Kaggle-style modeling) and <strong>GenAI-native data scientists</strong> (LLM pipelines, RAG, multimodal AI). You're positioned perfectly for the second camp — which is the <strong>higher-paying, faster-growing</strong> side of the market. Don't dilute your focus.</div>
+  </div>
+
+  <!-- Focus 1 -->
+  <div class="focus-card primary">
+    <div style="display:flex;justify-content:space-between;align-items:flex-start;flex-wrap:wrap;gap:10px;margin-bottom:10px">
+      <div class="focus-title">🔥 Focus 1 — GenAI & LLM Engineering (Your Biggest Differentiator)</div>
+      <span class="bx bx-g">PRIMARY FOCUS · 40% of time</span>
+    </div>
+    <div class="focus-why">
+      You've already built with Gemini API — <strong>you're ahead of 95% of DS candidates</strong> who have only theoretical LLM knowledge. 
+      Double down here. The companies paying $300K+ total comp in 2026 are hiring people who can build 
+      <strong>production LLM systems</strong>, not just call an API. Learn the full stack: RAG, evaluation frameworks, 
+      fine-tuning, prompt engineering at scale, and agentic AI systems. This is where your library orchestration project becomes a killer story.
+    </div>
+    <ul class="focus-actions">
+      <li><span class="fa-bullet g">→</span>Deep-dive into RAG architectures: LangChain → LlamaIndex → custom RAG pipelines from scratch</li>
+      <li><span class="fa-bullet g">→</span>Learn vector databases: ChromaDB (free/local), Pinecone (cloud), Weaviate — build one into each project</li>
+      <li><span class="fa-bullet g">→</span>Study LLM evaluation: RAGAS framework, hallucination metrics, relevance scoring — shows scientific rigor</li>
+      <li><span class="fa-bullet g">→</span>Expand Gemini project to multimodal search: image + text query → vector search → ranked results</li>
+      <li><span class="fa-bullet g">→</span>Build an LLM-powered agentic system: multi-step reasoning agent using LangGraph or AutoGen</li>
+      <li><span class="fa-bullet g">→</span>Write a Medium article: "Building Production RAG Systems with Gemini API — Lessons Learned" — this will rank on Google</li>
+      <li><span class="fa-bullet g">→</span>Target companies with strong GenAI DS roles: Google DeepMind, Meta FAIR, Microsoft AI, Salesforce Einstein</li>
+    </ul>
+  </div>
+
+  <!-- Focus 2 -->
+  <div class="focus-card secondary">
+    <div style="display:flex;justify-content:space-between;align-items:flex-start;flex-wrap:wrap;gap:10px;margin-bottom:10px">
+      <div class="focus-title">⚡ Focus 2 — Big Data + MLOps (Your Certification Edge)</div>
+      <span class="bx bx-b">SECONDARY FOCUS · 30% of time</span>
+    </div>
+    <div class="focus-why">
+      Your Big Data Analytics certification is <strong>not on most candidates' resumes</strong>. This is a genuine 
+      differentiator — but only if you can back it up with a real Spark/Kafka project. Every senior DS role 
+      (L5+) at FAANG requires understanding how models are deployed, monitored, and scaled. 
+      Combine your Big Data knowledge with MLOps tools and you become a <strong>"full-stack data scientist"</strong> — 
+      the rarest and most hired type in 2026.
+    </div>
+    <ul class="focus-actions">
+      <li><span class="fa-bullet b">→</span>Build the Kafka + Spark Streaming pipeline project from Roadmap (this is your signature technical project)</li>
+      <li><span class="fa-bullet b">→</span>Learn MLflow for experiment tracking — add it to every ML model you build going forward</li>
+      <li><span class="fa-bullet b">→</span>Get Databricks Community Edition (free) — build and run Spark notebooks there, screenshot it for your profile</li>
+      <li><span class="fa-bullet b">→</span>Learn Docker + containerize one of your projects — shows MLOps maturity</li>
+      <li><span class="fa-bullet b">→</span>Combine GenAI with Big Data: build a streaming pipeline that processes text at scale + LLM summarization</li>
+      <li><span class="fa-bullet b">→</span>Consider GCP Professional Data Engineer cert ($200) — extremely high ROI, recognized at all FAANG companies</li>
+    </ul>
+  </div>
+
+  <!-- Focus 3 -->
+  <div class="focus-card tertiary">
+    <div style="display:flex;justify-content:space-between;align-items:flex-start;flex-wrap:wrap;gap:10px;margin-bottom:10px">
+      <div class="focus-title">📊 Focus 3 — SQL + Statistics + A/B Testing (The Interview Gatekeepers)</div>
+      <span class="bx bx-a">MUST DO · 30% of time</span>
+    </div>
+    <div class="focus-why">
+      You can have the most impressive GenAI projects in the world but <strong>if you fail the SQL round, you're out</strong>. 
+      This is the hard truth. 90% of FAANG DS interviews have a dedicated SQL round. Statistics and A/B testing are 
+      tested in nearly every product DS role. These aren't glamorous skills but they are the <strong>gatekeepers</strong>. 
+      Spend 30% of your prep time here — especially in the first 60 days.
+    </div>
+    <ul class="focus-actions">
+      <li><span class="fa-bullet a">→</span>5 StrataScratch FAANG SQL problems per day — every single day, no exceptions</li>
+      <li><span class="fa-bullet a">→</span>Master window functions: ROW_NUMBER, RANK, DENSE_RANK, LAG, LEAD, NTILE — these appear in every hard SQL question</li>
+      <li><span class="fa-bullet a">→</span>Study A/B testing from scratch: read "Trustworthy Online Controlled Experiments" (free PDF available)</li>
+      <li><span class="fa-bullet a">→</span>Build A/B Testing Streamlit app (from Roadmap) — walk interviewers through it live</li>
+      <li><span class="fa-bullet a">→</span>Practice explaining statistics out loud — record yourself, play it back, improve until it sounds natural</li>
+    </ul>
+  </div>
+
+  <!-- ═══════════ ACCELERATION PLAN ═══════════ -->
+  <div id="acceleration" class="sh">
+    <div class="sh-icon" style="background:linear-gradient(135deg,rgba(239,68,68,0.25),rgba(245,158,11,0.15))">⚡</div>
+    <div><h2>Acceleration Plan — Can You Beat 180 Days?</h2><p>Realistic scenarios based on your current profile strength</p></div>
+  </div>
+  <div class="hr"></div>
+
+  <div class="accel-grid">
+    <div class="accel-card" style="border-color:rgba(16,185,129,0.25)">
+      <div class="accel-day" style="color:#6ee7b7">60</div>
+      <div class="accel-label" style="color:#6ee7b7">Days — Tier 2/3</div>
+      <div class="accel-desc">Realistic for companies like Databricks, Snowflake, Stripe, DoorDash, Coinbase. Your GenAI background makes you very competitive here <em>fast</em>.</div>
+      <span class="accel-if" style="background:rgba(16,185,129,0.1);color:#6ee7b7">If: projects polished + SQL solid</span>
+    </div>
+    <div class="accel-card" style="border-color:rgba(99,102,241,0.25)">
+      <div class="accel-day" style="color:#a5b4fc">90</div>
+      <div class="accel-label" style="color:#a5b4fc">Days — Top Tech</div>
+      <div class="accel-desc">Realistic for LinkedIn, Uber, Lyft, Airbnb, Spotify. Requires polished projects, 100+ LeetCode, and 2 mock interviews done. Very achievable.</div>
+      <span class="accel-if" style="background:rgba(99,102,241,0.1);color:#a5b4fc">If: referral secured + portfolio live</span>
+    </div>
+    <div class="accel-card" style="border-color:rgba(239,68,68,0.25)">
+      <div class="accel-day" style="color:#fca5a5">120–180</div>
+      <div class="accel-label" style="color:#fca5a5">Days — FAANG Core</div>
+      <div class="accel-desc">Realistic for Google, Meta, Amazon, Netflix. These pipelines take 4–8 weeks each regardless of prep. Apply early, re-apply if rejected.</div>
+      <span class="accel-if" style="background:rgba(239,68,68,0.1);color:#fca5a5">If: interview ready + referral in hand</span>
+    </div>
+  </div>
+
+  <div class="banner blue mb20">
+    <span class="bl">Acceleration Secret</span>
+    <div class="bt">The biggest bottleneck isn't prep — it's <strong>the hiring pipeline duration</strong>. FAANG processes take 4–8 weeks from application to offer regardless of how good you are. <strong>Start applying earlier than you feel ready.</strong> Apply to Tier 2/3 companies at Day 30 to start the clock. Use those as interview practice. By the time you get to FAANG onsites (Day 60–90), you've already done 5+ real interviews and your confidence will be unmatched.</div>
+  </div>
+
+  <!-- Comparison: Average Candidate vs You -->
+  <div class="sh" style="margin-top:30px">
+    <div class="sh-icon" style="background:rgba(255,255,255,0.05)">⚖️</div>
+    <div><h2>You vs. The Average DS Applicant</h2><p>Understand where you're ahead — and what to close</p></div>
+  </div>
+  <div class="hr"></div>
+
+  <div class="tbl-wrap">
+    <table class="compare-table">
+      <thead>
+        <tr>
+          <th>Credential / Skill</th>
+          <th>Average DS Applicant</th>
+          <th>You (Right Now)</th>
+          <th>You (After 60 Days)</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><strong>Degree</strong></td>
+          <td>B.S. CS or Stats (60%) / M.S. (40%)</td>
+          <td><span class="yes">✓ M.S. Data Science — FAU</span></td>
+          <td><span class="yes">✓ Same — strong</span></td>
+        </tr>
+        <tr>
+          <td><strong>GenAI Experience</strong></td>
+          <td>Theoretical only — 80% never built with LLMs</td>
+          <td><span class="yes">✓ Gemini API — built live systems</span></td>
+          <td><span class="yes">✓ + RAG + deployed + documented</span></td>
+        </tr>
+        <tr>
+          <td><strong>Big Data Skills</strong></td>
+          <td>Most have never run Spark in production</td>
+          <td><span class="maybe">~ Certification — needs a project</span></td>
+          <td><span class="yes">✓ Kafka + Spark project deployed</span></td>
+        </tr>
+        <tr>
+          <td><strong>SQL Proficiency</strong></td>
+          <td>Basic queries — most fail window functions</td>
+          <td><span class="maybe">~ Needs structured daily practice</span></td>
+          <td><span class="yes">✓ 300+ problems solved, FAANG-ready</span></td>
+        </tr>
+        <tr>
+          <td><strong>Deployed Projects</strong></td>
+          <td>Average: 1–2 local Jupyter notebooks</td>
+          <td><span class="no">✗ Not yet publicly deployed</span></td>
+          <td><span class="yes">✓ 3+ live demos with URLs</span></td>
+        </tr>
+        <tr>
+          <td><strong>LeetCode</strong></td>
+          <td>Average: 50–100 problems (inconsistent)</td>
+          <td><span class="no">✗ Not yet started systematically</span></td>
+          <td><span class="maybe">~ 80+ problems, mediums in progress</span></td>
+        </tr>
+        <tr>
+          <td><strong>Published Writing</strong></td>
+          <td>Most have zero — huge missed opportunity</td>
+          <td><span class="no">✗ Not yet on Medium/Substack</span></td>
+          <td><span class="yes">✓ 2+ articles published, getting views</span></td>
+        </tr>
+        <tr>
+          <td><strong>Industry Experience</strong></td>
+          <td>0–2 years average for master's applicants</td>
+          <td><span class="yes">✓ 3.8 years — significant advantage</span></td>
+          <td><span class="yes">✓ + framed with data/impact language</span></td>
+        </tr>
+        <tr>
+          <td><strong>Referral Network</strong></td>
+          <td>Most apply cold — very low acceptance rate</td>
+          <td><span class="maybe">~ Building — FAU alumni not yet tapped</span></td>
+          <td><span class="yes">✓ 3+ alumni conversations, 1 referral</span></td>
+        </tr>
+        <tr>
+          <td><strong>Research Paper</strong></td>
+          <td>Less than 5% of DS candidates have one</td>
+          <td><span class="no">✗ Not yet — huge opportunity gap</span></td>
+          <td><span class="maybe">~ arXiv draft in progress</span></td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- ═══════════ TELLING YOUR STORY ═══════════ -->
+  <div id="story" class="sh">
+    <div class="sh-icon" style="background:linear-gradient(135deg,rgba(236,72,153,0.2),rgba(239,68,68,0.15))">✍️</div>
+    <div><h2>How to Tell Your Story — Resume, LinkedIn & Interviews</h2><p>The narrative that makes interviewers lean forward</p></div>
+  </div>
+  <div class="hr"></div>
+
+  <div class="story-block highlight">
+    <div class="sb-label">Your Power Headline (LinkedIn + Resume)</div>
+    <div class="sb-text">"Data Scientist specializing in GenAI Systems & Multimodal AI | Built production LLM pipelines with Gemini API | M.S. Data Science (FAU) + Big Data Analytics Certified | Python · SQL · PySpark"</div>
+    <div class="sb-note"><strong>Why this works:</strong> It immediately signals GenAI depth (the hottest DS skill), shows production-level credibility, lists your strongest credentials, and includes the exact keywords ATS systems scan for.</div>
+  </div>
+
+  <div class="story-block">
+    <div class="sb-label">The 60-Second Elevator Pitch (Tell Me About Yourself)</div>
+    <div class="sb-text">"I'm a data scientist with a Master's in Data Science from Florida Atlantic University and close to 4 years of hands-on experience. My focus is at the intersection of generative AI and applied machine learning — during my master's I built an intelligent orchestration system for a library using the Gemini API, and a multimodal image recognition and description engine. I'm also certified in Big Data Analytics and have experience with distributed systems like Spark. I'm now targeting roles where I can build and scale AI-driven products that solve real problems at millions of users."</div>
+    <div class="sb-note"><strong>Why this works:</strong> Opens with credentials, pivots immediately to GenAI specifics (rare + impressive), shows technical depth, ends with a forward-looking statement about scale. Delivered in 45 seconds — <strong>practice it until it's natural, not scripted.</strong></div>
+  </div>
+
+  <div class="story-block">
+    <div class="sb-label">How to Frame Your Work Experience (Even if Not Pure DS)</div>
+    <div class="sb-text">Every job has data. Reframe every experience bullet in this format: "Used [method/tool] on [data volume/scale] to [achieve measurable outcome that impacted X users / saved Y time / improved Z metric]."</div>
+    <div class="sb-note"><strong>Example transformation:</strong> ❌ "Created monthly reports for management team" → ✅ <strong>"Designed and automated data reporting pipeline processing 500K+ records monthly, reducing report generation time by 60% and enabling real-time business decisions for leadership team."</strong></div>
+  </div>
+
+  <!-- ═══════════ RESEARCH PAPERS ═══════════ -->
+  <div id="papers" class="sh">
+    <div class="sh-icon" style="background:linear-gradient(135deg,rgba(6,182,212,0.2),rgba(59,130,246,0.15))">📄</div>
+    <div><h2>Research Papers — Your 5% Differentiator</h2><p>Less than 5% of DS candidates have a publication. You can be in that 5%.</p></div>
+  </div>
+  <div class="hr"></div>
+
+  <div class="banner cyan mb20">
+    <span class="bl">Opportunity</span>
+    <div class="bt">You don't need to publish in Nature or NeurIPS. A <strong>well-written arXiv preprint</strong> on your Gemini-based image recognition system or your GenAI library orchestration work is more impressive than 90% of candidates' entire portfolios. It shows depth, rigor, and academic-caliber thinking — and Google Scholar will index it.</div>
+  </div>
+
+  <div class="paper-row">
+    <div class="paper-icon" style="background:rgba(16,185,129,0.12)">📝</div>
+    <div class="paper-body">
+      <div class="paper-title">Option 1 (Fastest — 30 Days): arXiv Preprint on Your Gemini Projects</div>
+      <div class="paper-desc">Write a technical paper (8–12 pages, IEEE format) documenting your multimodal image recognition system or GenAI library orchestration. Include: motivation, system architecture, methodology, evaluation metrics, results, and future work. arXiv is free to submit and gets you a citable publication link immediately. <strong>This alone puts you in the top 5% of DS candidates.</strong></div>
+      <span class="paper-tag" style="background:rgba(16,185,129,0.15);color:#6ee7b7">30 days · Free · High Impact</span>
+    </div>
+  </div>
+
+  <div class="paper-row">
+    <div class="paper-icon" style="background:rgba(99,102,241,0.12)">🎓</div>
+    <div class="paper-body">
+      <div class="paper-title">Option 2 (Medium — 60–90 Days): Workshop Papers at Top Conferences</div>
+      <div class="paper-desc">Many top AI conferences (NeurIPS, ICLR, EMNLP, NAACL) have <strong>workshops</strong> that accept papers from practitioners — not just researchers. Workshops like "Practical ML for Developing Countries," "LLM Evaluation," or "Responsible Generative AI" are perfect for applied DS work. Acceptance rates for workshops are 30–50% vs. 15% for main tracks. <strong>A workshop acceptance at NeurIPS 2026 on your CV changes every conversation.</strong></div>
+      <span class="paper-tag" style="background:rgba(99,102,241,0.15);color:#a5b4fc">60–90 days · Small fee · Massive Impact</span>
+    </div>
+  </div>
+
+  <div class="paper-row">
+    <div class="paper-icon" style="background:rgba(245,158,11,0.12)">🤝</div>
+    <div class="paper-body">
+      <div class="paper-title">Option 3 (Best Long-Term): Contact Your FAU Professors for Collaboration</div>
+      <div class="paper-desc">Email 2–3 FAU faculty members who supervised your master's projects. Propose turning your thesis work or capstone project into a co-authored paper. Professors always want publications too — you'd be doing them a favor. A <strong>journal paper with a faculty co-author</strong> (even in a mid-tier venue like MDPI or Applied Sciences) carries significant weight at FAANG, especially Google and Microsoft Research. This is also how you get strong recommendation letters if needed.</div>
+      <span class="paper-tag" style="background:rgba(245,158,11,0.15);color:#fcd34d">90 days · Free · Highest Credibility</span>
+    </div>
+  </div>
+
+  <!-- ═══════════ PRE-APPLICATION SPRINT ═══════════ -->
+  <div id="sprint" class="sh">
+    <div class="sh-icon" style="background:linear-gradient(135deg,rgba(16,185,129,0.25),rgba(6,182,212,0.15))">🚀</div>
+    <div><h2>Your Pre-Application Sprint — The First 30 Days</h2><p>Exact weekly priorities to maximize your profile before Day 1 of applications</p></div>
+  </div>
+  <div class="hr"></div>
+
+  <div class="g2">
+    <div>
+      <div class="sprint-track c-green">
+        <div class="sprint-item">
+          <div class="sprint-day">Week 1 · Days 1–7</div>
+          <div class="sprint-title">🛠️ Polish What You Have</div>
+          <ul class="sprint-tasks">
+            <li>Push ALL master's projects to GitHub with full READMEs</li>
+            <li>Record a 2-min Loom demo of image recognition system</li>
+            <li>Upgrade LinkedIn with new headline and About section</li>
+            <li>Deploy Gemini project to Streamlit Cloud or Hugging Face Spaces</li>
+            <li>Start 5 StrataScratch SQL problems/day (don't skip this)</li>
+          </ul>
+        </div>
+        <div class="sprint-item">
+          <div class="sprint-day">Week 2 · Days 8–14</div>
+          <div class="sprint-title">🔥 GenAI Upgrade Sprint</div>
+          <ul class="sprint-tasks">
+            <li>Add RAG pipeline to library orchestration project (LangChain + ChromaDB)</li>
+            <li>Write architecture diagram for each project (Excalidraw)</li>
+            <li>Start LeetCode: 5 Easy problems/day (Arrays + Strings)</li>
+            <li>Draft arXiv paper outline — introduction and methodology sections</li>
+            <li>Contact 5 FAU alumni working at target companies via LinkedIn</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+    <div>
+      <div class="sprint-track c-blue">
+        <div class="sprint-item">
+          <div class="sprint-day">Week 3 · Days 15–21</div>
+          <div class="sprint-title">📊 Data & Visibility Push</div>
+          <ul class="sprint-tasks">
+            <li>Write and publish first Medium article (your Gemini system)</li>
+            <li>Start Big Data pipeline project (Kafka + Spark setup)</li>
+            <li>Increase LeetCode to 5 Medium problems/day</li>
+            <li>Pin 6 best repos on GitHub profile</li>
+            <li>Apply to first 3 Tier 3 companies (start pipeline clock early)</li>
+          </ul>
+        </div>
+        <div class="sprint-item">
+          <div class="sprint-day">Week 4 · Days 22–30</div>
+          <div class="sprint-title">🎯 Interview Readiness Check</div>
+          <ul class="sprint-tasks">
+            <li>Do first mock interview on Pramp (coding round)</li>
+            <li>Practice Tell Me About Yourself pitch 10x out loud</li>
+            <li>Finish arXiv paper first draft — submit by end of week</li>
+            <li>Apply to 5 Tier 2 companies with tailored resumes</li>
+            <li>Schedule 2 alumni coffee chats for next week</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Day 30 State -->
+  <div class="card" style="margin-top:20px;border-color:rgba(16,185,129,0.25);background:rgba(16,185,129,0.04)">
+    <div class="ct" style="color:#6ee7b7"><span class="em">🎯</span> At Day 30, You Will Have:</div>
+    <div class="g2" style="margin-top:4px">
+      <ul style="list-style:none;font-size:13px;color:var(--muted2)">
+        <li style="padding:4px 0;display:flex;gap:8px"><span style="color:#6ee7b7">✓</span> All master's projects live on GitHub with demos</li>
+        <li style="padding:4px 0;display:flex;gap:8px"><span style="color:#6ee7b7">✓</span> Gemini system upgraded with RAG + deployed publicly</li>
+        <li style="padding:4px 0;display:flex;gap:8px"><span style="color:#6ee7b7">✓</span> arXiv paper submitted (huge resume booster)</li>
+        <li style="padding:4px 0;display:flex;gap:8px"><span style="color:#6ee7b7">✓</span> 1 Medium article published and getting organic traffic</li>
+      </ul>
+      <ul style="list-style:none;font-size:13px;color:var(--muted2)">
+        <li style="padding:4px 0;display:flex;gap:8px"><span style="color:#6ee7b7">✓</span> 8+ company applications already in pipeline</li>
+        <li style="padding:4px 0;display:flex;gap:8px"><span style="color:#6ee7b7">✓</span> 150 SQL problems solved on StrataScratch</li>
+        <li style="padding:4px 0;display:flex;gap:8px"><span style="color:#6ee7b7">✓</span> 100+ LeetCode problems solved</li>
+        <li style="padding:4px 0;display:flex;gap:8px"><span style="color:#6ee7b7">✓</span> 5 alumni conversations started, 1 referral potentially secured</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- FOOTER -->
+  <div class="footer">
+    <strong>🔑 The One-Line Summary:</strong> You have a genuinely strong profile — M.S., real GenAI experience with Gemini API, Big Data certification, and 4 years of experience. <br>
+    The gap isn't your credentials. It's making those credentials <strong>visible, verifiable, and interview-ready.</strong><br>
+    Polish your existing work. Deploy it. Document it. Then apply aggressively and early.<br><br>
+    <strong>Your GenAI + Big Data combination is rare. Own it. Position it. Win with it.</strong>
+  </div>
+
+</div>
+</body>
+</html>

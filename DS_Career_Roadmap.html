@@ -1,0 +1,1345 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Data Scientist Career Roadmap — FAANG in 180 Days</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Fira+Code:wght@400;500&display=swap');
+
+  :root {
+    --bg: #0a0e1a;
+    --surface: #111827;
+    --surface2: #1a2235;
+    --border: rgba(255,255,255,0.07);
+    --text: #e8edf5;
+    --muted: #7a8ba3;
+    --accent: #6366f1;
+    --accent2: #8b5cf6;
+    --green: #10b981;
+    --amber: #f59e0b;
+    --red: #ef4444;
+    --blue: #3b82f6;
+    --cyan: #06b6d4;
+    --pink: #ec4899;
+    --orange: #f97316;
+    --grad1: linear-gradient(135deg, #6366f1, #8b5cf6);
+    --grad2: linear-gradient(135deg, #10b981, #06b6d4);
+    --grad3: linear-gradient(135deg, #f59e0b, #f97316);
+    --grad4: linear-gradient(135deg, #ef4444, #ec4899);
+    --grad5: linear-gradient(135deg, #3b82f6, #6366f1);
+    --radius: 16px;
+    --shadow: 0 8px 32px rgba(0,0,0,0.4);
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    font-family: 'Inter', sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    line-height: 1.6;
+    min-height: 100vh;
+  }
+
+  /* ── HERO ── */
+  .hero {
+    background: linear-gradient(135deg, #0f1729 0%, #1a1040 50%, #0a1628 100%);
+    padding: 60px 40px 50px;
+    position: relative;
+    overflow: hidden;
+    border-bottom: 1px solid var(--border);
+  }
+  .hero::before {
+    content: '';
+    position: absolute; inset: 0;
+    background: radial-gradient(ellipse at 20% 50%, rgba(99,102,241,0.15) 0%, transparent 60%),
+                radial-gradient(ellipse at 80% 20%, rgba(139,92,246,0.12) 0%, transparent 50%);
+  }
+  .hero-inner { position: relative; max-width: 960px; margin: 0 auto; }
+  .hero-badge {
+    display: inline-flex; align-items: center; gap: 8px;
+    background: rgba(99,102,241,0.15); border: 1px solid rgba(99,102,241,0.35);
+    border-radius: 100px; padding: 6px 14px; font-size: 12px;
+    font-weight: 600; color: #a5b4fc; letter-spacing: 0.5px;
+    text-transform: uppercase; margin-bottom: 20px;
+  }
+  .hero-badge span { font-size: 16px; }
+  .hero h1 {
+    font-size: clamp(28px, 5vw, 46px); font-weight: 900;
+    line-height: 1.15; margin-bottom: 16px;
+    background: linear-gradient(135deg, #fff 30%, #a5b4fc 70%, #8b5cf6 100%);
+    -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+  .hero-sub {
+    font-size: 16px; color: var(--muted); max-width: 640px; margin-bottom: 32px;
+  }
+  .hero-sub strong { color: #c7d2fe; }
+  .hero-stats {
+    display: flex; flex-wrap: wrap; gap: 16px;
+  }
+  .stat-pill {
+    display: flex; align-items: center; gap: 10px;
+    background: rgba(255,255,255,0.04); border: 1px solid var(--border);
+    border-radius: 100px; padding: 10px 20px; font-size: 13px; font-weight: 500;
+  }
+  .stat-pill .dot {
+    width: 8px; height: 8px; border-radius: 50%;
+  }
+
+  /* ── LAYOUT ── */
+  .container { max-width: 960px; margin: 0 auto; padding: 0 24px 80px; }
+
+  /* ── SECTION HEADER ── */
+  .section-header {
+    display: flex; align-items: center; gap: 14px;
+    margin: 50px 0 24px;
+  }
+  .section-icon {
+    width: 44px; height: 44px; border-radius: 12px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 20px; flex-shrink: 0;
+  }
+  .section-header h2 {
+    font-size: 22px; font-weight: 800; color: var(--text);
+  }
+  .section-header p {
+    font-size: 13px; color: var(--muted); margin-top: 2px;
+  }
+  .divider {
+    height: 1px; background: var(--border); margin: 0 0 28px;
+  }
+
+  /* ── GRID HELPERS ── */
+  .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+  .grid-3 { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 16px; }
+  @media(max-width:680px) {
+    .grid-2, .grid-3 { grid-template-columns: 1fr; }
+  }
+
+  /* ── CARD ── */
+  .card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 22px;
+    transition: transform 0.2s, border-color 0.2s;
+  }
+  .card:hover { transform: translateY(-2px); border-color: rgba(99,102,241,0.3); }
+  .card-title {
+    font-size: 14px; font-weight: 700; margin-bottom: 12px;
+    display: flex; align-items: center; gap: 8px;
+  }
+  .card-title .icon { font-size: 18px; }
+
+  /* ── SKILL BADGE ── */
+  .skill-group { margin-bottom: 20px; }
+  .skill-group:last-child { margin-bottom: 0; }
+  .skill-label {
+    font-size: 11px; font-weight: 700; text-transform: uppercase;
+    letter-spacing: 0.8px; color: var(--muted); margin-bottom: 8px;
+  }
+  .badge-wrap { display: flex; flex-wrap: wrap; gap: 6px; }
+  .badge {
+    display: inline-block; padding: 4px 10px; border-radius: 6px;
+    font-size: 11.5px; font-weight: 600; font-family: 'Fira Code', monospace;
+    border: 1px solid transparent;
+  }
+  .badge.py    { background: rgba(59,130,246,0.12); color: #93c5fd; border-color: rgba(59,130,246,0.2); }
+  .badge.sql   { background: rgba(16,185,129,0.12); color: #6ee7b7; border-color: rgba(16,185,129,0.2); }
+  .badge.ml    { background: rgba(99,102,241,0.12); color: #a5b4fc; border-color: rgba(99,102,241,0.2); }
+  .badge.cloud { background: rgba(245,158,11,0.12); color: #fcd34d; border-color: rgba(245,158,11,0.2); }
+  .badge.big   { background: rgba(239,68,68,0.12);  color: #fca5a5; border-color: rgba(239,68,68,0.2); }
+  .badge.stat  { background: rgba(6,182,212,0.12);  color: #67e8f9; border-color: rgba(6,182,212,0.2); }
+  .badge.viz   { background: rgba(236,72,153,0.12); color: #f9a8d4; border-color: rgba(236,72,153,0.2); }
+  .badge.tools { background: rgba(249,115,22,0.12); color: #fdba74; border-color: rgba(249,115,22,0.2); }
+
+  /* ── PRIORITY BANNER ── */
+  .priority-banner {
+    border-radius: 12px; padding: 16px 20px;
+    display: flex; align-items: flex-start; gap: 12px;
+    margin-bottom: 16px; border: 1px solid transparent;
+  }
+  .priority-banner.high { background: rgba(239,68,68,0.08); border-color: rgba(239,68,68,0.2); }
+  .priority-banner.mid  { background: rgba(245,158,11,0.08); border-color: rgba(245,158,11,0.2); }
+  .priority-banner.low  { background: rgba(16,185,129,0.08); border-color: rgba(16,185,129,0.2); }
+  .priority-label {
+    font-size: 10px; font-weight: 800; text-transform: uppercase; letter-spacing: 1px;
+    padding: 2px 8px; border-radius: 4px; white-space: nowrap; margin-top: 1px;
+  }
+  .high .priority-label { background: rgba(239,68,68,0.2); color: #fca5a5; }
+  .mid  .priority-label { background: rgba(245,158,11,0.2); color: #fcd34d; }
+  .low  .priority-label { background: rgba(16,185,129,0.2); color: #6ee7b7; }
+  .priority-text { font-size: 13px; color: var(--text); line-height: 1.6; }
+  .priority-text strong { color: #fff; }
+
+  /* ── PROJECT CARD ── */
+  .project-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 22px;
+    margin-bottom: 16px;
+    transition: border-color 0.2s, transform 0.2s;
+  }
+  .project-card:hover { border-color: rgba(99,102,241,0.35); transform: translateY(-2px); }
+  .project-header {
+    display: flex; justify-content: space-between; align-items: flex-start;
+    margin-bottom: 10px; flex-wrap: wrap; gap: 8px;
+  }
+  .project-title { font-size: 15px; font-weight: 700; color: #fff; }
+  .project-difficulty {
+    font-size: 11px; font-weight: 700; padding: 3px 10px; border-radius: 20px;
+    text-transform: uppercase; letter-spacing: 0.5px;
+  }
+  .diff-beg { background: rgba(16,185,129,0.15); color: #6ee7b7; }
+  .diff-int { background: rgba(245,158,11,0.15); color: #fcd34d; }
+  .diff-adv { background: rgba(239,68,68,0.15); color: #fca5a5; }
+  .project-desc { font-size: 13px; color: var(--muted); margin-bottom: 14px; line-height: 1.6; }
+  .project-tech { display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: 12px; }
+  .project-impact {
+    font-size: 12px; color: #a5b4fc; background: rgba(99,102,241,0.08);
+    border: 1px solid rgba(99,102,241,0.18); border-radius: 8px;
+    padding: 8px 12px; line-height: 1.5;
+  }
+  .project-impact strong { color: #c7d2fe; }
+  .project-steps { list-style: none; padding: 0; margin: 10px 0; }
+  .project-steps li {
+    font-size: 12.5px; color: var(--muted); padding: 3px 0;
+    display: flex; align-items: flex-start; gap: 8px;
+  }
+  .project-steps li::before { content: '→'; color: var(--accent); flex-shrink: 0; }
+
+  /* ── INTERVIEW ── */
+  .interview-tab-row {
+    display: flex; gap: 8px; margin-bottom: 20px; flex-wrap: wrap;
+  }
+  .tab-btn {
+    padding: 8px 18px; border-radius: 8px; font-size: 13px; font-weight: 600;
+    cursor: pointer; border: 1px solid var(--border); background: var(--surface);
+    color: var(--muted); transition: all 0.2s;
+  }
+  .tab-btn.active {
+    background: var(--accent); color: #fff; border-color: var(--accent);
+  }
+  .tab-content { display: none; }
+  .tab-content.active { display: block; }
+
+  .interview-list { list-style: none; }
+  .interview-list li {
+    padding: 11px 16px; border-radius: 10px; margin-bottom: 8px;
+    background: var(--surface); border: 1px solid var(--border);
+    font-size: 13px; display: flex; align-items: flex-start; gap: 10px;
+  }
+  .interview-list li .num {
+    width: 22px; height: 22px; border-radius: 6px; background: rgba(99,102,241,0.2);
+    color: #a5b4fc; font-size: 11px; font-weight: 700;
+    display: flex; align-items: center; justify-content: center; flex-shrink: 0;
+  }
+  .lc-tag {
+    display: inline-block; padding: 1px 7px; border-radius: 4px;
+    font-size: 10.5px; font-weight: 700; margin-left: 6px;
+  }
+  .lc-easy { background: rgba(16,185,129,0.15); color: #6ee7b7; }
+  .lc-med  { background: rgba(245,158,11,0.15);  color: #fcd34d; }
+  .lc-hard { background: rgba(239,68,68,0.15);   color: #fca5a5; }
+
+  /* ── RESOURCES ── */
+  .resource-row {
+    display: flex; gap: 8px; align-items: center;
+    padding: 10px 14px; border-radius: 10px; margin-bottom: 6px;
+    background: var(--surface); border: 1px solid var(--border);
+    font-size: 13px;
+  }
+  .resource-row .tag {
+    font-size: 10px; font-weight: 700; padding: 2px 7px; border-radius: 4px;
+    text-transform: uppercase; white-space: nowrap;
+  }
+  .tag-free    { background: rgba(16,185,129,0.15); color: #6ee7b7; }
+  .tag-paid    { background: rgba(245,158,11,0.15); color: #fcd34d; }
+  .tag-course  { background: rgba(99,102,241,0.15); color: #a5b4fc; }
+  .tag-book    { background: rgba(6,182,212,0.15);  color: #67e8f9; }
+  .tag-platform{ background: rgba(249,115,22,0.15); color: #fdba74; }
+
+  /* ── NETWORKING ── */
+  .network-step {
+    display: flex; gap: 16px; padding: 18px; border-radius: 12px;
+    background: var(--surface); border: 1px solid var(--border);
+    margin-bottom: 12px; transition: border-color 0.2s;
+  }
+  .network-step:hover { border-color: rgba(16,185,129,0.3); }
+  .step-icon {
+    width: 44px; height: 44px; border-radius: 12px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 20px; flex-shrink: 0;
+  }
+  .step-body { flex: 1; }
+  .step-title { font-size: 14px; font-weight: 700; margin-bottom: 5px; color: #fff; }
+  .step-desc  { font-size: 13px; color: var(--muted); line-height: 1.6; }
+  .step-desc strong { color: var(--text); }
+
+  /* ── 180-DAY TIMELINE ── */
+  .timeline-phase {
+    position: relative; margin-bottom: 16px;
+    border-radius: 14px; overflow: hidden;
+    border: 1px solid var(--border);
+  }
+  .phase-header {
+    display: flex; align-items: center; gap: 14px;
+    padding: 18px 22px; cursor: pointer;
+    transition: background 0.2s;
+    user-select: none;
+  }
+  .phase-header:hover { background: rgba(255,255,255,0.03); }
+  .phase-num {
+    width: 36px; height: 36px; border-radius: 10px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 14px; font-weight: 800; flex-shrink: 0;
+  }
+  .phase-meta { flex: 1; }
+  .phase-name { font-size: 15px; font-weight: 700; color: #fff; }
+  .phase-days { font-size: 12px; color: var(--muted); margin-top: 2px; }
+  .phase-toggle { font-size: 18px; color: var(--muted); transition: transform 0.3s; }
+  .phase-toggle.open { transform: rotate(180deg); }
+  .phase-body {
+    padding: 0 22px 20px; display: none;
+    border-top: 1px solid var(--border);
+    background: rgba(0,0,0,0.15);
+  }
+  .phase-body.open { display: block; }
+  .phase-tasks { list-style: none; margin-top: 16px; }
+  .phase-tasks li {
+    padding: 8px 12px; margin-bottom: 6px; border-radius: 8px;
+    font-size: 13px; color: var(--text); display: flex; gap: 10px;
+    background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.05);
+  }
+  .phase-tasks li::before { content: '✦'; font-size: 10px; margin-top: 3px; flex-shrink: 0; }
+  .phase-goal {
+    margin-top: 14px; padding: 12px 16px; border-radius: 10px;
+    font-size: 13px; font-weight: 600;
+  }
+  .progress-bar {
+    height: 4px; border-radius: 2px; margin: 8px 0 0; overflow: hidden;
+    background: rgba(255,255,255,0.06);
+  }
+  .progress-fill { height: 100%; border-radius: 2px; }
+
+  /* Phase colors */
+  .ph1 .phase-num  { background: rgba(99,102,241,0.2);  color: #a5b4fc; }
+  .ph1 .phase-goal { background: rgba(99,102,241,0.08); border: 1px solid rgba(99,102,241,0.2); color: #a5b4fc; }
+  .ph1 .progress-fill { background: var(--grad1); width: 30%; }
+  .ph1 { background: linear-gradient(90deg, rgba(99,102,241,0.04) 0%, transparent 100%); }
+
+  .ph2 .phase-num  { background: rgba(6,182,212,0.2);   color: #67e8f9; }
+  .ph2 .phase-goal { background: rgba(6,182,212,0.08);  border: 1px solid rgba(6,182,212,0.2); color: #67e8f9; }
+  .ph2 .progress-fill { background: var(--grad2); width: 55%; }
+  .ph2 { background: linear-gradient(90deg, rgba(6,182,212,0.04) 0%, transparent 100%); }
+
+  .ph3 .phase-num  { background: rgba(245,158,11,0.2);  color: #fcd34d; }
+  .ph3 .phase-goal { background: rgba(245,158,11,0.08); border: 1px solid rgba(245,158,11,0.2); color: #fcd34d; }
+  .ph3 .progress-fill { background: var(--grad3); width: 70%; }
+  .ph3 { background: linear-gradient(90deg, rgba(245,158,11,0.04) 0%, transparent 100%); }
+
+  .ph4 .phase-num  { background: rgba(239,68,68,0.2);   color: #fca5a5; }
+  .ph4 .phase-goal { background: rgba(239,68,68,0.08);  border: 1px solid rgba(239,68,68,0.2); color: #fca5a5; }
+  .ph4 .progress-fill { background: var(--grad4); width: 90%; }
+  .ph4 { background: linear-gradient(90deg, rgba(239,68,68,0.04) 0%, transparent 100%); }
+
+  .ph5 .phase-num  { background: rgba(16,185,129,0.2);  color: #6ee7b7; }
+  .ph5 .phase-goal { background: rgba(16,185,129,0.08); border: 1px solid rgba(16,185,129,0.2); color: #6ee7b7; }
+  .ph5 .progress-fill { background: var(--grad2); width: 100%; }
+  .ph5 { background: linear-gradient(90deg, rgba(16,185,129,0.04) 0%, transparent 100%); }
+
+  /* ── COMPANIES GRID ── */
+  .company-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(160px, 1fr)); gap: 12px; }
+  .company-card {
+    background: var(--surface); border: 1px solid var(--border);
+    border-radius: 12px; padding: 16px; text-align: center;
+    transition: border-color 0.2s, transform 0.2s;
+  }
+  .company-card:hover { border-color: rgba(99,102,241,0.35); transform: translateY(-2px); }
+  .company-logo { font-size: 28px; margin-bottom: 8px; }
+  .company-name { font-size: 13px; font-weight: 700; color: #fff; margin-bottom: 4px; }
+  .company-note { font-size: 11px; color: var(--muted); line-height: 1.4; }
+
+  /* ── CHECKLIST ── */
+  .checklist { list-style: none; }
+  .checklist li {
+    display: flex; align-items: flex-start; gap: 10px;
+    padding: 10px 0; border-bottom: 1px solid var(--border);
+    font-size: 13px; color: var(--text);
+  }
+  .checklist li:last-child { border-bottom: none; }
+  .check-box {
+    width: 18px; height: 18px; border-radius: 5px;
+    border: 1.5px solid rgba(99,102,241,0.4);
+    flex-shrink: 0; margin-top: 1px;
+  }
+
+  /* ── SALARY CARD ── */
+  .salary-card {
+    background: linear-gradient(135deg, rgba(99,102,241,0.1), rgba(16,185,129,0.06));
+    border: 1px solid rgba(99,102,241,0.2);
+    border-radius: 14px; padding: 24px;
+    display: flex; flex-wrap: wrap; gap: 20px; align-items: center;
+  }
+  .salary-item { text-align: center; flex: 1; min-width: 120px; }
+  .salary-label { font-size: 11px; color: var(--muted); text-transform: uppercase;
+    letter-spacing: 0.5px; font-weight: 600; margin-bottom: 6px; }
+  .salary-value { font-size: 22px; font-weight: 800; }
+  .salary-note  { font-size: 11px; color: var(--muted); margin-top: 3px; }
+
+  /* ── FOOTER NOTE ── */
+  .footer-note {
+    margin-top: 50px; padding: 24px; border-radius: 14px;
+    background: linear-gradient(135deg, rgba(99,102,241,0.08), rgba(139,92,246,0.05));
+    border: 1px solid rgba(99,102,241,0.2);
+    font-size: 13px; color: var(--muted); text-align: center; line-height: 1.7;
+  }
+  .footer-note strong { color: #a5b4fc; }
+
+  /* Utility */
+  .mt-8  { margin-top: 8px; }
+  .mt-16 { margin-top: 16px; }
+  .text-green  { color: var(--green); }
+  .text-amber  { color: var(--amber); }
+  .text-blue   { color: var(--blue); }
+  .text-accent { color: var(--accent); }
+  .text-muted  { color: var(--muted); }
+
+  /* Nav */
+  .toc {
+    background: var(--surface); border: 1px solid var(--border);
+    border-radius: var(--radius); padding: 20px 24px;
+    margin: 32px 0; display: flex; flex-wrap: wrap; gap: 8px;
+  }
+  .toc a {
+    color: var(--muted); text-decoration: none; font-size: 12.5px; font-weight: 500;
+    padding: 6px 12px; border-radius: 6px; background: rgba(255,255,255,0.03);
+    border: 1px solid var(--border); transition: all 0.2s; white-space: nowrap;
+  }
+  .toc a:hover { color: #a5b4fc; border-color: rgba(99,102,241,0.3); background: rgba(99,102,241,0.06); }
+</style>
+</head>
+<body>
+
+<!-- ═══════════════ HERO ═══════════════ -->
+<div class="hero">
+  <div class="hero-inner">
+    <div class="hero-badge"><span>🚀</span> FAANG Data Scientist Roadmap</div>
+    <h1>Land a Data Scientist Role<br>in 180 Days</h1>
+    <p class="hero-sub">
+      A personalized, actionable roadmap for <strong>FAU M.S. Data Science & Analytics</strong> graduates targeting 
+      top-tier tech companies. Built around your <strong>3+ years of experience</strong> and Big Data Analytics certification.
+    </p>
+    <div class="hero-stats">
+      <div class="stat-pill"><span class="dot" style="background:#6366f1"></span> 180-Day Target</div>
+      <div class="stat-pill"><span class="dot" style="background:#10b981"></span> M.S. + Big Data Certified</div>
+      <div class="stat-pill"><span class="dot" style="background:#f59e0b"></span> 3.8 Years Experience</div>
+      <div class="stat-pill"><span class="dot" style="background:#ef4444"></span> FAANG / Equivalent</div>
+    </div>
+  </div>
+</div>
+
+<div class="container">
+
+  <!-- TABLE OF CONTENTS -->
+  <div class="toc">
+    <a href="#skills">📘 Technical Skills</a>
+    <a href="#projects">🔬 Portfolio Projects</a>
+    <a href="#interview">🎯 Interview Prep</a>
+    <a href="#networking">🤝 Networking</a>
+    <a href="#timeline">📅 180-Day Timeline</a>
+    <a href="#companies">🏢 Target Companies</a>
+    <a href="#resources">📚 Resources</a>
+  </div>
+
+  <!-- ═══════════════ YOUR ADVANTAGE ═══════════════ -->
+  <div class="section-header" style="margin-top:20px">
+    <div class="section-icon" style="background:linear-gradient(135deg,rgba(16,185,129,0.2),rgba(6,182,212,0.2))">⚡</div>
+    <div>
+      <h2>Your Competitive Advantage</h2>
+      <p>What you already bring to the table — leverage these heavily</p>
+    </div>
+  </div>
+  <div class="divider"></div>
+  <div class="grid-3">
+    <div class="card" style="border-color:rgba(16,185,129,0.2)">
+      <div class="card-title"><span class="icon">🎓</span> M.S. Data Science</div>
+      <div style="font-size:13px;color:var(--muted)">Florida Atlantic University degree gives you theoretical credibility — emphasize coursework in ML, statistics, and algorithms in your resume.</div>
+    </div>
+    <div class="card" style="border-color:rgba(6,182,212,0.2)">
+      <div class="card-title"><span class="icon">📊</span> Big Data Certification</div>
+      <div style="font-size:13px;color:var(--muted)">Your FAU Big Data Analytics certification signals Spark/Hadoop knowledge — a direct differentiator for data engineering-adjacent DS roles.</div>
+    </div>
+    <div class="card" style="border-color:rgba(245,158,11,0.2)">
+      <div class="card-title"><span class="icon">💼</span> 3.8 Years Experience</div>
+      <div style="font-size:13px;color:var(--muted)">You're NOT a fresh grad — you're an experienced DS candidate. Target L4/L5 roles, not entry-level. This means higher pay and better teams.</div>
+    </div>
+  </div>
+
+  <!-- ═══════════════ SECTION 1: SKILLS ═══════════════ -->
+  <div id="skills" class="section-header">
+    <div class="section-icon" style="background:var(--grad1)">📘</div>
+    <div>
+      <h2>Key Technical Skills to Develop & Strengthen</h2>
+      <p>Organized by priority — what FAANG interviewers actually test</p>
+    </div>
+  </div>
+  <div class="divider"></div>
+
+  <div class="priority-banner high">
+    <span class="priority-label">🔴 Must-Have</span>
+    <div class="priority-text">These are <strong>non-negotiables</strong> — every FAANG DS interview will test these. Master them first before anything else.</div>
+  </div>
+
+  <div class="grid-2">
+    <div class="card">
+      <div class="skill-group">
+        <div class="skill-label">🐍 Python (Core Language)</div>
+        <div class="badge-wrap">
+          <span class="badge py">NumPy</span><span class="badge py">Pandas</span><span class="badge py">Scikit-learn</span>
+          <span class="badge py">Matplotlib</span><span class="badge py">Seaborn</span><span class="badge py">Jupyter</span>
+          <span class="badge py">OOP Concepts</span><span class="badge py">List Comprehensions</span>
+        </div>
+      </div>
+      <div style="font-size:12px;color:var(--muted);margin-top:8px;line-height:1.6">
+        Focus on clean, production-quality code. Write functions, not scripts. Learn decorators, generators, and context managers.
+      </div>
+    </div>
+    <div class="card">
+      <div class="skill-group">
+        <div class="skill-label">🗄️ SQL (Critical for DS)</div>
+        <div class="badge-wrap">
+          <span class="badge sql">Window Functions</span><span class="badge sql">CTEs</span>
+          <span class="badge sql">JOINs (all types)</span><span class="badge sql">Aggregations</span>
+          <span class="badge sql">Subqueries</span><span class="badge sql">CASE WHEN</span>
+          <span class="badge sql">Query Optimization</span>
+        </div>
+      </div>
+      <div style="font-size:12px;color:var(--muted);margin-top:8px;line-height:1.6">
+        <strong style="color:#6ee7b7">SQL is tested in 90% of DS interviews.</strong> Practice on Mode Analytics, StrataScratch, and LeetCode SQL.
+      </div>
+    </div>
+  </div>
+
+  <div class="priority-banner mid" style="margin-top:20px">
+    <span class="priority-label">🟡 High Priority</span>
+    <div class="priority-text">These skills define your depth as a data scientist — expect deep-dive questions in technical rounds.</div>
+  </div>
+
+  <div class="grid-2">
+    <div class="card">
+      <div class="skill-group">
+        <div class="skill-label">📐 Statistics & Math</div>
+        <div class="badge-wrap">
+          <span class="badge stat">Hypothesis Testing</span><span class="badge stat">A/B Testing</span>
+          <span class="badge stat">p-values & CIs</span><span class="badge stat">Bayesian Stats</span>
+          <span class="badge stat">Distributions</span><span class="badge stat">CLT</span>
+          <span class="badge stat">Linear Algebra</span><span class="badge stat">Probability</span>
+        </div>
+      </div>
+    </div>
+    <div class="card">
+      <div class="skill-group">
+        <div class="skill-label">🤖 Machine Learning</div>
+        <div class="badge-wrap">
+          <span class="badge ml">Linear/Logistic Reg</span><span class="badge ml">Decision Trees</span>
+          <span class="badge ml">Random Forest</span><span class="badge ml">XGBoost/LightGBM</span>
+          <span class="badge ml">K-Means / DBSCAN</span><span class="badge ml">PCA / SVD</span>
+          <span class="badge ml">Cross-Validation</span><span class="badge ml">Feature Engineering</span>
+          <span class="badge ml">Bias-Variance Tradeoff</span><span class="badge ml">Regularization</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="priority-banner low" style="margin-top:16px">
+    <span class="priority-label">🟢 Strong Differentiators</span>
+    <div class="priority-text">These separate <strong>good candidates from exceptional ones</strong> — especially for senior-track DS roles at top companies.</div>
+  </div>
+
+  <div class="grid-3">
+    <div class="card">
+      <div class="skill-group">
+        <div class="skill-label">☁️ Cloud Platforms</div>
+        <div class="badge-wrap">
+          <span class="badge cloud">AWS SageMaker</span><span class="badge cloud">S3 / EC2</span>
+          <span class="badge cloud">BigQuery (GCP)</span><span class="badge cloud">Vertex AI</span>
+          <span class="badge cloud">Azure ML</span><span class="badge cloud">Databricks</span>
+        </div>
+      </div>
+    </div>
+    <div class="card">
+      <div class="skill-group">
+        <div class="skill-label">🔥 Deep Learning & NLP</div>
+        <div class="badge-wrap">
+          <span class="badge ml">PyTorch / TensorFlow</span><span class="badge ml">HuggingFace</span>
+          <span class="badge ml">Transformers</span><span class="badge ml">BERT / GPT</span>
+          <span class="badge ml">CNNs / RNNs</span><span class="badge ml">LLM Fine-tuning</span>
+        </div>
+      </div>
+    </div>
+    <div class="card">
+      <div class="skill-group">
+        <div class="skill-label">⚡ Big Data (Your Strength!)</div>
+        <div class="badge-wrap">
+          <span class="badge big">Apache Spark</span><span class="badge big">PySpark</span>
+          <span class="badge big">Hadoop HDFS</span><span class="badge big">Kafka</span>
+          <span class="badge big">Hive / Impala</span><span class="badge big">Airflow</span>
+        </div>
+      </div>
+    </div>
+    <div class="card">
+      <div class="skill-group">
+        <div class="skill-label">📊 Visualization & BI</div>
+        <div class="badge-wrap">
+          <span class="badge viz">Tableau</span><span class="badge viz">Power BI</span>
+          <span class="badge viz">Plotly / Dash</span><span class="badge viz">Streamlit</span>
+          <span class="badge viz">D3.js (basics)</span>
+        </div>
+      </div>
+    </div>
+    <div class="card">
+      <div class="skill-group">
+        <div class="skill-label">🛠️ MLOps & Tools</div>
+        <div class="badge-wrap">
+          <span class="badge tools">MLflow</span><span class="badge tools">Docker</span>
+          <span class="badge tools">Git / GitHub</span><span class="badge tools">FastAPI</span>
+          <span class="badge tools">CI/CD Basics</span><span class="badge tools">DVC</span>
+        </div>
+      </div>
+    </div>
+    <div class="card">
+      <div class="skill-group">
+        <div class="skill-label">🧪 Experimentation</div>
+        <div class="badge-wrap">
+          <span class="badge stat">A/B Test Design</span><span class="badge stat">Sample Size Calc</span>
+          <span class="badge stat">Multi-armed Bandit</span><span class="badge stat">Causal Inference</span>
+          <span class="badge stat">Power Analysis</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ═══════════════ SECTION 2: PROJECTS ═══════════════ -->
+  <div id="projects" class="section-header">
+    <div class="section-icon" style="background:var(--grad2)">🔬</div>
+    <div>
+      <h2>Portfolio Projects That Demonstrate Expertise</h2>
+      <p>Build 4–5 of these — each should be a GitHub repo with README + deployed demo</p>
+    </div>
+  </div>
+  <div class="divider"></div>
+
+  <!-- Project 1 -->
+  <div class="project-card">
+    <div class="project-header">
+      <div class="project-title">🎬 End-to-End Recommendation Engine</div>
+      <span class="project-difficulty diff-int">Intermediate</span>
+    </div>
+    <div class="project-desc">Build a Netflix/Amazon-style recommender system using collaborative filtering, content-based filtering, and hybrid approaches. Deploy as a live web app.</div>
+    <div class="project-tech">
+      <span class="badge ml">Scikit-learn</span><span class="badge py">Pandas</span>
+      <span class="badge py">Streamlit</span><span class="badge cloud">AWS / GCP Deploy</span>
+      <span class="badge big">Spark MLlib</span><span class="badge sql">SQL Feature Store</span>
+    </div>
+    <ul class="project-steps">
+      <li>Use MovieLens 25M or Amazon Product datasets</li>
+      <li>Implement Matrix Factorization (SVD), ALS with Spark, and Neural CF</li>
+      <li>Build A/B test framework comparing algorithm variants</li>
+      <li>Deploy Streamlit app — include evaluation metrics (NDCG, MAP@K)</li>
+    </ul>
+    <div class="project-impact"><strong>Why it matters:</strong> Netflix, Spotify, Amazon, Meta all have recommender teams. Shows you can handle sparse data, large-scale problems, and ML evaluation rigorously.</div>
+  </div>
+
+  <!-- Project 2 -->
+  <div class="project-card">
+    <div class="project-header">
+      <div class="project-title">📈 Time Series Forecasting Dashboard</div>
+      <span class="project-difficulty diff-int">Intermediate</span>
+    </div>
+    <div class="project-desc">Forecast business KPIs (sales, traffic, revenue) using classical and deep learning methods with a production-ready pipeline and interactive dashboard.</div>
+    <div class="project-tech">
+      <span class="badge py">Prophet</span><span class="badge ml">LSTM / Transformer</span>
+      <span class="badge py">Statsmodels (ARIMA)</span><span class="badge viz">Plotly Dash</span>
+      <span class="badge tools">Airflow</span><span class="badge sql">BigQuery</span>
+    </div>
+    <ul class="project-steps">
+      <li>Source: Walmart Sales, NYC Taxi, or financial data (Yahoo Finance)</li>
+      <li>Compare ARIMA, Prophet, LSTM, Temporal Fusion Transformer</li>
+      <li>Build automated retraining pipeline with Airflow</li>
+      <li>Deploy interactive Dash dashboard with real-time updates</li>
+    </ul>
+    <div class="project-impact"><strong>Why it matters:</strong> Every company forecasts demand, revenue, or user behavior. Shows ML engineering + data engineering skills together.</div>
+  </div>
+
+  <!-- Project 3 -->
+  <div class="project-card">
+    <div class="project-header">
+      <div class="project-title">🔍 NLP Sentiment & Topic Analysis Platform</div>
+      <span class="project-difficulty diff-adv">Advanced</span>
+    </div>
+    <div class="project-desc">Build a full NLP pipeline that ingests customer reviews, performs sentiment analysis, topic modeling, and generates actionable insights with an LLM summarizer.</div>
+    <div class="project-tech">
+      <span class="badge ml">HuggingFace Transformers</span><span class="badge ml">BERT Fine-tuning</span>
+      <span class="badge ml">LDA / BERTopic</span><span class="badge py">SpaCy</span>
+      <span class="badge tools">FastAPI</span><span class="badge big">Spark NLP</span>
+    </div>
+    <ul class="project-steps">
+      <li>Dataset: Amazon Reviews, Yelp, or Twitter data (via API)</li>
+      <li>Fine-tune DistilBERT for domain-specific sentiment classification</li>
+      <li>BERTopic for topic clustering — visualize with interactive plots</li>
+      <li>Add GPT-4/Llama summarization for weekly insight reports</li>
+    </ul>
+    <div class="project-impact"><strong>Why it matters:</strong> NLP/LLM skills are in extreme demand at Google, Meta, Amazon. Demonstrates cutting-edge ML awareness and practical LLM integration.</div>
+  </div>
+
+  <!-- Project 4 -->
+  <div class="project-card">
+    <div class="project-header">
+      <div class="project-title">⚡ Big Data Pipeline with Real-Time Analytics</div>
+      <span class="project-difficulty diff-adv">Advanced</span>
+    </div>
+    <div class="project-desc">Leverage your Big Data certification — build a streaming data pipeline using Kafka + Spark Streaming with real-time dashboards. This is your signature project.</div>
+    <div class="project-tech">
+      <span class="badge big">Apache Kafka</span><span class="badge big">Spark Streaming</span>
+      <span class="badge big">HDFS / Delta Lake</span><span class="badge cloud">AWS / Databricks</span>
+      <span class="badge sql">Hive / Presto</span><span class="badge viz">Grafana / Superset</span>
+    </div>
+    <ul class="project-steps">
+      <li>Ingest Twitter stream or simulated e-commerce events via Kafka</li>
+      <li>Process with Spark Structured Streaming — compute rolling aggregates</li>
+      <li>Store in Delta Lake (ACID transactions) on S3 or HDFS</li>
+      <li>Build real-time Grafana/Superset dashboard showing live metrics</li>
+    </ul>
+    <div class="project-impact"><strong>Why it matters:</strong> Directly showcases your Big Data Certification. Extremely impressive for DS roles at LinkedIn, Uber, Meta, and DoorDash.</div>
+  </div>
+
+  <!-- Project 5 -->
+  <div class="project-card">
+    <div class="project-header">
+      <div class="project-title">🧪 A/B Testing & Causal Inference Framework</div>
+      <span class="project-difficulty diff-int">Intermediate</span>
+    </div>
+    <div class="project-desc">Build a statistically rigorous A/B testing system simulating product experiments — the bread and butter of DS work at FAANG companies.</div>
+    <div class="project-tech">
+      <span class="badge stat">Statsmodels</span><span class="badge py">SciPy</span>
+      <span class="badge stat">Bayesian A/B Testing</span><span class="badge py">Streamlit App</span>
+      <span class="badge sql">SQL Feature Extraction</span>
+    </div>
+    <ul class="project-steps">
+      <li>Simulate an e-commerce experiment (button color, pricing) dataset</li>
+      <li>Implement frequentist AND Bayesian A/B testing from scratch</li>
+      <li>Add power analysis, MDE calculator, and sequential testing</li>
+      <li>Build a Streamlit app to run A/B tests interactively</li>
+    </ul>
+    <div class="project-impact"><strong>Why it matters:</strong> Google, Meta, Amazon run thousands of A/B tests daily. Being able to design, execute, and interpret experiments is a core DS skill tested heavily.</div>
+  </div>
+
+  <!-- ═══════════════ SECTION 3: INTERVIEW ═══════════════ -->
+  <div id="interview" class="section-header">
+    <div class="section-icon" style="background:var(--grad3)">🎯</div>
+    <div>
+      <h2>Interview Preparation Strategy</h2>
+      <p>FAANG DS interviews have 4 core pillars — each requires a separate strategy</p>
+    </div>
+  </div>
+  <div class="divider"></div>
+
+  <!-- Interview Overview Cards -->
+  <div class="grid-2" style="margin-bottom:24px">
+    <div class="card" style="border-color:rgba(59,130,246,0.25)">
+      <div class="card-title"><span class="icon">💻</span> <span style="color:#93c5fd">Coding / Algorithms</span></div>
+      <div style="font-size:13px;color:var(--muted);margin-bottom:10px">Python-focused DSA. FAANG DS roles test easier than SWE roles but still require solid fundamentals.</div>
+      <div class="badge-wrap">
+        <span class="badge py">Arrays & Strings</span><span class="badge py">Hash Maps</span>
+        <span class="badge py">Two Pointers</span><span class="badge py">Sliding Window</span>
+        <span class="badge py">Recursion</span><span class="badge py">BFS / DFS</span>
+        <span class="badge py">Dynamic Programming</span>
+      </div>
+      <div style="font-size:12px;color:var(--green);margin-top:10px;font-weight:600">Target: LeetCode Easy (all) + Medium (70%) in 8 weeks</div>
+    </div>
+    <div class="card" style="border-color:rgba(6,182,212,0.25)">
+      <div class="card-title"><span class="icon">📐</span> <span style="color:#67e8f9">Statistics & ML Theory</span></div>
+      <div style="font-size:13px;color:var(--muted);margin-bottom:10px">The deepest and most unique part of DS interviews — you must explain concepts clearly and from first principles.</div>
+      <div class="badge-wrap">
+        <span class="badge stat">Why Gradient Descent?</span><span class="badge stat">Bias vs Variance</span>
+        <span class="badge stat">Regularization L1/L2</span><span class="badge stat">AUC-ROC explained</span>
+        <span class="badge stat">Class Imbalance</span><span class="badge stat">Overfitting solutions</span>
+      </div>
+      <div style="font-size:12px;color:var(--green);margin-top:10px;font-weight:600">Practice explaining every concept to a non-technical person</div>
+    </div>
+    <div class="card" style="border-color:rgba(245,158,11,0.25)">
+      <div class="card-title"><span class="icon">📊</span> <span style="color:#fcd34d">SQL Technical Round</span></div>
+      <div style="font-size:13px;color:var(--muted);margin-bottom:10px">Usually a separate 45-min round. Expect medium-to-hard analytical SQL problems similar to real product data.</div>
+      <div class="badge-wrap">
+        <span class="badge sql">User Retention</span><span class="badge sql">Funnel Analysis</span>
+        <span class="badge sql">Rolling Averages</span><span class="badge sql">Cohort Analysis</span>
+        <span class="badge sql">Ranking with RANK()</span><span class="badge sql">LEAD/LAG</span>
+      </div>
+      <div style="font-size:12px;color:var(--green);margin-top:10px;font-weight:600">Do 5+ StrataScratch problems per week for 8 weeks</div>
+    </div>
+    <div class="card" style="border-color:rgba(99,102,241,0.25)">
+      <div class="card-title"><span class="icon">💼</span> <span style="color:#a5b4fc">Product & Case Study</span></div>
+      <div style="font-size:13px;color:var(--muted);margin-bottom:10px">Given a business problem — define metrics, design experiments, interpret results. Tests data intuition + business thinking.</div>
+      <div class="badge-wrap">
+        <span class="badge ml">Define Success Metrics</span><span class="badge ml">Root Cause Analysis</span>
+        <span class="badge ml">Metric Trade-offs</span><span class="badge ml">Experiment Design</span>
+        <span class="badge ml">Guarding Metrics</span>
+      </div>
+      <div style="font-size:12px;color:var(--green);margin-top:10px;font-weight:600">Use the STAR + Metric Framework for every case question</div>
+    </div>
+  </div>
+
+  <!-- Coding roadmap detail -->
+  <div class="card" style="margin-bottom:16px">
+    <div class="card-title"><span class="icon">💻</span> LeetCode Study Plan — 8-Week Sprint</div>
+    <ul class="interview-list">
+      <li><span class="num">1</span><div><strong>Week 1–2:</strong> All Easy problems in Arrays, Strings, and Hash Maps<span class="lc-tag lc-easy">Easy</span> — solve 5 problems/day. Focus on clarity, not speed.</div></li>
+      <li><span class="num">2</span><div><strong>Week 3–4:</strong> Two Pointers, Sliding Window, and Sorting<span class="lc-tag lc-med">Medium</span> — these appear most in DS coding screens.</div></li>
+      <li><span class="num">3</span><div><strong>Week 5–6:</strong> Binary Search, Recursion, Tree traversal (BFS/DFS)<span class="lc-tag lc-med">Medium</span> — 3 problems/day, review solutions after 20 min max.</div></li>
+      <li><span class="num">4</span><div><strong>Week 7–8:</strong> Dynamic Programming basics + mock interviews on Pramp/Interviewing.io<span class="lc-tag lc-hard">Hard</span> — do 2 full mock sessions per week.</div></li>
+      <li><span class="num">5</span><div><strong>Ongoing:</strong> Complete <strong>LeetCode Top 50 SQL</strong> and <strong>StrataScratch FAANG SQL set</strong>. Target: 100+ SQL problems before first application.</div></li>
+    </ul>
+  </div>
+
+  <!-- Stats & ML Questions -->
+  <div class="card" style="margin-bottom:16px">
+    <div class="card-title"><span class="icon">📐</span> Top Statistics & ML Concepts to Master</div>
+    <div class="grid-2" style="margin-top:8px">
+      <div>
+        <div class="skill-label" style="margin-bottom:8px">Statistics Must-Knows</div>
+        <ul class="interview-list">
+          <li><span class="num">A</span>Explain p-value, Type I/II errors to a PM</li>
+          <li><span class="num">B</span>Central Limit Theorem — why it matters in A/B tests</li>
+          <li><span class="num">C</span>When to use t-test vs. Mann-Whitney vs. chi-square</li>
+          <li><span class="num">D</span>Confidence intervals — construction and interpretation</li>
+          <li><span class="num">E</span>Bayesian vs. Frequentist A/B testing trade-offs</li>
+        </ul>
+      </div>
+      <div>
+        <div class="skill-label" style="margin-bottom:8px">ML Theory Must-Knows</div>
+        <ul class="interview-list">
+          <li><span class="num">A</span>Bias-variance tradeoff with examples</li>
+          <li><span class="num">B</span>Why regularization works (L1 vs L2 intuition)</li>
+          <li><span class="num">C</span>How gradient boosting works vs random forest</li>
+          <li><span class="num">D</span>Handling class imbalance (SMOTE, weights, thresholds)</li>
+          <li><span class="num">E</span>Feature importance methods (Shapley, permutation)</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <!-- Case study framework -->
+  <div class="card">
+    <div class="card-title"><span class="icon">💼</span> Product Case Study — METRICS Framework</div>
+    <div style="font-size:13px;color:var(--muted);margin-bottom:14px;line-height:1.7">
+      Use this structured approach for every product case question. Practice it until it becomes instinct.
+    </div>
+    <div class="grid-2">
+      <div style="background:rgba(99,102,241,0.06);border:1px solid rgba(99,102,241,0.15);border-radius:10px;padding:16px">
+        <div style="font-size:12px;font-weight:700;color:#a5b4fc;margin-bottom:10px">THE FRAMEWORK</div>
+        <ul style="list-style:none;font-size:13px;color:var(--muted)">
+          <li style="padding:5px 0;border-bottom:1px solid rgba(255,255,255,0.05)"><strong style="color:#fff">M</strong>ission — clarify the business goal</li>
+          <li style="padding:5px 0;border-bottom:1px solid rgba(255,255,255,0.05)"><strong style="color:#fff">E</strong>xplore — understand the product/data</li>
+          <li style="padding:5px 0;border-bottom:1px solid rgba(255,255,255,0.05)"><strong style="color:#fff">T</strong>arget metrics — define primary & guardrails</li>
+          <li style="padding:5px 0;border-bottom:1px solid rgba(255,255,255,0.05)"><strong style="color:#fff">R</strong>easoning — explain your approach</li>
+          <li style="padding:5px 0;border-bottom:1px solid rgba(255,255,255,0.05)"><strong style="color:#fff">I</strong>nterpret — analyze results, edge cases</li>
+          <li style="padding:5px 0;border-bottom:1px solid rgba(255,255,255,0.05)"><strong style="color:#fff">C</strong>ommunicate — summarize clearly</li>
+          <li style="padding:5px 0"><strong style="color:#fff">S</strong>cale — how would this work at 10x?</li>
+        </ul>
+      </div>
+      <div>
+        <div style="font-size:12px;font-weight:700;color:#fcd34d;margin-bottom:10px">EXAMPLE QUESTIONS TO PRACTICE</div>
+        <ul style="list-style:none;font-size:12.5px;color:var(--muted)">
+          <li style="padding:5px 0;display:flex;gap:8px"><span>→</span>"Instagram engagement is down 10% — diagnose"</li>
+          <li style="padding:5px 0;display:flex;gap:8px"><span>→</span>"How would you measure success for a new Uber feature?"</li>
+          <li style="padding:5px 0;display:flex;gap:8px"><span>→</span>"Design an A/B test for a new checkout flow"</li>
+          <li style="padding:5px 0;display:flex;gap:8px"><span>→</span>"Amazon Prime retention dropped — what do you do?"</li>
+          <li style="padding:5px 0;display:flex;gap:8px"><span>→</span>"How do you measure the ROI of a recommendation model?"</li>
+          <li style="padding:5px 0;display:flex;gap:8px"><span>→</span>"Define metrics for Google Maps ETA accuracy"</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <!-- ═══════════════ SECTION 4: NETWORKING ═══════════════ -->
+  <div id="networking" class="section-header">
+    <div class="section-icon" style="background:var(--grad4)">🤝</div>
+    <div>
+      <h2>Networking & Application Tactics</h2>
+      <p>80% of FAANG offers come through referrals — this section is as important as technical prep</p>
+    </div>
+  </div>
+  <div class="divider"></div>
+
+  <div class="priority-banner high" style="margin-bottom:20px">
+    <span class="priority-label">🔴 Key Insight</span>
+    <div class="priority-text">A referral from a current employee can jump you <strong>past 80% of applicants</strong> in FAANG hiring. Spend at least 30% of your prep time on networking.</div>
+  </div>
+
+  <div class="network-step">
+    <div class="step-icon" style="background:rgba(99,102,241,0.15)">🔗</div>
+    <div class="step-body">
+      <div class="step-title">1. LinkedIn Optimization (Week 1 — Do This First)</div>
+      <div class="step-desc">
+        Update your headline to: <strong>"Data Scientist | ML/NLP/Big Data | Python · SQL · Spark | FAU M.S."</strong><br>
+        Write an "About" section with your value proposition in 3 sentences. Add every project, certification, and tool keyword. 
+        Turn on <strong>"Open to Work" (recruiter-only)</strong>. Connect with 10+ DS professionals at target companies each week.
+        Post weekly about your projects, learnings, or data insights — <strong>consistency beats virality.</strong>
+      </div>
+    </div>
+  </div>
+
+  <div class="network-step">
+    <div class="step-icon" style="background:rgba(16,185,129,0.15)">🎓</div>
+    <div class="step-body">
+      <div class="step-title">2. Leverage FAU Alumni Network Strategically</div>
+      <div class="step-desc">
+        Search LinkedIn for <strong>FAU alumni working at Google, Meta, Amazon, Netflix, LinkedIn, Uber</strong>.
+        Send personalized connection requests: <em>"Hi [Name], fellow FAU alum here — I noticed your DS work at [company]. I'm targeting DS roles there. Would love 15 min to hear about your experience."</em>
+        Aim for <strong>3-5 alumni coffees per week</strong>. Always end with: "Is there anyone else I should speak to?" and "Would you be comfortable referring me?"
+      </div>
+    </div>
+  </div>
+
+  <div class="network-step">
+    <div class="step-icon" style="background:rgba(245,158,11,0.15)">🏆</div>
+    <div class="step-body">
+      <div class="step-title">3. Build Presence on Kaggle & GitHub</div>
+      <div class="step-desc">
+        <strong>Kaggle:</strong> Enter 2-3 competitions and aim for top 15% — even bronze medals are resume-worthy.
+        <strong>GitHub:</strong> Make your 5 portfolio projects public with detailed READMEs, demo GIFs, and architecture diagrams.
+        Pin your best 6 repos. Maintain a <strong>daily commit streak</strong> — recruiters check your GitHub activity graph.
+        Write <strong>Medium articles</strong> about your projects — these often rank on Google and lead to inbound recruiter messages.
+      </div>
+    </div>
+  </div>
+
+  <div class="network-step">
+    <div class="step-icon" style="background:rgba(6,182,212,0.15)">📬</div>
+    <div class="step-body">
+      <div class="step-title">4. Smart Application Strategy</div>
+      <div class="step-desc">
+        <strong>Don't spray and pray.</strong> Apply to 5-10 roles per week, all highly targeted. Customize your resume for each job description using the exact keywords from the JD.
+        Use <strong>Teal HQ or Huntr</strong> to track applications. Apply on company career pages AND LinkedIn.
+        <strong>Timing matters:</strong> Apply on Tuesday or Wednesday mornings for highest recruiter visibility.
+        Follow up with a recruiter on LinkedIn 5-7 days after applying: <em>"Hi [Name], I applied for DS role #XXXXX. My background in Big Data and ML aligns directly with the JD — happy to share more."</em>
+      </div>
+    </div>
+  </div>
+
+  <div class="network-step">
+    <div class="step-icon" style="background:rgba(236,72,153,0.15)">🎤</div>
+    <div class="step-body">
+      <div class="step-title">5. Attend Meetups & Conferences</div>
+      <div class="step-desc">
+        <strong>In-person:</strong> Find local Data Science meetups (Meetup.com), Kaggle Days, PyData conferences.
+        <strong>Virtual:</strong> NeurIPS, ICML, MLConf, Data + AI Summit (Databricks), AWS re:Invent.
+        Volunteer at events — you get free entry + direct access to speakers who are often FAANG employees.
+        Ask speakers thoughtful questions after talks — this is how cold connections turn warm.
+      </div>
+    </div>
+  </div>
+
+  <div class="network-step">
+    <div class="step-icon" style="background:rgba(99,102,241,0.15)">💰</div>
+    <div class="step-body">
+      <div class="step-title">6. Use Referral Platforms</div>
+      <div class="step-desc">
+        <strong>Blind:</strong> Use the anonymous "Referrals" section to ask for referrals at specific companies.
+        <strong>ReferralHero / Teamblind Referrals:</strong> Many employees post referral offers — respond promptly with your resume.
+        <strong>Reddit:</strong> r/cscareerquestions and r/datascience frequently have referral threads.
+        <strong>Discord:</strong> MLOps Community, Hugging Face, and various DS Discords have #job-referrals channels.
+      </div>
+    </div>
+  </div>
+
+  <!-- ═══════════════ SECTION 5: 180-DAY TIMELINE ═══════════════ -->
+  <div id="timeline" class="section-header">
+    <div class="section-icon" style="background:var(--grad5)">📅</div>
+    <div>
+      <h2>Realistic 180-Day Action Plan</h2>
+      <p>Starting June 2, 2026 — target offer by November 28, 2026</p>
+    </div>
+  </div>
+  <div class="divider"></div>
+
+  <!-- Phase 1 -->
+  <div class="timeline-phase ph1">
+    <div class="phase-header" onclick="togglePhase(this)">
+      <div class="phase-num">1</div>
+      <div class="phase-meta">
+        <div class="phase-name">🔧 Foundation & Audit — "Know Your Gaps"</div>
+        <div class="phase-days">Days 1–30 &nbsp;·&nbsp; June 2 – July 1, 2026</div>
+        <div class="progress-bar"><div class="progress-fill"></div></div>
+      </div>
+      <div class="phase-toggle">▾</div>
+    </div>
+    <div class="phase-body">
+      <ul class="phase-tasks">
+        <li>Audit your current skills — take Kaggle's ML course and rate yourself honestly on each skill area</li>
+        <li>Refresh Python fundamentals: OOP, list comprehensions, Pandas advanced operations, NumPy broadcasting</li>
+        <li>Deep-dive SQL: Complete all LeetCode SQL Easy + 30 Medium problems. Practice window functions daily</li>
+        <li>Review statistics: Hypothesis testing, distributions, CLT, confidence intervals — from scratch if needed</li>
+        <li>Set up your dev environment: VS Code + GitHub + Jupyter + Docker basics</li>
+        <li>Optimize LinkedIn profile fully. Connect with 50+ DS professionals at target companies</li>
+        <li>Start LeetCode: Solve 5 Easy Python problems/day (Arrays, Strings, Hash Maps)</li>
+        <li>Pick your 5 portfolio projects and start Project #1 (Recommendation Engine)</li>
+        <li>Create a Kaggle account and enter your first competition (beginner-friendly: Titanic, House Prices)</li>
+      </ul>
+      <div class="phase-goal">🎯 Phase 1 Goal: Python + SQL at 80% confidence. LinkedIn profile live. Project #1 started. 50+ relevant connections made.</div>
+    </div>
+  </div>
+
+  <!-- Phase 2 -->
+  <div class="timeline-phase ph2">
+    <div class="phase-header" onclick="togglePhase(this)">
+      <div class="phase-num">2</div>
+      <div class="phase-meta">
+        <div class="phase-name">🤖 ML Depth & Portfolio Build — "Sharpen Your Edge"</div>
+        <div class="phase-days">Days 31–75 &nbsp;·&nbsp; July 2 – August 14, 2026</div>
+        <div class="progress-bar"><div class="progress-fill"></div></div>
+      </div>
+      <div class="phase-toggle">▾</div>
+    </div>
+    <div class="phase-body">
+      <ul class="phase-tasks">
+        <li>Complete Recommendation Engine project — deploy on AWS/GCP with Streamlit frontend. Push to GitHub</li>
+        <li>Build A/B Testing Framework project — include Bayesian variant. Write a Medium article about it</li>
+        <li>Deep dive into ML algorithms: Understand gradient boosting (XGBoost/LightGBM) inside out</li>
+        <li>Study Scikit-learn thoroughly — pipelines, cross-validation, feature selection, preprocessing</li>
+        <li>Take fast.ai Deep Learning course (free) — cover PyTorch fundamentals and NLP basics</li>
+        <li>LeetCode: 5 problems/day — shift to Medium difficulty. Focus on Two Pointers and Sliding Window</li>
+        <li>SQL: 5 StrataScratch FAANG-tagged SQL problems per day</li>
+        <li>Reach out to 3 FAU alumni per week at target companies — schedule informational interviews</li>
+        <li>Start building your Big Data project (Kafka + Spark Streaming) — leverage your certification advantage</li>
+      </ul>
+      <div class="phase-goal">🎯 Phase 2 Goal: 2 projects deployed and live. 30+ LeetCode mediums solved. ML theory solid. 10+ alumni conversations completed.</div>
+    </div>
+  </div>
+
+  <!-- Phase 3 -->
+  <div class="timeline-phase ph3">
+    <div class="phase-header" onclick="togglePhase(this)">
+      <div class="phase-num">3</div>
+      <div class="phase-meta">
+        <div class="phase-name">🚀 Advanced Projects & Interview Prep Begins</div>
+        <div class="phase-days">Days 76–110 &nbsp;·&nbsp; August 15 – September 18, 2026</div>
+        <div class="progress-bar"><div class="progress-fill"></div></div>
+      </div>
+      <div class="phase-toggle">▾</div>
+    </div>
+    <div class="phase-body">
+      <ul class="phase-tasks">
+        <li>Complete Big Data Pipeline project (your signature project) — this is your #1 differentiator</li>
+        <li>Build NLP/Sentiment Analysis project — fine-tune a HuggingFace model and deploy via FastAPI</li>
+        <li>Write 2 detailed Medium articles on your projects — include architecture diagrams and benchmarks</li>
+        <li>Start mock interviews: 2x/week on Pramp (free) for coding, Interviewing.io for technical rounds</li>
+        <li>Study ML System Design: Read "Designing Machine Learning Systems" by Chip Huyen (must-read!)</li>
+        <li>Practice case studies daily: 1 product case question per day using the METRICS framework</li>
+        <li>Apply to 10 target companies — focus on companies where you have alumni connections</li>
+        <li>LeetCode: Complete 100 total problems. Move to Binary Search + Trees + Graphs</li>
+        <li>Attend a virtual DS conference or Databricks Summit session. Network there</li>
+      </ul>
+      <div class="phase-goal">🎯 Phase 3 Goal: All 5 projects complete and deployed. First 10 applications sent. Mock interviewing weekly. 150+ LeetCode problems solved.</div>
+    </div>
+  </div>
+
+  <!-- Phase 4 -->
+  <div class="timeline-phase ph4">
+    <div class="phase-header" onclick="togglePhase(this)">
+      <div class="phase-num">4</div>
+      <div class="phase-meta">
+        <div class="phase-name">🎯 Full-Force Applications & Interview Execution</div>
+        <div class="phase-days">Days 111–155 &nbsp;·&nbsp; September 19 – November 1, 2026</div>
+        <div class="progress-bar"><div class="progress-fill"></div></div>
+      </div>
+      <div class="phase-toggle">▾</div>
+    </div>
+    <div class="phase-body">
+      <ul class="phase-tasks">
+        <li>Apply to 5–8 companies per week — prioritize companies where you have referrals</li>
+        <li>Tailor your resume for each application using exact JD keywords (use Jobscan to verify ATS score)</li>
+        <li>Phone screens → Technical rounds → Virtual onsites: expect 4–6 week cycles per company</li>
+        <li>Prep behavioral answers using STAR method: 5 stories for leadership, 5 for impact, 5 for failure+learning</li>
+        <li>Deep-prep for specific company styles: Google (stats-heavy), Meta (product metrics), Amazon (LPs + coding)</li>
+        <li>Study ML System Design: practice designing recommendation systems, fraud detection, search ranking</li>
+        <li>Run 4 mock interviews per week — record yourself and review the playback critically</li>
+        <li>Continue Kaggle — aim to finish one competition with a top-20% rank</li>
+        <li>Research each company deeply before interviews: recent blog posts, research papers, products</li>
+      </ul>
+      <div class="phase-goal">🎯 Phase 4 Goal: 30+ applications sent. Active in 5+ interview pipelines simultaneously. Onsite interviews scheduled at 2+ companies.</div>
+    </div>
+  </div>
+
+  <!-- Phase 5 -->
+  <div class="timeline-phase ph5">
+    <div class="phase-header" onclick="togglePhase(this)">
+      <div class="phase-num">5</div>
+      <div class="phase-meta">
+        <div class="phase-name">✅ Offer Stage & Negotiation — "Land & Win"</div>
+        <div class="phase-days">Days 156–180 &nbsp;·&nbsp; November 2 – November 28, 2026</div>
+        <div class="progress-bar"><div class="progress-fill"></div></div>
+      </div>
+      <div class="phase-toggle">▾</div>
+    </div>
+    <div class="phase-body">
+      <ul class="phase-tasks">
+        <li>Complete all pending onsites — keep multiple company processes alive simultaneously for negotiation leverage</li>
+        <li>When offers arrive: <strong>always negotiate.</strong> Counter with at minimum 10-15% above initial offer</li>
+        <li>Use competing offers as leverage — "I have an offer from [Company X] — can you match or improve?"</li>
+        <li>Negotiate total comp: base salary, equity (RSUs), signing bonus, annual bonus, PTO, remote flexibility</li>
+        <li>Use levels.fyi to validate your offer against market benchmarks for your experience level</li>
+        <li>Evaluate offers on: team quality, growth trajectory, manager quality, work-life balance, not just salary</li>
+        <li>If no offers yet: don't panic — expand target list to 50+ companies. Tier 2 companies (Stripe, Airbnb, LinkedIn) are equally great</li>
+      </ul>
+      <div class="phase-goal">🎯 Phase 5 Goal: 1–3 offers in hand. Negotiate total comp up by 10–20%. Sign with the best opportunity. 🎉</div>
+    </div>
+  </div>
+
+  <!-- ═══════════════ TARGET COMPANIES ═══════════════ -->
+  <div id="companies" class="section-header">
+    <div class="section-icon" style="background:linear-gradient(135deg,rgba(245,158,11,0.3),rgba(249,115,22,0.3))">🏢</div>
+    <div>
+      <h2>Target Companies — Tiered Strategy</h2>
+      <p>Diversify across tiers — don't put all your eggs in FAANG basket</p>
+    </div>
+  </div>
+  <div class="divider"></div>
+
+  <div class="skill-label" style="margin-bottom:12px">🔴 TIER 1 — FAANG & Equivalent (High bar, 2–3% acceptance)</div>
+  <div class="company-grid" style="margin-bottom:24px">
+    <div class="company-card">
+      <div class="company-logo">🔍</div>
+      <div class="company-name">Google / DeepMind</div>
+      <div class="company-note">Heavy stats & coding. Great for NLP/ML research</div>
+    </div>
+    <div class="company-card">
+      <div class="company-logo">👤</div>
+      <div class="company-name">Meta / Instagram</div>
+      <div class="company-note">Product metrics & experimentation focused</div>
+    </div>
+    <div class="company-card">
+      <div class="company-logo">📦</div>
+      <div class="company-name">Amazon / AWS</div>
+      <div class="company-note">Leadership Principles + SQL + ML. Large DS org</div>
+    </div>
+    <div class="company-card">
+      <div class="company-logo">🎬</div>
+      <div class="company-name">Netflix</div>
+      <div class="company-note">Recommender systems + A/B testing culture</div>
+    </div>
+    <div class="company-card">
+      <div class="company-logo">🤝</div>
+      <div class="company-name">Microsoft</div>
+      <div class="company-note">Azure ML + Azure OpenAI. Diverse DS roles</div>
+    </div>
+  </div>
+
+  <div class="skill-label" style="margin-bottom:12px">🟡 TIER 2 — Top Tech (Great pay, better WLB, faster growth)</div>
+  <div class="company-grid" style="margin-bottom:24px">
+    <div class="company-card" style="border-color:rgba(245,158,11,0.15)">
+      <div class="company-logo">💳</div>
+      <div class="company-name">Stripe</div>
+      <div class="company-note">Payments data + fraud detection</div>
+    </div>
+    <div class="company-card" style="border-color:rgba(245,158,11,0.15)">
+      <div class="company-logo">✈️</div>
+      <div class="company-name">Airbnb</div>
+      <div class="company-note">Famous for A/B testing + experimentation</div>
+    </div>
+    <div class="company-card" style="border-color:rgba(245,158,11,0.15)">
+      <div class="company-logo">💼</div>
+      <div class="company-name">LinkedIn</div>
+      <div class="company-note">Graph ML + recommendation systems</div>
+    </div>
+    <div class="company-card" style="border-color:rgba(245,158,11,0.15)">
+      <div class="company-logo">🚗</div>
+      <div class="company-name">Uber / Lyft</div>
+      <div class="company-note">Time series + geo data + pricing ML</div>
+    </div>
+    <div class="company-card" style="border-color:rgba(245,158,11,0.15)">
+      <div class="company-logo">🎵</div>
+      <div class="company-name">Spotify</div>
+      <div class="company-note">Audio ML + recommender systems</div>
+    </div>
+    <div class="company-card" style="border-color:rgba(245,158,11,0.15)">
+      <div class="company-logo">🛒</div>
+      <div class="company-name">DoorDash / Instacart</div>
+      <div class="company-note">Operations ML + forecasting</div>
+    </div>
+  </div>
+
+  <div class="skill-label" style="margin-bottom:12px">🟢 TIER 3 — Strong Companies (Excellent for building experience)</div>
+  <div class="company-grid">
+    <div class="company-card" style="border-color:rgba(16,185,129,0.15)">
+      <div class="company-logo">💰</div>
+      <div class="company-name">Salesforce</div>
+      <div class="company-note">Einstein AI + CRM data</div>
+    </div>
+    <div class="company-card" style="border-color:rgba(16,185,129,0.15)">
+      <div class="company-logo">🔷</div>
+      <div class="company-name">Databricks</div>
+      <div class="company-note">Big Data + MLOps focused</div>
+    </div>
+    <div class="company-card" style="border-color:rgba(16,185,129,0.15)">
+      <div class="company-logo">❄️</div>
+      <div class="company-name">Snowflake</div>
+      <div class="company-note">Cloud data + analytics</div>
+    </div>
+    <div class="company-card" style="border-color:rgba(16,185,129,0.15)">
+      <div class="company-logo">📊</div>
+      <div class="company-name">Palantir</div>
+      <div class="company-note">Enterprise data + government contracts</div>
+    </div>
+    <div class="company-card" style="border-color:rgba(16,185,129,0.15)">
+      <div class="company-logo">🏦</div>
+      <div class="company-name">Capital One / JPMorgan</div>
+      <div class="company-note">FinTech DS + fraud detection</div>
+    </div>
+  </div>
+
+  <!-- ═══════════════ RESOURCES ═══════════════ -->
+  <div id="resources" class="section-header">
+    <div class="section-icon" style="background:linear-gradient(135deg,rgba(16,185,129,0.3),rgba(6,182,212,0.2))">📚</div>
+    <div>
+      <h2>Curated Learning Resources</h2>
+      <p>Every resource here is battle-tested for FAANG DS interview prep</p>
+    </div>
+  </div>
+  <div class="divider"></div>
+
+  <div class="grid-2">
+    <div>
+      <div class="card-title" style="margin-bottom:12px"><span class="icon">💻</span> Coding & SQL Practice</div>
+      <div class="resource-row"><span class="tag tag-platform">Platform</span><strong>LeetCode</strong> — 150+ problems, DS-tagged filter</div>
+      <div class="resource-row"><span class="tag tag-platform">Platform</span><strong>StrataScratch</strong> — FAANG SQL questions, must-do</div>
+      <div class="resource-row"><span class="tag tag-platform">Platform</span><strong>HackerRank</strong> — Python and SQL certifications</div>
+      <div class="resource-row"><span class="tag tag-free">Free</span><strong>Mode Analytics SQL Tutorial</strong> — window functions deep dive</div>
+      <div class="resource-row"><span class="tag tag-platform">Platform</span><strong>Pramp</strong> — free mock coding interviews with peers</div>
+      <div class="resource-row"><span class="tag tag-paid">Paid</span><strong>Interviewing.io</strong> — mock interviews with FAANG engineers</div>
+    </div>
+    <div>
+      <div class="card-title" style="margin-bottom:12px"><span class="icon">🤖</span> ML & Data Science</div>
+      <div class="resource-row"><span class="tag tag-free">Free</span><strong>fast.ai Practical Deep Learning</strong> — best DL course</div>
+      <div class="resource-row"><span class="tag tag-free">Free</span><strong>Andrew Ng ML Specialization</strong> — Coursera (audit free)</div>
+      <div class="resource-row"><span class="tag tag-book">Book</span><strong>Hands-On ML — Aurélien Géron</strong> — the DS bible</div>
+      <div class="resource-row"><span class="tag tag-book">Book</span><strong>Designing ML Systems — Chip Huyen</strong> — system design</div>
+      <div class="resource-row"><span class="tag tag-platform">Platform</span><strong>Kaggle Learn</strong> — free micro-courses, ML to NLP</div>
+      <div class="resource-row"><span class="tag tag-paid">Paid</span><strong>Deep Learning Specialization</strong> — Coursera, Andrew Ng</div>
+    </div>
+    <div style="margin-top:16px">
+      <div class="card-title" style="margin-bottom:12px"><span class="icon">📊</span> Statistics & Product DS</div>
+      <div class="resource-row"><span class="tag tag-book">Book</span><strong>Statistics in a Nutshell — O'Reilly</strong> — interview stats</div>
+      <div class="resource-row"><span class="tag tag-free">Free</span><strong>Seeing Theory</strong> — visual probability (brilliant resource)</div>
+      <div class="resource-row"><span class="tag tag-paid">Paid</span><strong>Ace the Data Science Interview</strong> — Nick Singh (best DS interview book)</div>
+      <div class="resource-row"><span class="tag tag-free">Free</span><strong>Data Interview Pro (YouTube)</strong> — mock DS interviews</div>
+      <div class="resource-row"><span class="tag tag-paid">Paid</span><strong>Exponent</strong> — product DS and PM interview prep</div>
+    </div>
+    <div style="margin-top:16px">
+      <div class="card-title" style="margin-bottom:12px"><span class="icon">⚡</span> Big Data & Cloud</div>
+      <div class="resource-row"><span class="tag tag-free">Free</span><strong>Databricks Academy</strong> — free Spark + Delta Lake certs</div>
+      <div class="resource-row"><span class="tag tag-free">Free</span><strong>AWS Educate</strong> — free tier ML and SageMaker labs</div>
+      <div class="resource-row"><span class="tag tag-paid">Paid</span><strong>GCP Professional Data Engineer</strong> — cert prep, highly valued</div>
+      <div class="resource-row"><span class="tag tag-course">Course</span><strong>Udemy: Apache Kafka Series</strong> — Stéphane Maarek</div>
+      <div class="resource-row"><span class="tag tag-free">Free</span><strong>The Data Engineering Cookbook</strong> — free PDF, excellent</div>
+    </div>
+  </div>
+
+  <!-- ═══════════════ SALARY EXPECTATIONS ═══════════════ -->
+  <div class="section-header">
+    <div class="section-icon" style="background:linear-gradient(135deg,rgba(16,185,129,0.3),rgba(99,102,241,0.2))">💰</div>
+    <div>
+      <h2>Salary Expectations (2026)</h2>
+      <p>Based on your experience level — verify current rates on levels.fyi</p>
+    </div>
+  </div>
+  <div class="divider"></div>
+  <div class="salary-card">
+    <div class="salary-item">
+      <div class="salary-label">Tier 2–3 Companies</div>
+      <div class="salary-value" style="color:#6ee7b7">$130K–$165K</div>
+      <div class="salary-note">Base salary + 10-20% bonus</div>
+    </div>
+    <div class="salary-item">
+      <div class="salary-label">FAANG Base Salary</div>
+      <div class="salary-value" style="color:#a5b4fc">$160K–$200K</div>
+      <div class="salary-note">L4/L5 equivalent level</div>
+    </div>
+    <div class="salary-item">
+      <div class="salary-label">FAANG Total Comp</div>
+      <div class="salary-value" style="color:#fcd34d">$220K–$320K</div>
+      <div class="salary-note">Base + RSUs + Signing Bonus</div>
+    </div>
+    <div class="salary-item">
+      <div class="salary-label">Negotiation Target</div>
+      <div class="salary-value" style="color:#fdba74">+15–25%</div>
+      <div class="salary-note">Always negotiate — always</div>
+    </div>
+  </div>
+
+  <!-- ═══════════════ PRE-LAUNCH CHECKLIST ═══════════════ -->
+  <div class="section-header">
+    <div class="section-icon" style="background:linear-gradient(135deg,rgba(99,102,241,0.3),rgba(139,92,246,0.2))">✅</div>
+    <div>
+      <h2>Pre-Application Launch Checklist</h2>
+      <p>Don't apply until all of these are complete — quality over quantity</p>
+    </div>
+  </div>
+  <div class="divider"></div>
+  <div class="grid-2">
+    <div class="card">
+      <div class="card-title"><span class="icon">📄</span> Resume & Profile</div>
+      <ul class="checklist">
+        <li><div class="check-box"></div>1-page resume with quantified impact bullets (not just responsibilities)</li>
+        <li><div class="check-box"></div>LinkedIn profile fully optimized with all skills and keywords</li>
+        <li><div class="check-box"></div>GitHub profile with 5+ pinned repos, all with detailed READMEs</li>
+        <li><div class="check-box"></div>Personal website/portfolio (even a simple GitHub Pages site is great)</li>
+        <li><div class="check-box"></div>At least 2 published Medium/blog articles about your projects</li>
+        <li><div class="check-box"></div>Kaggle profile with at least 1 completed competition</li>
+      </ul>
+    </div>
+    <div class="card">
+      <div class="card-title"><span class="icon">🎯</span> Interview Readiness</div>
+      <ul class="checklist">
+        <li><div class="check-box"></div>100+ LeetCode problems solved (mix of Easy/Medium)</li>
+        <li><div class="check-box"></div>50+ SQL problems on StrataScratch FAANG set</li>
+        <li><div class="check-box"></div>5 ML system design scenarios practiced (recommender, fraud, search)</li>
+        <li><div class="check-box"></div>10 product case questions answered using METRICS framework</li>
+        <li><div class="check-box"></div>STAR stories prepared: 5 impact, 3 failure, 3 leadership, 3 conflict</li>
+        <li><div class="check-box"></div>2+ mock interviews done on Pramp or Interviewing.io</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- FOOTER NOTE -->
+  <div class="footer-note">
+    <strong>🎓 Remember Your Unique Story:</strong> You have an M.S. in Data Science from Florida Atlantic University, a Big Data Analytics Certification, and nearly 4 years of experience. 
+    That's a <strong>genuinely strong profile.</strong> You are NOT competing as a fresh graduate — pitch yourself as an experienced candidate with academic depth. 
+    Be patient with the process (FAANG pipelines take 4–8 weeks per company), stay consistent, and trust the compound effect of daily progress.<br><br>
+    <strong>Built for you · Starting June 2, 2026 · Target: November 28, 2026</strong>
+  </div>
+
+</div>
+
+<script>
+  function togglePhase(header) {
+    const body = header.nextElementSibling;
+    const toggle = header.querySelector('.phase-toggle');
+    const isOpen = body.classList.contains('open');
+    body.classList.toggle('open', !isOpen);
+    toggle.classList.toggle('open', !isOpen);
+  }
+  // Open first phase by default
+  document.addEventListener('DOMContentLoaded', () => {
+    const firstPhase = document.querySelector('.phase-body');
+    const firstToggle = document.querySelector('.phase-toggle');
+    if (firstPhase) firstPhase.classList.add('open');
+    if (firstToggle) firstToggle.classList.add('open');
+  });
+</script>
+</body>
+</html>
