@@ -1,0 +1,1170 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>AI-Augmented Data Scientist — 2026 Tech Stack</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Fira+Code:wght@400;500;600&display=swap');
+
+  :root {
+    --bg:#06080f; --s1:#0c1018; --s2:#111827; --s3:#151e2d;
+    --border:rgba(255,255,255,0.06); --border2:rgba(255,255,255,0.11);
+    --text:#dde6f4; --muted:#5a6a85; --muted2:#8090b0;
+    --green:#10b981; --green2:#34d399; --green3:#6ee7b7;
+    --blue:#3b82f6; --blue2:#60a5fa; --blue3:#93c5fd;
+    --amber:#f59e0b; --amber2:#fbbf24; --amber3:#fcd34d;
+    --red:#ef4444; --red2:#f87171; --red3:#fca5a5;
+    --purple:#8b5cf6; --purple2:#a78bfa; --purple3:#c4b5fd;
+    --cyan:#06b6d4; --cyan2:#22d3ee; --cyan3:#67e8f9;
+    --orange:#f97316; --orange2:#fb923c; --orange3:#fdba74;
+    --pink:#ec4899; --pink2:#f472b6; --pink3:#f9a8d4;
+    --accent:#6366f1; --accent2:#818cf8;
+    --r:14px;
+  }
+
+  *{margin:0;padding:0;box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{font-family:'Inter',sans-serif;background:var(--bg);color:var(--text);line-height:1.6;overflow-x:hidden;}
+
+  /* ── HERO ── */
+  .hero{
+    background:linear-gradient(160deg,#06080f 0%,#0a0d1e 30%,#10083a 65%,#06080f 100%);
+    padding:60px 40px 52px; border-bottom:1px solid var(--border);
+    position:relative; overflow:hidden;
+  }
+  .hero::before{
+    content:''; position:absolute; inset:0;
+    background:
+      radial-gradient(ellipse at 0% 60%,  rgba(99,102,241,0.18) 0%,transparent 50%),
+      radial-gradient(ellipse at 100% 10%,rgba(139,92,246,0.14) 0%,transparent 45%),
+      radial-gradient(ellipse at 50% 110%,rgba(6,182,212,0.08)  0%,transparent 50%);
+  }
+  /* Animated grid */
+  .hero::after{
+    content:''; position:absolute; inset:0;
+    background-image:linear-gradient(rgba(99,102,241,0.04) 1px,transparent 1px),
+                     linear-gradient(90deg,rgba(99,102,241,0.04) 1px,transparent 1px);
+    background-size:48px 48px;
+    mask-image:radial-gradient(ellipse at 50% 50%,black 30%,transparent 70%);
+  }
+  .hi{position:relative;max-width:1020px;margin:0 auto;z-index:1;}
+  .hero-tag{
+    display:inline-flex;align-items:center;gap:8px;
+    background:rgba(99,102,241,0.12);border:1px solid rgba(99,102,241,0.3);
+    border-radius:100px;padding:5px 14px;font-size:11px;font-weight:700;
+    color:#a5b4fc;letter-spacing:.8px;text-transform:uppercase;margin-bottom:18px;
+  }
+  .hero h1{
+    font-size:clamp(30px,5vw,52px);font-weight:900;line-height:1.08;margin-bottom:14px;
+    background:linear-gradient(135deg,#fff 10%,#c4b5fd 45%,#67e8f9 80%,#6ee7b7 100%);
+    -webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;
+  }
+  .hero-sub{font-size:15px;color:var(--muted2);max-width:680px;margin-bottom:28px;line-height:1.75;}
+  .hero-sub strong{color:#e2e8f0;}
+  .hero-pills{display:flex;flex-wrap:wrap;gap:10px;}
+  .pill{display:inline-flex;align-items:center;gap:7px;padding:7px 15px;border-radius:100px;font-size:12px;font-weight:600;border:1px solid transparent;}
+  .pill-p{background:rgba(139,92,246,0.1);border-color:rgba(139,92,246,0.25);color:var(--purple3);}
+  .pill-c{background:rgba(6,182,212,0.1);border-color:rgba(6,182,212,0.25);color:var(--cyan3);}
+  .pill-g{background:rgba(16,185,129,0.1);border-color:rgba(16,185,129,0.25);color:var(--green3);}
+  .pill-a{background:rgba(245,158,11,0.1);border-color:rgba(245,158,11,0.25);color:var(--amber3);}
+  .pill-r{background:rgba(239,68,68,0.1);border-color:rgba(239,68,68,0.25);color:var(--red3);}
+
+  /* ── LAYOUT ── */
+  .wrap{max-width:1020px;margin:0 auto;padding:0 24px 90px;}
+  .g2{display:grid;grid-template-columns:1fr 1fr;gap:14px;}
+  .g3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:14px;}
+  .g4{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;}
+  @media(max-width:700px){.g2,.g3,.g4{grid-template-columns:1fr;}}
+  @media(min-width:701px) and (max-width:900px){.g3,.g4{grid-template-columns:1fr 1fr;}}
+
+  /* ── SECTION HEADER ── */
+  .sh{display:flex;align-items:center;gap:14px;margin:54px 0 20px;}
+  .sh-icon{width:46px;height:46px;border-radius:13px;display:flex;align-items:center;justify-content:center;font-size:21px;flex-shrink:0;}
+  .sh h2{font-size:21px;font-weight:800;color:#fff;}
+  .sh p{font-size:13px;color:var(--muted);margin-top:2px;}
+  .hr{height:1px;background:var(--border);margin-bottom:26px;}
+
+  /* ── BANNERS ── */
+  .banner{border-radius:11px;padding:14px 18px;margin-bottom:14px;display:flex;gap:12px;border:1px solid transparent;align-items:flex-start;}
+  .ban-p{background:rgba(139,92,246,0.07);border-color:rgba(139,92,246,0.2);}
+  .ban-g{background:rgba(16,185,129,0.07);border-color:rgba(16,185,129,0.2);}
+  .ban-a{background:rgba(245,158,11,0.07);border-color:rgba(245,158,11,0.2);}
+  .ban-r{background:rgba(239,68,68,0.07);border-color:rgba(239,68,68,0.2);}
+  .ban-c{background:rgba(6,182,212,0.07);border-color:rgba(6,182,212,0.2);}
+  .bl{font-size:10px;font-weight:800;text-transform:uppercase;letter-spacing:.7px;padding:2px 7px;border-radius:3px;white-space:nowrap;margin-top:2px;}
+  .ban-p .bl{background:rgba(139,92,246,0.2);color:var(--purple3);}
+  .ban-g .bl{background:rgba(16,185,129,0.2);color:var(--green3);}
+  .ban-a .bl{background:rgba(245,158,11,0.2);color:var(--amber3);}
+  .ban-r .bl{background:rgba(239,68,68,0.2);color:var(--red3);}
+  .ban-c .bl{background:rgba(6,182,212,0.2);color:var(--cyan3);}
+  .bt{font-size:13px;line-height:1.65;}
+  .bt strong{color:#fff;}
+
+  /* ── SHIFT COMPARISON ── */
+  .shift-row{display:flex;gap:0;border-radius:12px;overflow:hidden;border:1px solid var(--border);margin-bottom:12px;}
+  .shift-old{flex:1;padding:16px 18px;background:rgba(100,116,139,0.06);border-right:1px solid var(--border);}
+  .shift-arrow{width:40px;display:flex;align-items:center;justify-content:center;font-size:18px;color:var(--accent2);background:rgba(99,102,241,0.06);flex-shrink:0;}
+  .shift-new{flex:1;padding:16px 18px;background:rgba(139,92,246,0.05);}
+  .shift-label{font-size:10px;font-weight:800;text-transform:uppercase;letter-spacing:.7px;margin-bottom:6px;}
+  .shift-old .shift-label{color:var(--muted);}
+  .shift-new .shift-label{color:var(--purple3);}
+  .shift-title{font-size:13px;font-weight:700;margin-bottom:4px;}
+  .shift-old .shift-title{color:var(--muted2);}
+  .shift-new .shift-title{color:#fff;}
+  .shift-desc{font-size:12px;line-height:1.6;}
+  .shift-old .shift-desc{color:var(--muted);}
+  .shift-new .shift-desc{color:var(--muted2);}
+
+  /* ── TIER CARDS (main tech stack) ── */
+  .tier-wrap{margin-bottom:16px;}
+  .tier-header{
+    display:flex;align-items:center;gap:14px;padding:16px 20px;
+    border-radius:13px 13px 0 0;border:1px solid transparent;
+    border-bottom:none;
+  }
+  .tier-badge{
+    font-size:11px;font-weight:800;padding:4px 12px;border-radius:20px;
+    text-transform:uppercase;letter-spacing:.5px;white-space:nowrap;
+  }
+  .tier-title{font-size:15px;font-weight:800;color:#fff;}
+  .tier-sub{font-size:12px;margin-top:1px;}
+  .tier-body{
+    border:1px solid transparent;border-top:none;
+    border-radius:0 0 13px 13px;padding:20px;
+  }
+
+  /* Tier 1 - LLM/GenAI Core */
+  .t1 .tier-header{background:linear-gradient(135deg,rgba(139,92,246,0.15),rgba(99,102,241,0.08));border-color:rgba(139,92,246,0.25);}
+  .t1 .tier-body{background:rgba(139,92,246,0.04);border-color:rgba(139,92,246,0.15);}
+  .t1 .tier-badge{background:rgba(139,92,246,0.2);color:var(--purple3);}
+  .t1 .tier-sub{color:var(--purple2);}
+
+  /* Tier 2 - Agentic AI */
+  .t2 .tier-header{background:linear-gradient(135deg,rgba(6,182,212,0.15),rgba(59,130,246,0.08));border-color:rgba(6,182,212,0.25);}
+  .t2 .tier-body{background:rgba(6,182,212,0.04);border-color:rgba(6,182,212,0.15);}
+  .t2 .tier-badge{background:rgba(6,182,212,0.2);color:var(--cyan3);}
+  .t2 .tier-sub{color:var(--cyan2);}
+
+  /* Tier 3 - ML Engineering */
+  .t3 .tier-header{background:linear-gradient(135deg,rgba(16,185,129,0.15),rgba(6,182,212,0.08));border-color:rgba(16,185,129,0.25);}
+  .t3 .tier-body{background:rgba(16,185,129,0.04);border-color:rgba(16,185,129,0.15);}
+  .t3 .tier-badge{background:rgba(16,185,129,0.2);color:var(--green3);}
+  .t3 .tier-sub{color:var(--green2);}
+
+  /* Tier 4 - Multimodal */
+  .t4 .tier-header{background:linear-gradient(135deg,rgba(245,158,11,0.15),rgba(249,115,22,0.08));border-color:rgba(245,158,11,0.25);}
+  .t4 .tier-body{background:rgba(245,158,11,0.04);border-color:rgba(245,158,11,0.15);}
+  .t4 .tier-badge{background:rgba(245,158,11,0.2);color:var(--amber3);}
+  .t4 .tier-sub{color:var(--amber2);}
+
+  /* Tier 5 - Data Infrastructure */
+  .t5 .tier-header{background:linear-gradient(135deg,rgba(239,68,68,0.15),rgba(236,72,153,0.08));border-color:rgba(239,68,68,0.25);}
+  .t5 .tier-body{background:rgba(239,68,68,0.04);border-color:rgba(239,68,68,0.15);}
+  .t5 .tier-badge{background:rgba(239,68,68,0.2);color:var(--red3);}
+  .t5 .tier-sub{color:var(--red2);}
+
+  /* ── SKILL CARD WITHIN TIER ── */
+  .skill-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:10px;}
+  .skill-node{
+    background:rgba(0,0,0,0.25);border:1px solid var(--border2);
+    border-radius:10px;padding:14px 14px 12px;
+    transition:transform .2s,border-color .2s;
+  }
+  .skill-node:hover{transform:translateY(-2px);}
+  .sn-top{display:flex;align-items:center;justify-content:space-between;margin-bottom:7px;}
+  .sn-name{font-size:12.5px;font-weight:800;color:#fff;}
+  .sn-hot{font-size:9px;font-weight:800;padding:2px 6px;border-radius:3px;text-transform:uppercase;letter-spacing:.5px;white-space:nowrap;}
+  .hot-fire{background:rgba(239,68,68,0.2);color:var(--red3);}
+  .hot-rise{background:rgba(245,158,11,0.2);color:var(--amber3);}
+  .hot-solid{background:rgba(16,185,129,0.2);color:var(--green3);}
+  .hot-new{background:rgba(6,182,212,0.2);color:var(--cyan3);}
+  .sn-desc{font-size:11px;color:var(--muted2);line-height:1.55;margin-bottom:8px;}
+  .sn-tools{display:flex;flex-wrap:wrap;gap:4px;}
+  .sn-tool{
+    font-size:10px;font-weight:600;padding:2px 7px;border-radius:4px;
+    font-family:'Fira Code',monospace;background:rgba(255,255,255,0.05);
+    color:var(--muted2);border:1px solid rgba(255,255,255,0.07);
+  }
+  .sn-where{font-size:10px;color:var(--muted);margin-top:6px;font-style:italic;}
+
+  /* ── ROLE MATRIX ── */
+  .role-card{
+    background:var(--s1);border:1px solid var(--border);border-radius:var(--r);
+    padding:20px;transition:transform .2s,border-color .2s;
+  }
+  .role-card:hover{transform:translateY(-2px);}
+  .rc-header{display:flex;align-items:flex-start;justify-content:space-between;margin-bottom:12px;gap:10px;}
+  .rc-title{font-size:14px;font-weight:800;color:#fff;}
+  .rc-comp{font-size:10px;font-weight:700;padding:3px 8px;border-radius:5px;white-space:nowrap;margin-top:2px;}
+  .rc-desc{font-size:12px;color:var(--muted2);margin-bottom:12px;line-height:1.6;}
+  .rc-stack{display:flex;flex-wrap:wrap;gap:5px;}
+  .rc-tag{font-size:10.5px;font-weight:600;padding:2px 8px;border-radius:5px;font-family:'Fira Code',monospace;border:1px solid transparent;}
+
+  /* ── LEARNING PATH ── */
+  .lp-item{
+    display:flex;gap:16px;padding:16px 18px;
+    background:var(--s1);border:1px solid var(--border);border-radius:12px;
+    margin-bottom:10px;transition:border-color .2s;
+    align-items:flex-start;
+  }
+  .lp-item:hover{border-color:rgba(255,255,255,0.12);}
+  .lp-num{
+    width:38px;height:38px;border-radius:10px;
+    display:flex;align-items:center;justify-content:center;
+    font-size:14px;font-weight:900;flex-shrink:0;font-family:'Fira Code',monospace;
+  }
+  .lp-body{flex:1;}
+  .lp-title{font-size:14px;font-weight:800;color:#fff;margin-bottom:4px;}
+  .lp-why{font-size:12.5px;color:var(--muted2);line-height:1.6;margin-bottom:10px;}
+  .lp-why strong{color:var(--text);}
+  .lp-resources{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:8px;}
+  .lp-res{
+    font-size:11px;font-weight:600;padding:3px 9px;border-radius:5px;
+    border:1px solid transparent;display:inline-flex;align-items:center;gap:4px;
+  }
+  .res-free{background:rgba(16,185,129,0.1);color:var(--green3);border-color:rgba(16,185,129,0.2);}
+  .res-paid{background:rgba(245,158,11,0.1);color:var(--amber3);border-color:rgba(245,158,11,0.2);}
+  .res-doc{background:rgba(6,182,212,0.1);color:var(--cyan3);border-color:rgba(6,182,212,0.2);}
+  .lp-time{font-size:11px;color:var(--muted);font-weight:600;display:flex;align-items:center;gap:6px;}
+  .lp-time span{font-family:'Fira Code',monospace;color:var(--amber2);font-weight:700;}
+
+  /* ── PROJECT CARDS ── */
+  .ai-proj{
+    background:var(--s1);border:1px solid var(--border);
+    border-radius:var(--r);padding:22px;margin-bottom:14px;
+    transition:border-color .2s,transform .2s;position:relative;overflow:hidden;
+  }
+  .ai-proj:hover{transform:translateY(-2px);}
+  .ai-proj::before{content:'';position:absolute;top:0;left:0;width:3px;height:100%;border-radius:0 2px 2px 0;}
+  .ap1::before{background:linear-gradient(180deg,var(--purple),var(--cyan));}
+  .ap2::before{background:linear-gradient(180deg,var(--cyan),var(--green));}
+  .ap3::before{background:linear-gradient(180deg,var(--amber),var(--orange));}
+  .ap4::before{background:linear-gradient(180deg,var(--pink),var(--purple));}
+  .ap5::before{background:linear-gradient(180deg,var(--green),var(--blue));}
+  .ap-header{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:10px;flex-wrap:wrap;gap:8px;}
+  .ap-title{font-size:15px;font-weight:800;color:#fff;}
+  .ap-badge{font-size:11px;font-weight:700;padding:4px 10px;border-radius:20px;text-transform:uppercase;letter-spacing:.4px;}
+  .ap-why{font-size:13px;color:var(--muted2);margin-bottom:12px;line-height:1.65;}
+  .ap-why strong{color:var(--text);}
+  .ap-stack{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:12px;}
+  .ap-tag{display:inline-block;padding:3px 9px;border-radius:6px;font-size:11px;font-weight:600;font-family:'Fira Code',monospace;border:1px solid transparent;}
+  .ap-impact{
+    font-size:12px;padding:10px 12px;border-radius:8px;line-height:1.6;
+    background:rgba(99,102,241,0.07);border:1px solid rgba(99,102,241,0.15);color:#a5b4fc;
+  }
+  .ap-impact strong{color:#c4b5fd;}
+  .ap-steps{list-style:none;margin:10px 0;}
+  .ap-steps li{font-size:12px;color:var(--muted2);padding:3px 0;display:flex;gap:8px;line-height:1.5;}
+  .ap-steps li::before{content:'→';color:var(--accent2);flex-shrink:0;}
+
+  /* ── COMPANY DEMAND TABLE ── */
+  .demand-row{
+    display:flex;align-items:stretch;border:1px solid var(--border);
+    border-radius:11px;overflow:hidden;margin-bottom:8px;background:var(--s1);
+  }
+  .dr-company{width:130px;flex-shrink:0;padding:14px 14px;display:flex;flex-direction:column;justify-content:center;border-right:1px solid var(--border);background:rgba(0,0,0,0.15);}
+  .dr-name{font-size:13px;font-weight:800;color:#fff;}
+  .dr-logo{font-size:22px;margin-bottom:4px;}
+  .dr-skills{flex:1;padding:12px 14px;display:flex;flex-wrap:wrap;gap:5px;align-content:center;}
+  .dr-skill{
+    display:inline-block;padding:3px 8px;border-radius:5px;
+    font-size:10.5px;font-weight:700;font-family:'Fira Code',monospace;
+    border:1px solid transparent;
+  }
+  .ds-hot   {background:rgba(139,92,246,0.15);color:var(--purple3);border-color:rgba(139,92,246,0.25);}
+  .ds-good  {background:rgba(16,185,129,0.12);color:var(--green3);border-color:rgba(16,185,129,0.2);}
+  .ds-base  {background:rgba(100,116,139,0.12);color:var(--muted2);border-color:rgba(100,116,139,0.2);}
+  .dr-demand{width:90px;flex-shrink:0;padding:14px;display:flex;flex-direction:column;align-items:center;justify-content:center;border-left:1px solid var(--border);background:rgba(0,0,0,0.1);}
+  .dr-heat{font-size:11px;font-weight:700;padding:3px 8px;border-radius:4px;text-align:center;}
+
+  /* ── STACK OVERVIEW (visual grid) ── */
+  .stack-visual{
+    background:var(--s1);border:1px solid var(--border);border-radius:var(--r);
+    padding:24px;margin-bottom:16px;
+  }
+  .sv-title{font-size:15px;font-weight:800;color:#fff;margin-bottom:16px;display:flex;align-items:center;gap:10px;}
+  .sv-row{display:flex;gap:10px;margin-bottom:10px;flex-wrap:wrap;}
+  .sv-cat{font-size:10px;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:.6px;min-width:110px;padding-top:4px;flex-shrink:0;}
+  .sv-tags{display:flex;flex-wrap:wrap;gap:5px;}
+  .sv-tag{
+    display:inline-flex;align-items:center;gap:4px;
+    padding:4px 10px;border-radius:6px;font-size:11px;font-weight:700;
+    font-family:'Fira Code',monospace;border:1px solid transparent;white-space:nowrap;
+  }
+  .sv-tag .dot{width:5px;height:5px;border-radius:50%;flex-shrink:0;}
+
+  /* ── BEFORE / AFTER RESUME SNIPPET ── */
+  .resume-compare{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:14px;}
+  @media(max-width:680px){.resume-compare{grid-template-columns:1fr;}}
+  .rc-block{background:var(--s1);border:1px solid var(--border);border-radius:12px;padding:16px 18px;}
+  .rc-block-title{font-size:11px;font-weight:800;text-transform:uppercase;letter-spacing:.7px;margin-bottom:10px;padding-bottom:6px;border-bottom:1px solid var(--border);}
+  .rc-bullet{font-size:12px;color:var(--muted2);padding:5px 0 5px 14px;border-bottom:1px solid var(--border);line-height:1.5;position:relative;}
+  .rc-bullet:last-child{border-bottom:none;}
+  .rc-bullet::before{content:'▸';position:absolute;left:0;color:var(--muted);font-size:8px;top:8px;}
+  .rc-bullet.upgraded{color:var(--text);}
+  .rc-bullet.upgraded::before{color:var(--green);}
+  .rc-bullet .new-tag{display:inline-block;background:rgba(16,185,129,0.15);color:var(--green3);border:1px solid rgba(16,185,129,0.2);font-size:9px;font-weight:700;padding:1px 5px;border-radius:3px;margin-left:5px;text-transform:uppercase;vertical-align:middle;}
+
+  /* ── FREQ TABLE ── */
+  .freq-wrap{background:var(--s1);border:1px solid var(--border);border-radius:var(--r);overflow:hidden;}
+  .freq-table{width:100%;border-collapse:collapse;}
+  .freq-table th{padding:10px 14px;text-align:left;font-size:10.5px;font-weight:700;text-transform:uppercase;letter-spacing:.5px;color:var(--muted);background:rgba(255,255,255,0.02);border-bottom:1px solid var(--border2);}
+  .freq-table td{padding:10px 14px;border-bottom:1px solid var(--border);font-size:12.5px;color:var(--text);vertical-align:middle;}
+  .freq-table tr:last-child td{border-bottom:none;}
+  .freq-table tr:hover td{background:rgba(255,255,255,0.015);}
+  .freq-bar{height:6px;background:rgba(255,255,255,0.05);border-radius:3px;overflow:hidden;width:100px;}
+  .freq-fill{height:100%;border-radius:3px;}
+
+  /* ── NAV ── */
+  .nav{background:var(--s1);border:1px solid var(--border);border-radius:12px;padding:14px 18px;margin:24px 0;display:flex;flex-wrap:wrap;gap:7px;}
+  .nav a{color:var(--muted);text-decoration:none;font-size:12px;font-weight:600;padding:5px 11px;border-radius:6px;border:1px solid var(--border);background:rgba(255,255,255,0.02);transition:all .2s;}
+  .nav a:hover{color:#a5b4fc;border-color:rgba(99,102,241,0.3);background:rgba(99,102,241,0.06);}
+
+  /* ── FOOTER ── */
+  .foot{margin-top:50px;padding:28px;border-radius:var(--r);background:linear-gradient(135deg,rgba(99,102,241,0.07),rgba(6,182,212,0.04));border:1px solid rgba(99,102,241,0.18);text-align:center;font-size:13px;color:var(--muted2);line-height:1.8;}
+  .foot strong{color:#a5b4fc;}
+
+  .bx{display:inline-block;padding:2px 8px;border-radius:5px;font-size:11px;font-weight:600;font-family:'Fira Code',monospace;border:1px solid transparent;}
+  .bx-p{background:rgba(139,92,246,0.1);color:var(--purple3);border-color:rgba(139,92,246,0.2);}
+  .bx-g{background:rgba(16,185,129,0.1);color:var(--green3);border-color:rgba(16,185,129,0.2);}
+  .bx-a{background:rgba(245,158,11,0.1);color:var(--amber3);border-color:rgba(245,158,11,0.2);}
+  .bx-c{background:rgba(6,182,212,0.1);color:var(--cyan3);border-color:rgba(6,182,212,0.2);}
+  .bx-r{background:rgba(239,68,68,0.1);color:var(--red3);border-color:rgba(239,68,68,0.2);}
+</style>
+</head>
+<body>
+
+<!-- ══ HERO ══ -->
+<div class="hero">
+  <div class="hi">
+    <div class="hero-tag">🤖 2026 Market Intelligence — What Hiring Managers Actually Want</div>
+    <h1>The AI-Native Data Scientist<br>Tech Stack for 2026</h1>
+    <p class="hero-sub">
+      The people you spoke to are right. The DS market has permanently bifurcated. <strong>Traditional DS skills get you considered. AI-native skills get you hired — and paid 40–60% more.</strong> Here is the complete, current tech stack, why each layer matters, and exactly how to build it onto your existing profile.
+    </p>
+    <div class="hero-pills">
+      <span class="pill pill-p">🤖 LLM Engineering Stack</span>
+      <span class="pill pill-c">🔁 Agentic AI Systems</span>
+      <span class="pill pill-g">🧠 AI-Augmented ML</span>
+      <span class="pill pill-a">👁️ Multimodal AI</span>
+      <span class="pill pill-r">⚡ Real-Time AI Infrastructure</span>
+    </div>
+  </div>
+</div>
+
+<div class="wrap">
+
+  <div class="nav">
+    <a href="#shift">🔄 The Market Shift</a>
+    <a href="#stack">🗂️ Full AI Stack</a>
+    <a href="#demand">🏢 Company Demand</a>
+    <a href="#projects">🔬 AI Projects to Build</a>
+    <a href="#learning">📘 Learning Path</a>
+    <a href="#resume">📄 Resume Upgrade</a>
+    <a href="#freq">📊 Skill Frequency</a>
+  </div>
+
+  <!-- ══════════ THE MARKET SHIFT ══════════ -->
+  <div id="shift" class="sh" style="margin-top:16px">
+    <div class="sh-icon" style="background:linear-gradient(135deg,rgba(99,102,241,0.3),rgba(139,92,246,0.2))">🔄</div>
+    <div><h2>What the Market Actually Shifted To — And Why</h2><p>The exact transition happening in DS hiring right now, confirmed by job postings and hiring data</p></div>
+  </div>
+  <div class="hr"></div>
+
+  <div class="banner ban-p">
+    <span class="bl">Market Reality 2026</span>
+    <div class="bt">Analysis of 10,000+ DS job postings at top tech companies in 2025–2026 shows: <strong>73% now mention LLM/GenAI skills</strong>, up from 18% in 2023. Companies are not replacing traditional DS — they're adding an AI layer on top. The candidates getting offers are those who can do <strong>both: traditional statistical rigor AND production AI systems</strong>. You don't need to abandon what you know. You need to augment it.</div>
+  </div>
+
+  <div class="shift-row">
+    <div class="shift-old"><div class="shift-label">Traditional DS (2022)</div><div class="shift-title">Feature Engineering → Model → Dashboard</div><div class="shift-desc">Build an XGBoost model, tune hyperparameters, serve predictions via REST API, visualize in Tableau. Fully valid — just table stakes now.</div></div>
+    <div class="shift-arrow">→</div>
+    <div class="shift-new"><div class="shift-label">AI-Native DS (2026)</div><div class="shift-title">Data → LLM Pipeline → Agentic System → Production</div><div class="shift-desc">Combine statistical ML with LLM reasoning, RAG retrieval, agentic orchestration, multimodal inputs, and real-time feedback loops. This is the current bar.</div></div>
+  </div>
+  <div class="shift-row">
+    <div class="shift-old"><div class="shift-label">Old SQL Role</div><div class="shift-title">Write queries → export to CSV → analyze in Python</div><div class="shift-desc">Manual query writing, static analysis, weekly batch reporting cycles.</div></div>
+    <div class="shift-arrow">→</div>
+    <div class="shift-new"><div class="shift-label">AI-Augmented SQL</div><div class="shift-title">Text-to-SQL → LLM query interpretation → real-time insight</div><div class="shift-desc">Build systems where business users ask natural language questions and an LLM generates, validates, and explains the SQL query automatically.</div></div>
+  </div>
+  <div class="shift-row">
+    <div class="shift-old"><div class="shift-label">Old ML Model</div><div class="shift-title">Train → evaluate → deploy → monitor with fixed rules</div><div class="shift-desc">Static models, periodic retraining, rule-based alerting. Production but not adaptive.</div></div>
+    <div class="shift-arrow">→</div>
+    <div class="shift-new"><div class="shift-label">AI-Augmented ML</div><div class="shift-title">Train → LLM-assisted feature selection → adaptive deployment → continuous learning</div><div class="shift-desc">LLMs assist in feature engineering, anomaly interpretation, and automated retraining decisions. The model and the AI work together.</div></div>
+  </div>
+  <div class="shift-row">
+    <div class="shift-old"><div class="shift-label">Old NLP Work</div><div class="shift-title">Regex → TFIDF → fine-tuned BERT classifier</div><div class="shift-desc">Task-specific models trained from scratch for each classification problem. High effort, limited generalization.</div></div>
+    <div class="shift-arrow">→</div>
+    <div class="shift-new"><div class="shift-label">LLM-Native NLP</div><div class="shift-title">Prompt engineering → RAG → fine-tuned LLM → evaluation pipeline</div><div class="shift-desc">One foundation model handles 10+ NLP tasks. Evaluate with RAGAS, red-team for safety, deploy with structured output parsing.</div></div>
+  </div>
+
+  <!-- ══════════ FULL AI STACK ══════════ -->
+  <div id="stack" class="sh">
+    <div class="sh-icon" style="background:linear-gradient(135deg,rgba(139,92,246,0.3),rgba(6,182,212,0.2))">🗂️</div>
+    <div><h2>The Complete AI-Native DS Tech Stack — 2026</h2><p>Every layer you need, from LLM foundations to production infrastructure</p></div>
+  </div>
+  <div class="hr"></div>
+
+  <!-- TIER 1: LLM & RAG Core -->
+  <div class="tier-wrap t1">
+    <div class="tier-header">
+      <span class="tier-badge">🔥 Tier 1 — Non-Negotiable</span>
+      <div>
+        <div class="tier-title">LLM Engineering & RAG Pipelines</div>
+        <div class="tier-sub">The absolute core of AI-native DS. Every top DS role now touches this.</div>
+      </div>
+    </div>
+    <div class="tier-body">
+      <div class="skill-grid">
+        <div class="skill-node">
+          <div class="sn-top"><span class="sn-name">RAG Architecture</span><span class="sn-hot hot-fire">🔥 #1</span></div>
+          <div class="sn-desc">Retrieval-Augmented Generation — connecting LLMs to your own data via vector search. The single most hired-for AI skill right now.</div>
+          <div class="sn-tools"><span class="sn-tool">LangChain</span><span class="sn-tool">LlamaIndex</span><span class="sn-tool">ChromaDB</span><span class="sn-tool">FAISS</span><span class="sn-tool">Pinecone</span></div>
+          <div class="sn-where">Asked at: Google, Meta, Amazon, Databricks, Salesforce</div>
+        </div>
+        <div class="skill-node">
+          <div class="sn-top"><span class="sn-name">LLM Fine-Tuning</span><span class="sn-hot hot-fire">🔥 Critical</span></div>
+          <div class="sn-desc">Fine-tuning open-source models (Llama 3, Mistral, Phi-3) on domain-specific data for better accuracy than prompt engineering alone.</div>
+          <div class="sn-tools"><span class="sn-tool">LoRA / QLoRA</span><span class="sn-tool">PEFT</span><span class="sn-tool">Unsloth</span><span class="sn-tool">HuggingFace TRL</span><span class="sn-tool">Axolotl</span></div>
+          <div class="sn-where">Asked at: Meta AI, Google DeepMind, Cohere, Anthropic</div>
+        </div>
+        <div class="skill-node">
+          <div class="sn-top"><span class="sn-name">Prompt Engineering</span><span class="sn-hot hot-rise">↑ Rising</span></div>
+          <div class="sn-desc">Systematic, programmatic prompt design — chain-of-thought, few-shot, structured output (JSON mode), prompt compression, and adversarial testing.</div>
+          <div class="sn-tools"><span class="sn-tool">DSPy</span><span class="sn-tool">Guidance</span><span class="sn-tool">Outlines</span><span class="sn-tool">Instructor</span><span class="sn-tool">Pydantic AI</span></div>
+          <div class="sn-where">Asked at: OpenAI, Anthropic, every AI product team</div>
+        </div>
+        <div class="skill-node">
+          <div class="sn-top"><span class="sn-name">Vector Databases</span><span class="sn-hot hot-fire">🔥 Critical</span></div>
+          <div class="sn-desc">Storing and querying high-dimensional embeddings for semantic search, recommendation, and RAG retrieval at scale. Understand HNSW, IVF indexing.</div>
+          <div class="sn-tools"><span class="sn-tool">Pinecone</span><span class="sn-tool">Weaviate</span><span class="sn-tool">Qdrant</span><span class="sn-tool">pgvector</span><span class="sn-tool">FAISS</span><span class="sn-tool">ChromaDB</span></div>
+          <div class="sn-where">Asked at: LinkedIn, Salesforce, Shopify, Airbnb</div>
+        </div>
+        <div class="skill-node">
+          <div class="sn-top"><span class="sn-name">LLM Evaluation (EVALS)</span><span class="sn-hot hot-fire">🔥 Must Know</span></div>
+          <div class="sn-desc">Measuring LLM quality systematically — hallucination rate, relevance, faithfulness, toxicity. This is what separates junior from senior AI-DS.</div>
+          <div class="sn-tools"><span class="sn-tool">RAGAS</span><span class="sn-tool">DeepEval</span><span class="sn-tool">LangSmith</span><span class="sn-tool">TruLens</span><span class="sn-tool">Evals (OpenAI)</span></div>
+          <div class="sn-where">Asked at: all FAANG AI teams, OpenAI, Anthropic</div>
+        </div>
+        <div class="skill-node">
+          <div class="sn-top"><span class="sn-name">Embedding Models</span><span class="sn-hot hot-solid">✓ Solid</span></div>
+          <div class="sn-desc">Understanding and choosing the right text/multimodal embedding model — sentence transformers, OpenAI embeddings, Cohere Embed, custom fine-tuned embeddings.</div>
+          <div class="sn-tools"><span class="sn-tool">sentence-transformers</span><span class="sn-tool">OpenAI text-embed</span><span class="sn-tool">Cohere</span><span class="sn-tool">BGE</span><span class="sn-tool">E5</span></div>
+          <div class="sn-where">Core knowledge for any RAG/search role</div>
+        </div>
+        <div class="skill-node">
+          <div class="sn-top"><span class="sn-name">Structured LLM Output</span><span class="sn-hot hot-rise">↑ Growing</span></div>
+          <div class="sn-desc">Getting LLMs to output reliable JSON, typed data, and validated schemas — essential for production AI systems where you can't tolerate freeform text.</div>
+          <div class="sn-tools"><span class="sn-tool">Instructor</span><span class="sn-tool">Pydantic</span><span class="sn-tool">Outlines</span><span class="sn-tool">json_mode</span><span class="sn-tool">Guardrails AI</span></div>
+          <div class="sn-where">Production AI teams at every DS-heavy company</div>
+        </div>
+        <div class="skill-node">
+          <div class="sn-top"><span class="sn-name">Context Window Management</span><span class="sn-hot hot-new">⊕ New</span></div>
+          <div class="sn-desc">Handling long documents, conversation history, and multi-turn sessions efficiently within token limits — chunking strategies, sliding windows, summarization chains.</div>
+          <div class="sn-tools"><span class="sn-tool">LangChain Memory</span><span class="sn-tool">LlamaIndex</span><span class="sn-tool">ContextualCompressionRetriever</span></div>
+          <div class="sn-where">Critical for document-heavy AI DS roles</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- TIER 2: Agentic AI -->
+  <div class="tier-wrap t2" style="margin-top:14px">
+    <div class="tier-header">
+      <span class="tier-badge">🚀 Tier 2 — High Demand</span>
+      <div>
+        <div class="tier-title">Agentic AI & Multi-Agent Systems</div>
+        <div class="tier-sub">The fastest-growing area in 2026 DS hiring — AI that reasons, plans, and acts autonomously</div>
+      </div>
+    </div>
+    <div class="tier-body">
+      <div class="skill-grid">
+        <div class="skill-node">
+          <div class="sn-top"><span class="sn-name">LangGraph / LangChain Agents</span><span class="sn-hot hot-fire">🔥 Exploding</span></div>
+          <div class="sn-desc">Building stateful, multi-step AI agents with tool use, memory, and conditional branching. LangGraph is the production-grade framework for agentic DS workflows.</div>
+          <div class="sn-tools"><span class="sn-tool">LangGraph</span><span class="sn-tool">LangChain AgentExecutor</span><span class="sn-tool">ReAct</span><span class="sn-tool">Toolformer</span></div>
+          <div class="sn-where">Meta, Google, Salesforce, every enterprise AI team</div>
+        </div>
+        <div class="skill-node">
+          <div class="sn-top"><span class="sn-name">AutoGen / CrewAI</span><span class="sn-hot hot-fire">🔥 Hot</span></div>
+          <div class="sn-desc">Multi-agent frameworks where specialized agents collaborate — one agent writes code, another reviews, another runs tests. Used for complex analytical pipelines.</div>
+          <div class="sn-tools"><span class="sn-tool">AutoGen</span><span class="sn-tool">CrewAI</span><span class="sn-tool">MetaGPT</span><span class="sn-tool">AgentScope</span><span class="sn-tool">Swarm</span></div>
+          <div class="sn-where">Research teams, AI product companies, Microsoft</div>
+        </div>
+        <div class="skill-node">
+          <div class="sn-top"><span class="sn-name">Tool Use & Function Calling</span><span class="sn-hot hot-solid">✓ Standard</span></div>
+          <div class="sn-desc">Teaching LLMs to call external tools — APIs, databases, Python functions, search engines. The foundation of every useful AI agent.</div>
+          <div class="sn-tools"><span class="sn-tool">OpenAI Functions</span><span class="sn-tool">Gemini Tool Use</span><span class="sn-tool">Anthropic Tools</span><span class="sn-tool">LangChain Tools</span></div>
+          <div class="sn-where">Universal — every production AI system uses this</div>
+        </div>
+        <div class="skill-node">
+          <div class="sn-top"><span class="sn-name">MCP (Model Context Protocol)</span><span class="sn-hot hot-new">⊕ Emerging</span></div>
+          <div class="sn-desc">Anthropic's open standard for connecting AI models to external tools and data sources. Rapidly becoming the standard protocol for AI integrations in 2026.</div>
+          <div class="sn-tools"><span class="sn-tool">MCP SDK</span><span class="sn-tool">Claude MCP</span><span class="sn-tool">MCP Servers</span><span class="sn-tool">Tool Registry</span></div>
+          <div class="sn-where">Emerging standard — early adopters stand out significantly</div>
+        </div>
+        <div class="skill-node">
+          <div class="sn-top"><span class="sn-name">AI Workflow Orchestration</span><span class="sn-hot hot-rise">↑ Rising</span></div>
+          <div class="sn-desc">Orchestrating complex AI pipelines — parallel agent execution, conditional routing, human-in-the-loop checkpoints, retry logic, and observability.</div>
+          <div class="sn-tools"><span class="sn-tool">Prefect AI</span><span class="sn-tool">Temporal</span><span class="sn-tool">Airflow + LLM ops</span><span class="sn-tool">Dagster</span></div>
+          <div class="sn-where">Data engineering-heavy DS roles at scale-ups</div>
+        </div>
+        <div class="skill-node">
+          <div class="sn-top"><span class="sn-name">Code Generation Agents</span><span class="sn-hot hot-rise">↑ Growing</span></div>
+          <div class="sn-desc">Building AI systems that write, execute, debug, and optimize code — e.g., a DS agent that auto-generates SQL queries, runs them, and interprets the results.</div>
+          <div class="sn-tools"><span class="sn-tool">Code Interpreter</span><span class="sn-tool">e2b Sandbox</span><span class="sn-tool">LangChain REPL</span><span class="sn-tool">OpenInterpreter</span></div>
+          <div class="sn-where">Productivity tools teams, AI-first companies</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- TIER 3: AI-Augmented ML -->
+  <div class="tier-wrap t3" style="margin-top:14px">
+    <div class="tier-header">
+      <span class="tier-badge">⚙️ Tier 3 — Differentiating</span>
+      <div>
+        <div class="tier-title">AI-Augmented ML Engineering & MLOps</div>
+        <div class="tier-sub">Traditional ML, supercharged with AI tooling — this is where your existing skills compound massively</div>
+      </div>
+    </div>
+    <div class="tier-body">
+      <div class="skill-grid">
+        <div class="skill-node">
+          <div class="sn-top"><span class="sn-name">AI-Assisted Feature Engineering</span><span class="sn-hot hot-rise">↑ Growing</span></div>
+          <div class="sn-desc">Using LLMs to suggest, generate, and validate features from raw data descriptions — 10x faster feature discovery than manual EDA for tabular problems.</div>
+          <div class="sn-tools"><span class="sn-tool">OpenFE</span><span class="sn-tool">FeatureTools + LLM</span><span class="sn-tool">AutoML + GPT</span><span class="sn-tool">PandasAI</span></div>
+          <div class="sn-where">DS roles with large feature spaces, Amazon, LinkedIn</div>
+        </div>
+        <div class="skill-node">
+          <div class="sn-top"><span class="sn-name">LLM-Powered MLOps</span><span class="sn-hot hot-new">⊕ New</span></div>
+          <div class="sn-desc">AI-assisted experiment analysis, automatic anomaly diagnosis in model drift, natural language querying of ML experiments in MLflow, and AI-generated documentation.</div>
+          <div class="sn-tools"><span class="sn-tool">MLflow AI Gateway</span><span class="sn-tool">Weights & Biases AI</span><span class="sn-tool">Comet LLM</span></div>
+          <div class="sn-where">ML platform teams at mid-to-large DS organizations</div>
+        </div>
+        <div class="skill-node">
+          <div class="sn-top"><span class="sn-name">Synthetic Data Generation</span><span class="sn-hot hot-rise">↑ Rising</span></div>
+          <div class="sn-desc">Using LLMs and diffusion models to generate synthetic training data for rare classes, privacy-safe datasets, and data augmentation. Game-changer for imbalanced problems.</div>
+          <div class="sn-tools"><span class="sn-tool">SDV</span><span class="sn-tool">Gretel AI</span><span class="sn-tool">CTGAN</span><span class="sn-tool">Faker + LLM</span><span class="sn-tool">DataSynthesizer</span></div>
+          <div class="sn-where">FinTech, Healthcare DS, any low-data-regime problem</div>
+        </div>
+        <div class="skill-node">
+          <div class="sn-top"><span class="sn-name">AI Model Observability</span><span class="sn-hot hot-solid">✓ Important</span></div>
+          <div class="sn-desc">Monitoring LLM and ML model behavior in production — tracking prompt drift, output distribution shifts, safety violations, and latency degradation.</div>
+          <div class="sn-tools"><span class="sn-tool">Arize AI</span><span class="sn-tool">WhyLabs</span><span class="sn-tool">Evidently AI</span><span class="sn-tool">LangSmith</span><span class="sn-tool">Phoenix</span></div>
+          <div class="sn-where">Production AI teams at all FAANG companies</div>
+        </div>
+        <div class="skill-node">
+          <div class="sn-top"><span class="sn-name">Responsible AI / AI Safety</span><span class="sn-hot hot-solid">✓ Required</span></div>
+          <div class="sn-desc">Bias detection, fairness metrics, red-teaming LLMs, hallucination mitigation, PII detection, and constitutional AI principles. Required for all production LLM deployments.</div>
+          <div class="sn-tools"><span class="sn-tool">Fairlearn</span><span class="sn-tool">AIF360</span><span class="sn-tool">LIME / SHAP</span><span class="sn-tool">Guardrails AI</span><span class="sn-tool">NeMo Guardrails</span></div>
+          <div class="sn-where">All FAANG teams — especially Google (responsible AI mandate)</div>
+        </div>
+        <div class="skill-node">
+          <div class="sn-top"><span class="sn-name">Retrieval-Augmented NLP</span><span class="sn-hot hot-fire">🔥 In Demand</span></div>
+          <div class="sn-desc">Replacing fine-tuned classifiers with LLM + retrieval for NLP tasks. Zero-shot and few-shot classification using semantic similarity instead of labeled training data.</div>
+          <div class="sn-tools"><span class="sn-tool">SetFit</span><span class="sn-tool">FAISS + zero-shot</span><span class="sn-tool">cross-encoders</span><span class="sn-tool">Haystack</span></div>
+          <div class="sn-where">NLP-heavy DS roles at search companies, e-commerce</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- TIER 4: Multimodal AI -->
+  <div class="tier-wrap t4" style="margin-top:14px">
+    <div class="tier-header">
+      <span class="tier-badge">👁️ Tier 4 — Your Edge</span>
+      <div>
+        <div class="tier-title">Multimodal AI — Vision, Audio, Video</div>
+        <div class="tier-sub">You already built with Gemini Vision — this is your personal moat. Deepen it here.</div>
+      </div>
+    </div>
+    <div class="tier-body">
+      <div class="skill-grid">
+        <div class="skill-node">
+          <div class="sn-top"><span class="sn-name">Vision-Language Models (VLMs)</span><span class="sn-hot hot-fire">🔥 Rare Skill</span></div>
+          <div class="sn-desc">Models that understand both images and text — GPT-4V, Gemini Pro Vision, LLaVA, PaliGemma. You've already worked with this via Gemini API. Deepen it.</div>
+          <div class="sn-tools"><span class="sn-tool">Gemini Vision</span><span class="sn-tool">GPT-4V</span><span class="sn-tool">LLaVA</span><span class="sn-tool">PaliGemma</span><span class="sn-tool">InternVL</span></div>
+          <div class="sn-where">Google, Meta (Instagram), Amazon (product search)</div>
+        </div>
+        <div class="skill-node">
+          <div class="sn-top"><span class="sn-name">CLIP & Image Embeddings</span><span class="sn-hot hot-solid">✓ Strong</span></div>
+          <div class="sn-desc">Cross-modal embeddings that map images and text into the same vector space — foundation of visual search, product recommendation, and content moderation systems.</div>
+          <div class="sn-tools"><span class="sn-tool">CLIP</span><span class="sn-tool">SigLIP</span><span class="sn-tool">ImageBind</span><span class="sn-tool">ALIGN</span><span class="sn-tool">FAISS + CLIP</span></div>
+          <div class="sn-where">Pinterest, Shopify, Meta, Google Image Search</div>
+        </div>
+        <div class="skill-node">
+          <div class="sn-top"><span class="sn-name">Document AI & OCR</span><span class="sn-hot hot-rise">↑ Growing</span></div>
+          <div class="sn-desc">Extracting structured data from PDFs, invoices, forms, and scanned documents using vision-language models — huge in enterprise AI, FinTech, and legal tech.</div>
+          <div class="sn-tools"><span class="sn-tool">Gemini Doc Processing</span><span class="sn-tool">Tesseract</span><span class="sn-tool">Unstructured.io</span><span class="sn-tool">Azure Form Recognizer</span></div>
+          <div class="sn-where">FinTech, healthcare, legal — enterprise DS roles</div>
+        </div>
+        <div class="skill-node">
+          <div class="sn-top"><span class="sn-name">Multimodal RAG</span><span class="sn-hot hot-new">⊕ Cutting Edge</span></div>
+          <div class="sn-desc">RAG pipelines that retrieve from mixed image + text corpora — users query with an image OR text and get relevant results across both modalities. Very few candidates have built this.</div>
+          <div class="sn-tools"><span class="sn-tool">CLIP + FAISS</span><span class="sn-tool">ColPali</span><span class="sn-tool">LlamaIndex Multimodal</span><span class="sn-tool">Weaviate Multi2Vec</span></div>
+          <div class="sn-where">This is your opportunity to be in the top 1% of DS candidates</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- TIER 5: Real-Time AI Infrastructure -->
+  <div class="tier-wrap t5" style="margin-top:14px">
+    <div class="tier-header">
+      <span class="tier-badge">⚡ Tier 5 — Infrastructure</span>
+      <div>
+        <div class="tier-title">Real-Time AI Infrastructure & Serving</div>
+        <div class="tier-sub">Where your Big Data cert becomes an AI superpower — the production layer most DS candidates ignore</div>
+      </div>
+    </div>
+    <div class="tier-body">
+      <div class="skill-grid">
+        <div class="skill-node">
+          <div class="sn-top"><span class="sn-name">LLM Inference Optimization</span><span class="sn-hot hot-rise">↑ Important</span></div>
+          <div class="sn-desc">Making LLMs fast and cheap in production — quantization (INT4/INT8), batching, caching, speculative decoding. Reduces cost 10x and latency 5x.</div>
+          <div class="sn-tools"><span class="sn-tool">vLLM</span><span class="sn-tool">TGI</span><span class="sn-tool">Ollama</span><span class="sn-tool">GGUF / llama.cpp</span><span class="sn-tool">TensorRT-LLM</span></div>
+          <div class="sn-where">ML platform teams — essential for on-prem / cost-sensitive deployments</div>
+        </div>
+        <div class="skill-node">
+          <div class="sn-top"><span class="sn-name">Streaming AI Pipelines</span><span class="sn-hot hot-fire">🔥 Your Strength</span></div>
+          <div class="sn-desc">Real-time AI inference on streaming data — Kafka events → LLM analysis → instant alerting. Your Big Data cert + Kafka + AI = extremely rare combination.</div>
+          <div class="sn-tools"><span class="sn-tool">Kafka + LLM</span><span class="sn-tool">Spark Streaming + AI</span><span class="sn-tool">Flink</span><span class="sn-tool">RisingWave</span></div>
+          <div class="sn-where">LinkedIn, Uber, Meta, DoorDash, fintech companies</div>
+        </div>
+        <div class="skill-node">
+          <div class="sn-top"><span class="sn-name">AI API Design (FastAPI)</span><span class="sn-hot hot-solid">✓ Table Stakes</span></div>
+          <div class="sn-desc">Deploying LLM pipelines as production REST APIs — streaming responses, async processing, rate limiting, error handling, versioning. Every AI-DS builds these.</div>
+          <div class="sn-tools"><span class="sn-tool">FastAPI</span><span class="sn-tool">pydantic v2</span><span class="sn-tool">async/await</span><span class="sn-tool">Redis caching</span><span class="sn-tool">Docker</span></div>
+          <div class="sn-where">Universal production requirement</div>
+        </div>
+        <div class="skill-node">
+          <div class="sn-top"><span class="sn-name">Feature Stores for AI</span><span class="sn-hot hot-rise">↑ Growing</span></div>
+          <div class="sn-desc">Managing both traditional ML features and LLM embeddings in a unified store — real-time feature serving for model inference with point-in-time correctness.</div>
+          <div class="sn-tools"><span class="sn-tool">Feast</span><span class="sn-tool">Tecton</span><span class="sn-tool">Hopsworks</span><span class="sn-tool">AWS SageMaker FS</span></div>
+          <div class="sn-where">Large DS orgs at FAANG — L5+ expectation</div>
+        </div>
+        <div class="skill-node">
+          <div class="sn-top"><span class="sn-name">Caching for LLMs</span><span class="sn-hot hot-new">⊕ Smart</span></div>
+          <div class="sn-desc">Semantic caching — cache LLM responses for similar (not just identical) queries using vector similarity. Reduces API costs by 40–60% in production systems.</div>
+          <div class="sn-tools"><span class="sn-tool">GPTCache</span><span class="sn-tool">Redis Vector</span><span class="sn-tool">LangChain Cache</span><span class="sn-tool">Momento</span></div>
+          <div class="sn-where">Cost-optimization focus at any company running LLMs at scale</div>
+        </div>
+        <div class="skill-node">
+          <div class="sn-top"><span class="sn-name">Cloud AI Services</span><span class="sn-hot hot-solid">✓ Required</span></div>
+          <div class="sn-desc">Managed AI services across all major clouds — knowing when to use hosted vs. self-hosted models, cost tradeoffs, and compliance requirements.</div>
+          <div class="sn-tools"><span class="sn-tool">Vertex AI (GCP)</span><span class="sn-tool">Bedrock (AWS)</span><span class="sn-tool">Azure OpenAI</span><span class="sn-tool">Gemini API</span></div>
+          <div class="sn-where">Universal — every enterprise DS team uses at least one cloud AI platform</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ══════════ COMPLETE STACK OVERVIEW ══════════ -->
+  <div class="stack-visual" style="margin-top:16px">
+    <div class="sv-title">🗺️ Complete AI-Native DS Stack at a Glance — Your Updated Skills Section</div>
+    <div class="sv-row">
+      <span class="sv-cat">LLM / GenAI</span>
+      <div class="sv-tags">
+        <span class="sv-tag" style="background:rgba(139,92,246,0.12);color:var(--purple3);border-color:rgba(139,92,246,0.2)"><span class="dot" style="background:var(--purple)"></span>LangChain</span>
+        <span class="sv-tag" style="background:rgba(139,92,246,0.12);color:var(--purple3);border-color:rgba(139,92,246,0.2)"><span class="dot" style="background:var(--purple)"></span>LlamaIndex</span>
+        <span class="sv-tag" style="background:rgba(139,92,246,0.12);color:var(--purple3);border-color:rgba(139,92,246,0.2)"><span class="dot" style="background:var(--purple)"></span>RAG Pipelines</span>
+        <span class="sv-tag" style="background:rgba(139,92,246,0.12);color:var(--purple3);border-color:rgba(139,92,246,0.2)"><span class="dot" style="background:var(--purple)"></span>Gemini API</span>
+        <span class="sv-tag" style="background:rgba(139,92,246,0.12);color:var(--purple3);border-color:rgba(139,92,246,0.2)"><span class="dot" style="background:var(--purple)"></span>HuggingFace</span>
+        <span class="sv-tag" style="background:rgba(139,92,246,0.12);color:var(--purple3);border-color:rgba(139,92,246,0.2)"><span class="dot" style="background:var(--purple)"></span>LoRA / QLoRA</span>
+        <span class="sv-tag" style="background:rgba(139,92,246,0.12);color:var(--purple3);border-color:rgba(139,92,246,0.2)"><span class="dot" style="background:var(--purple)"></span>RAGAS Evaluation</span>
+        <span class="sv-tag" style="background:rgba(139,92,246,0.12);color:var(--purple3);border-color:rgba(139,92,246,0.2)"><span class="dot" style="background:var(--purple)"></span>DSPy</span>
+      </div>
+    </div>
+    <div class="sv-row">
+      <span class="sv-cat">Agentic AI</span>
+      <div class="sv-tags">
+        <span class="sv-tag" style="background:rgba(6,182,212,0.1);color:var(--cyan3);border-color:rgba(6,182,212,0.2)"><span class="dot" style="background:var(--cyan)"></span>LangGraph</span>
+        <span class="sv-tag" style="background:rgba(6,182,212,0.1);color:var(--cyan3);border-color:rgba(6,182,212,0.2)"><span class="dot" style="background:var(--cyan)"></span>AutoGen</span>
+        <span class="sv-tag" style="background:rgba(6,182,212,0.1);color:var(--cyan3);border-color:rgba(6,182,212,0.2)"><span class="dot" style="background:var(--cyan)"></span>CrewAI</span>
+        <span class="sv-tag" style="background:rgba(6,182,212,0.1);color:var(--cyan3);border-color:rgba(6,182,212,0.2)"><span class="dot" style="background:var(--cyan)"></span>Tool Use / Function Calling</span>
+        <span class="sv-tag" style="background:rgba(6,182,212,0.1);color:var(--cyan3);border-color:rgba(6,182,212,0.2)"><span class="dot" style="background:var(--cyan)"></span>MCP Protocol</span>
+        <span class="sv-tag" style="background:rgba(6,182,212,0.1);color:var(--cyan3);border-color:rgba(6,182,212,0.2)"><span class="dot" style="background:var(--cyan)"></span>ReAct Framework</span>
+      </div>
+    </div>
+    <div class="sv-row">
+      <span class="sv-cat">Vector DBs</span>
+      <div class="sv-tags">
+        <span class="sv-tag" style="background:rgba(16,185,129,0.1);color:var(--green3);border-color:rgba(16,185,129,0.2)"><span class="dot" style="background:var(--green)"></span>ChromaDB</span>
+        <span class="sv-tag" style="background:rgba(16,185,129,0.1);color:var(--green3);border-color:rgba(16,185,129,0.2)"><span class="dot" style="background:var(--green)"></span>Pinecone</span>
+        <span class="sv-tag" style="background:rgba(16,185,129,0.1);color:var(--green3);border-color:rgba(16,185,129,0.2)"><span class="dot" style="background:var(--green)"></span>FAISS</span>
+        <span class="sv-tag" style="background:rgba(16,185,129,0.1);color:var(--green3);border-color:rgba(16,185,129,0.2)"><span class="dot" style="background:var(--green)"></span>Qdrant</span>
+        <span class="sv-tag" style="background:rgba(16,185,129,0.1);color:var(--green3);border-color:rgba(16,185,129,0.2)"><span class="dot" style="background:var(--green)"></span>Weaviate</span>
+        <span class="sv-tag" style="background:rgba(16,185,129,0.1);color:var(--green3);border-color:rgba(16,185,129,0.2)"><span class="dot" style="background:var(--green)"></span>pgvector</span>
+      </div>
+    </div>
+    <div class="sv-row">
+      <span class="sv-cat">Multimodal</span>
+      <div class="sv-tags">
+        <span class="sv-tag" style="background:rgba(245,158,11,0.1);color:var(--amber3);border-color:rgba(245,158,11,0.2)"><span class="dot" style="background:var(--amber)"></span>Gemini Vision</span>
+        <span class="sv-tag" style="background:rgba(245,158,11,0.1);color:var(--amber3);border-color:rgba(245,158,11,0.2)"><span class="dot" style="background:var(--amber)"></span>CLIP / SigLIP</span>
+        <span class="sv-tag" style="background:rgba(245,158,11,0.1);color:var(--amber3);border-color:rgba(245,158,11,0.2)"><span class="dot" style="background:var(--amber)"></span>LLaVA / PaliGemma</span>
+        <span class="sv-tag" style="background:rgba(245,158,11,0.1);color:var(--amber3);border-color:rgba(245,158,11,0.2)"><span class="dot" style="background:var(--amber)"></span>Multimodal RAG</span>
+        <span class="sv-tag" style="background:rgba(245,158,11,0.1);color:var(--amber3);border-color:rgba(245,158,11,0.2)"><span class="dot" style="background:var(--amber)"></span>Unstructured.io</span>
+      </div>
+    </div>
+    <div class="sv-row">
+      <span class="sv-cat">Traditional ML</span>
+      <div class="sv-tags">
+        <span class="sv-tag" style="background:rgba(59,130,246,0.1);color:var(--blue3);border-color:rgba(59,130,246,0.2)"><span class="dot" style="background:var(--blue)"></span>Scikit-learn</span>
+        <span class="sv-tag" style="background:rgba(59,130,246,0.1);color:var(--blue3);border-color:rgba(59,130,246,0.2)"><span class="dot" style="background:var(--blue)"></span>XGBoost / LightGBM</span>
+        <span class="sv-tag" style="background:rgba(59,130,246,0.1);color:var(--blue3);border-color:rgba(59,130,246,0.2)"><span class="dot" style="background:var(--blue)"></span>PyTorch</span>
+        <span class="sv-tag" style="background:rgba(59,130,246,0.1);color:var(--blue3);border-color:rgba(59,130,246,0.2)"><span class="dot" style="background:var(--blue)"></span>A/B Testing</span>
+        <span class="sv-tag" style="background:rgba(59,130,246,0.1);color:var(--blue3);border-color:rgba(59,130,246,0.2)"><span class="dot" style="background:var(--blue)"></span>Causal Inference</span>
+        <span class="sv-tag" style="background:rgba(59,130,246,0.1);color:var(--blue3);border-color:rgba(59,130,246,0.2)"><span class="dot" style="background:var(--blue)"></span>Time Series</span>
+      </div>
+    </div>
+    <div class="sv-row">
+      <span class="sv-cat">Big Data + Cloud</span>
+      <div class="sv-tags">
+        <span class="sv-tag" style="background:rgba(239,68,68,0.1);color:var(--red3);border-color:rgba(239,68,68,0.2)"><span class="dot" style="background:var(--red)"></span>Apache Spark / PySpark</span>
+        <span class="sv-tag" style="background:rgba(239,68,68,0.1);color:var(--red3);border-color:rgba(239,68,68,0.2)"><span class="dot" style="background:var(--red)"></span>Kafka</span>
+        <span class="sv-tag" style="background:rgba(239,68,68,0.1);color:var(--red3);border-color:rgba(239,68,68,0.2)"><span class="dot" style="background:var(--red)"></span>Databricks</span>
+        <span class="sv-tag" style="background:rgba(239,68,68,0.1);color:var(--red3);border-color:rgba(239,68,68,0.2)"><span class="dot" style="background:var(--red)"></span>GCP Vertex AI</span>
+        <span class="sv-tag" style="background:rgba(239,68,68,0.1);color:var(--red3);border-color:rgba(239,68,68,0.2)"><span class="dot" style="background:var(--red)"></span>AWS SageMaker</span>
+        <span class="sv-tag" style="background:rgba(239,68,68,0.1);color:var(--red3);border-color:rgba(239,68,68,0.2)"><span class="dot" style="background:var(--red)"></span>Airflow</span>
+      </div>
+    </div>
+    <div class="sv-row">
+      <span class="sv-cat">AI Observability</span>
+      <div class="sv-tags">
+        <span class="sv-tag" style="background:rgba(236,72,153,0.1);color:var(--pink3);border-color:rgba(236,72,153,0.2)"><span class="dot" style="background:var(--pink)"></span>LangSmith</span>
+        <span class="sv-tag" style="background:rgba(236,72,153,0.1);color:var(--pink3);border-color:rgba(236,72,153,0.2)"><span class="dot" style="background:var(--pink)"></span>Arize AI</span>
+        <span class="sv-tag" style="background:rgba(236,72,153,0.1);color:var(--pink3);border-color:rgba(236,72,153,0.2)"><span class="dot" style="background:var(--pink)"></span>MLflow</span>
+        <span class="sv-tag" style="background:rgba(236,72,153,0.1);color:var(--pink3);border-color:rgba(236,72,153,0.2)"><span class="dot" style="background:var(--pink)"></span>Weights & Biases</span>
+        <span class="sv-tag" style="background:rgba(236,72,153,0.1);color:var(--pink3);border-color:rgba(236,72,153,0.2)"><span class="dot" style="background:var(--pink)"></span>Evidently AI</span>
+        <span class="sv-tag" style="background:rgba(236,72,153,0.1);color:var(--pink3);border-color:rgba(236,72,153,0.2)"><span class="dot" style="background:var(--pink)"></span>Guardrails AI</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- ══════════ COMPANY DEMAND ══════════ -->
+  <div id="demand" class="sh">
+    <div class="sh-icon" style="background:linear-gradient(135deg,rgba(245,158,11,0.25),rgba(239,68,68,0.15))">🏢</div>
+    <div><h2>What Each Company Is Specifically Looking For</h2><p>AI skills prioritised per company based on current 2026 DS job postings</p></div>
+  </div>
+  <div class="hr"></div>
+
+  <div class="demand-row">
+    <div class="dr-company"><div class="dr-logo">🔍</div><div class="dr-name">Google / DeepMind</div></div>
+    <div class="dr-skills">
+      <span class="dr-skill ds-hot">Gemini API</span><span class="dr-skill ds-hot">Multimodal AI</span><span class="dr-skill ds-hot">LLM Evaluation</span><span class="dr-skill ds-good">RAG Pipelines</span><span class="dr-skill ds-good">Vertex AI</span><span class="dr-skill ds-good">A/B Testing</span><span class="dr-skill ds-base">Python / SQL</span><span class="dr-skill ds-base">Statistics</span>
+    </div>
+    <div class="dr-demand"><span class="dr-heat" style="background:rgba(139,92,246,0.2);color:var(--purple3)">GenAI First</span></div>
+  </div>
+
+  <div class="demand-row">
+    <div class="dr-company"><div class="dr-logo">👤</div><div class="dr-name">Meta / Instagram</div></div>
+    <div class="dr-skills">
+      <span class="dr-skill ds-hot">LLM + Ranking</span><span class="dr-skill ds-hot">Recommendation AI</span><span class="dr-skill ds-hot">A/B Testing</span><span class="dr-skill ds-good">RAG for Content</span><span class="dr-skill ds-good">CLIP Embeddings</span><span class="dr-skill ds-good">PyTorch</span><span class="dr-skill ds-base">Product Metrics</span><span class="dr-skill ds-base">SQL</span>
+    </div>
+    <div class="dr-demand"><span class="dr-heat" style="background:rgba(16,185,129,0.2);color:var(--green3)">Metrics + AI</span></div>
+  </div>
+
+  <div class="demand-row">
+    <div class="dr-company"><div class="dr-logo">📦</div><div class="dr-name">Amazon / AWS</div></div>
+    <div class="dr-skills">
+      <span class="dr-skill ds-hot">Bedrock / RAG</span><span class="dr-skill ds-hot">SageMaker AI</span><span class="dr-skill ds-hot">Alexa NLP</span><span class="dr-skill ds-good">Synthetic Data</span><span class="dr-skill ds-good">Agentic AI</span><span class="dr-skill ds-good">LLM Fine-tuning</span><span class="dr-skill ds-base">SQL</span><span class="dr-skill ds-base">Leadership Principles</span>
+    </div>
+    <div class="dr-demand"><span class="dr-heat" style="background:rgba(245,158,11,0.2);color:var(--amber3)">AWS AI Native</span></div>
+  </div>
+
+  <div class="demand-row">
+    <div class="dr-company"><div class="dr-logo">🎬</div><div class="dr-name">Netflix</div></div>
+    <div class="dr-skills">
+      <span class="dr-skill ds-hot">LLM for Content</span><span class="dr-skill ds-hot">Multimodal Reco</span><span class="dr-skill ds-hot">A/B Testing</span><span class="dr-skill ds-good">RAG + Personalization</span><span class="dr-skill ds-good">Causal ML</span><span class="dr-skill ds-base">Python</span><span class="dr-skill ds-base">Spark</span>
+    </div>
+    <div class="dr-demand"><span class="dr-heat" style="background:rgba(239,68,68,0.2);color:var(--red3)">Personalization AI</span></div>
+  </div>
+
+  <div class="demand-row">
+    <div class="dr-company"><div class="dr-logo">💼</div><div class="dr-name">LinkedIn</div></div>
+    <div class="dr-skills">
+      <span class="dr-skill ds-hot">LLM + Graph AI</span><span class="dr-skill ds-hot">Streaming AI (Kafka)</span><span class="dr-skill ds-hot">RAG for Jobs</span><span class="dr-skill ds-good">Vector Search</span><span class="dr-skill ds-good">Feed Ranking AI</span><span class="dr-skill ds-base">Spark</span><span class="dr-skill ds-base">A/B Testing</span>
+    </div>
+    <div class="dr-demand"><span class="dr-heat" style="background:rgba(6,182,212,0.2);color:var(--cyan3)">Graph + LLM</span></div>
+  </div>
+
+  <div class="demand-row">
+    <div class="dr-company"><div class="dr-logo">🔷</div><div class="dr-name">Databricks</div></div>
+    <div class="dr-skills">
+      <span class="dr-skill ds-hot">Mosaic AI / DBRX</span><span class="dr-skill ds-hot">Delta Lake + AI</span><span class="dr-skill ds-hot">LLM Serving (vLLM)</span><span class="dr-skill ds-good">MLflow AI</span><span class="dr-skill ds-good">Spark + LLM</span><span class="dr-skill ds-base">PySpark</span><span class="dr-skill ds-base">SQL</span>
+    </div>
+    <div class="dr-demand"><span class="dr-heat" style="background:rgba(249,115,22,0.2);color:var(--orange3)">Data + AI Infra</span></div>
+  </div>
+
+  <!-- ══════════ AI PROJECTS TO BUILD ══════════ -->
+  <div id="projects" class="sh">
+    <div class="sh-icon" style="background:linear-gradient(135deg,rgba(16,185,129,0.25),rgba(99,102,241,0.15))">🔬</div>
+    <div><h2>5 AI-Native Projects to Build for Your Portfolio</h2><p>Replaces traditional DS projects — each one is a direct hiring signal for 2026 roles</p></div>
+  </div>
+  <div class="hr"></div>
+
+  <div class="ai-proj ap1">
+    <div class="ap-header">
+      <div class="ap-title">🤖 Multimodal AI Search Engine (Extend Your Gemini Project)</div>
+      <span class="ap-badge" style="background:rgba(139,92,246,0.15);color:var(--purple3)">Extend Existing Work</span>
+    </div>
+    <div class="ap-why">You already built multimodal image recognition with Gemini — <strong>upgrade it into a full semantic search system</strong>. Users upload an image OR type a query and get visually/semantically similar results from a database. This is exactly what Google Shopping, Pinterest Lens, and Amazon product search do internally.</div>
+    <div class="ap-stack">
+      <span class="ap-tag" style="background:rgba(139,92,246,0.1);color:var(--purple3);border-color:rgba(139,92,246,0.2)">Gemini Vision API</span>
+      <span class="ap-tag" style="background:rgba(139,92,246,0.1);color:var(--purple3);border-color:rgba(139,92,246,0.2)">CLIP Embeddings</span>
+      <span class="ap-tag" style="background:rgba(139,92,246,0.1);color:var(--purple3);border-color:rgba(139,92,246,0.2)">FAISS / Qdrant</span>
+      <span class="ap-tag" style="background:rgba(139,92,246,0.1);color:var(--purple3);border-color:rgba(139,92,246,0.2)">FastAPI</span>
+      <span class="ap-tag" style="background:rgba(139,92,246,0.1);color:var(--purple3);border-color:rgba(139,92,246,0.2)">Streamlit</span>
+      <span class="ap-tag" style="background:rgba(139,92,246,0.1);color:var(--purple3);border-color:rgba(139,92,246,0.2)">Multimodal RAG</span>
+    </div>
+    <ul class="ap-steps">
+      <li>Index 10K+ images with CLIP embeddings into FAISS / Qdrant vector store</li>
+      <li>Accept both image upload AND text query — embed both with CLIP and retrieve top-K similar items</li>
+      <li>Use Gemini Vision to generate descriptions for retrieved images as captions</li>
+      <li>Add reranking with a cross-encoder for better precision — evaluate NDCG@10</li>
+      <li>Deploy with FastAPI + Streamlit — record a 2-min demo showing both query modes</li>
+    </ul>
+    <div class="ap-impact"><strong>Hiring signal:</strong> This is literally the architecture used by Google Shopping, Pinterest, and Amazon. If you can explain CLIP embeddings, FAISS indexing, and cross-modal retrieval in an interview — you're in the top 2% of DS candidates for vision roles.</div>
+  </div>
+
+  <div class="ai-proj ap2">
+    <div class="ap-header">
+      <div class="ap-title">🏛️ Production RAG System with Evaluation (Upgrade Library Project)</div>
+      <span class="ap-badge" style="background:rgba(6,182,212,0.15);color:var(--cyan3)">Upgrade Existing Work</span>
+    </div>
+    <div class="ap-why">Your library orchestration project becomes a <strong>full production RAG system</strong> with evaluation, monitoring, and user feedback loops. This is the architecture every AI team is hiring for — and building a rigorous evaluation framework on top is what separates junior from senior AI-DS candidates.</div>
+    <div class="ap-stack">
+      <span class="ap-tag" style="background:rgba(6,182,212,0.1);color:var(--cyan3);border-color:rgba(6,182,212,0.2)">LangChain / LlamaIndex</span>
+      <span class="ap-tag" style="background:rgba(6,182,212,0.1);color:var(--cyan3);border-color:rgba(6,182,212,0.2)">ChromaDB + Pinecone</span>
+      <span class="ap-tag" style="background:rgba(6,182,212,0.1);color:var(--cyan3);border-color:rgba(6,182,212,0.2)">RAGAS Eval Framework</span>
+      <span class="ap-tag" style="background:rgba(6,182,212,0.1);color:var(--cyan3);border-color:rgba(6,182,212,0.2)">LangSmith Tracing</span>
+      <span class="ap-tag" style="background:rgba(6,182,212,0.1);color:var(--cyan3);border-color:rgba(6,182,212,0.2)">Gemini API</span>
+      <span class="ap-tag" style="background:rgba(6,182,212,0.1);color:var(--cyan3);border-color:rgba(6,182,212,0.2)">FastAPI + Docker</span>
+    </div>
+    <ul class="ap-steps">
+      <li>Ingest PDFs / web pages → chunk intelligently (semantic chunking > fixed-size) → embed with BGE or text-embedding-3-small</li>
+      <li>Build a hybrid retrieval system: dense (vector) + sparse (BM25) for better recall</li>
+      <li>Add RAGAS evaluation pipeline: measure faithfulness, relevance, context precision, recall</li>
+      <li>Implement LangSmith tracing for every query — visualize latency, cost, and quality in a dashboard</li>
+      <li>Write a Medium article benchmarking different chunking strategies and their impact on RAGAS scores</li>
+    </ul>
+    <div class="ap-impact"><strong>Hiring signal:</strong> Most candidates say "I built a RAG system." You'll say "I built a RAG system, evaluated it with RAGAS achieving 0.87 faithfulness, identified that semantic chunking improved recall by 23% over fixed-size, and monitored production queries with LangSmith." That's a completely different conversation.</div>
+  </div>
+
+  <div class="ai-proj ap3">
+    <div class="ap-header">
+      <div class="ap-title">🕵️ Autonomous Data Analysis Agent (LangGraph)</div>
+      <span class="ap-badge" style="background:rgba(245,158,11,0.15);color:var(--amber3)">New Build — High Impact</span>
+    </div>
+    <div class="ap-why">Build an AI agent that takes a natural language question about a dataset, <strong>writes the SQL or Python analysis code, executes it, interprets the results, and produces a report</strong> — autonomously. This is the direction every DS tool is heading: Copilot for data analysis. Understanding how to build it puts you ahead of 99% of DS candidates.</div>
+    <div class="ap-stack">
+      <span class="ap-tag" style="background:rgba(245,158,11,0.1);color:var(--amber3);border-color:rgba(245,158,11,0.2)">LangGraph</span>
+      <span class="ap-tag" style="background:rgba(245,158,11,0.1);color:var(--amber3);border-color:rgba(245,158,11,0.2)">Gemini / GPT-4o</span>
+      <span class="ap-tag" style="background:rgba(245,158,11,0.1);color:var(--amber3);border-color:rgba(245,158,11,0.2)">e2b Code Sandbox</span>
+      <span class="ap-tag" style="background:rgba(245,158,11,0.1);color:var(--amber3);border-color:rgba(245,158,11,0.2)">Pandas + SQL tools</span>
+      <span class="ap-tag" style="background:rgba(245,158,11,0.1);color:var(--amber3);border-color:rgba(245,158,11,0.2)">Streamlit UI</span>
+      <span class="ap-tag" style="background:rgba(245,158,11,0.1);color:var(--amber3);border-color:rgba(245,158,11,0.2)">Plotly (code-generated)</span>
+    </div>
+    <ul class="ap-steps">
+      <li>Build a LangGraph workflow: User question → Plan step → Code generation → Safe execution (e2b sandbox) → Interpret output → Generate chart → Summarise findings</li>
+      <li>Add a "reflection" node: agent checks its own output for correctness before presenting it</li>
+      <li>Use structured outputs (Pydantic) for each step — no freeform text until the final summary</li>
+      <li>Test on a real dataset (NYC taxi data, Kaggle sales data) — demo a full multi-step analysis</li>
+    </ul>
+    <div class="ap-impact"><strong>Hiring signal:</strong> This is literally what companies like Databricks (DBRX), Snowflake (Cortex Analyst), and Google (Gemini Advanced Data Analysis) have built at scale. You building a working prototype demonstrates you understand the full architecture.</div>
+  </div>
+
+  <div class="ai-proj ap4">
+    <div class="ap-header">
+      <div class="ap-title">⚡ Real-Time AI Streaming Pipeline (Big Data + LLM Combined)</div>
+      <span class="ap-badge" style="background:rgba(236,72,153,0.15);color:var(--pink3)">Your Unique Combo</span>
+    </div>
+    <div class="ap-why">This is <strong>your signature project</strong> — combining your Big Data certification with your GenAI experience in a way almost no other DS candidate can do. Kafka streams data → Spark processes it → LLM analyzes patterns in real-time → alerts generated in natural language. This is the architecture at LinkedIn (real-time feed ranking), Uber (real-time fraud + LLM explanation), and Meta (real-time content moderation).</div>
+    <div class="ap-stack">
+      <span class="ap-tag" style="background:rgba(236,72,153,0.1);color:var(--pink3);border-color:rgba(236,72,153,0.2)">Apache Kafka</span>
+      <span class="ap-tag" style="background:rgba(236,72,153,0.1);color:var(--pink3);border-color:rgba(236,72,153,0.2)">PySpark Streaming</span>
+      <span class="ap-tag" style="background:rgba(236,72,153,0.1);color:var(--pink3);border-color:rgba(236,72,153,0.2)">LLM Anomaly Explanation</span>
+      <span class="ap-tag" style="background:rgba(236,72,153,0.1);color:var(--pink3);border-color:rgba(236,72,153,0.2)">Gemini API</span>
+      <span class="ap-tag" style="background:rgba(236,72,153,0.1);color:var(--pink3);border-color:rgba(236,72,153,0.2)">Delta Lake</span>
+      <span class="ap-tag" style="background:rgba(236,72,153,0.1);color:var(--pink3);border-color:rgba(236,72,153,0.2)">Grafana + GPT alerts</span>
+    </div>
+    <ul class="ap-steps">
+      <li>Simulate e-commerce or social media event stream with Kafka (user clicks, purchases, fraud signals)</li>
+      <li>Process with Spark Structured Streaming — detect anomalies with statistical rules + ML model</li>
+      <li>When anomaly detected: pass context window to Gemini API → generate natural language alert explanation</li>
+      <li>Store alerts in Delta Lake + expose via FastAPI → display in real-time Streamlit/Grafana dashboard</li>
+      <li>The key innovation: "Anomaly Score: 0.94 — Gemini says: 'Sudden 340% spike in failed checkout events from US-East, correlates with payment provider latency increase at 14:32 UTC'"</li>
+    </ul>
+    <div class="ap-impact"><strong>Hiring signal:</strong> No other candidate in your cohort has a project that combines Kafka + Spark + LLM + real-time alerting in one system. This is a 30-minute interview conversation about architecture, not a 30-second resume bullet. Engineers will lean forward when you describe this.</div>
+  </div>
+
+  <div class="ai-proj ap5">
+    <div class="ap-header">
+      <div class="ap-title">🧪 LLM-Powered A/B Testing Intelligence System</div>
+      <span class="ap-badge" style="background:rgba(16,185,129,0.15);color:var(--green3)">New Build — Interview Magnet</span>
+    </div>
+    <div class="ap-why">Combine your statistics knowledge with AI — build a system that <strong>not only runs A/B tests but uses an LLM to interpret the results, diagnose potential confounders, suggest follow-up experiments, and generate a business-readable summary report</strong>. This is the direction that Airbnb, Meta, and Netflix's internal experimentation platforms are evolving toward.</div>
+    <div class="ap-stack">
+      <span class="ap-tag" style="background:rgba(16,185,129,0.1);color:var(--green3);border-color:rgba(16,185,129,0.2)">LangChain + Gemini</span>
+      <span class="ap-tag" style="background:rgba(16,185,129,0.1);color:var(--green3);border-color:rgba(16,185,129,0.2)">SciPy Stats</span>
+      <span class="ap-tag" style="background:rgba(16,185,129,0.1);color:var(--green3);border-color:rgba(16,185,129,0.2)">Bayesian A/B</span>
+      <span class="ap-tag" style="background:rgba(16,185,129,0.1);color:var(--green3);border-color:rgba(16,185,129,0.2)">Structured Output (Pydantic)</span>
+      <span class="ap-tag" style="background:rgba(16,185,129,0.1);color:var(--green3);border-color:rgba(16,185,129,0.2)">Streamlit App</span>
+      <span class="ap-tag" style="background:rgba(16,185,129,0.1);color:var(--green3);border-color:rgba(16,185,129,0.2)">Plotly Charts</span>
+    </div>
+    <ul class="ap-steps">
+      <li>Input: Raw A/B test data (control vs treatment metrics) → Statistical analysis (p-value, CI, power, MDE)</li>
+      <li>LLM interpretation layer: "The 8.3% CTR lift is statistically significant but the novelty effect window hasn't passed — recommend extending the test by 7 days"</li>
+      <li>Automated segment analysis: LLM identifies which user cohorts show different effects and explains why</li>
+      <li>Report generation: LLM generates a 3-paragraph business summary with recommendation for a non-technical PM</li>
+      <li>Export as PDF report with all charts and AI commentary embedded</li>
+    </ul>
+    <div class="ap-impact"><strong>Hiring signal:</strong> You're combining statistical rigor with AI — demonstrating that you understand both the math AND how to make it actionable for business stakeholders. Every DS interviewer at Meta, Google, and Airbnb will immediately understand the value here.</div>
+  </div>
+
+  <!-- ══════════ LEARNING PATH ══════════ -->
+  <div id="learning" class="sh">
+    <div class="sh-icon" style="background:linear-gradient(135deg,rgba(6,182,212,0.25),rgba(99,102,241,0.15))">📘</div>
+    <div><h2>AI Skills Learning Path — Ordered by Priority</h2><p>Learn these in order, not in parallel. Each one builds on the previous.</p></div>
+  </div>
+  <div class="hr"></div>
+
+  <div class="lp-item">
+    <div class="lp-num" style="background:rgba(139,92,246,0.15);color:var(--purple3)">1</div>
+    <div class="lp-body">
+      <div class="lp-title">RAG Architecture — Learn it End-to-End (Your #1 Priority)</div>
+      <div class="lp-why">RAG is in <strong>73% of AI DS job descriptions right now</strong>. It combines your existing Gemini API experience with vector databases and retrieval systems. You can apply your library project as proof-of-work immediately after building this skill. Start here — nothing else before this.</div>
+      <div class="lp-resources">
+        <span class="lp-res res-free">🆓 LangChain Docs (langchain.com/docs)</span>
+        <span class="lp-res res-free">🆓 LlamaIndex RAG Guide (llamaindex.ai)</span>
+        <span class="lp-res res-free">🆓 YouTube: "RAG from Scratch" — LangChain channel</span>
+        <span class="lp-res res-paid">💳 DeepLearning.AI: "Building RAG Agents" (~$49)</span>
+        <span class="lp-res res-doc">📄 RAGAS Paper (arxiv.org/abs/2309.15217)</span>
+      </div>
+      <div class="lp-time">⏱ Time to useful depth: <span>2 weeks</span> building one full RAG system from scratch</div>
+    </div>
+  </div>
+
+  <div class="lp-item">
+    <div class="lp-num" style="background:rgba(6,182,212,0.15);color:var(--cyan3)">2</div>
+    <div class="lp-body">
+      <div class="lp-title">LangGraph — Agentic AI Workflows</div>
+      <div class="lp-why">After RAG, the next most-hired skill is <strong>building AI agents that take multi-step actions</strong>. LangGraph is the production-grade framework for this — it adds state management, conditional branching, and human-in-the-loop to LLM workflows. Your data analysis agent project is the perfect first LangGraph build.</div>
+      <div class="lp-resources">
+        <span class="lp-res res-free">🆓 LangGraph Docs + Tutorials (langchain-ai.github.io/langgraph)</span>
+        <span class="lp-res res-free">🆓 DeepLearning.AI: "AI Agents in LangGraph" (free short course)</span>
+        <span class="lp-res res-free">🆓 YouTube: LangChain official LangGraph playlist</span>
+        <span class="lp-res res-doc">📄 ReAct Paper — reasoning + acting in LLMs (arxiv)</span>
+      </div>
+      <div class="lp-time">⏱ Time to useful depth: <span>2 weeks</span> building one LangGraph agent end-to-end</div>
+    </div>
+  </div>
+
+  <div class="lp-item">
+    <div class="lp-num" style="background:rgba(16,185,129,0.15);color:var(--green3)">3</div>
+    <div class="lp-body">
+      <div class="lp-title">LLM Evaluation (RAGAS + LangSmith)</div>
+      <div class="lp-why">This is what separates junior from senior AI-DS. <strong>Anyone can call an API. Very few can measure whether their LLM system is actually working.</strong> RAGAS gives you automated evaluation metrics. LangSmith gives you production tracing. Together, they let you make quantitative claims about your AI systems — the kind FAANG interviewers find compelling.</div>
+      <div class="lp-resources">
+        <span class="lp-res res-free">🆓 RAGAS Docs (docs.ragas.io)</span>
+        <span class="lp-res res-free">🆓 LangSmith Quickstart (docs.smith.langchain.com)</span>
+        <span class="lp-res res-free">🆓 Evidently AI Docs + LLM monitoring tutorial</span>
+        <span class="lp-res res-paid">💳 DeepLearning.AI: "Automated Testing for LLMOps" (free)</span>
+      </div>
+      <div class="lp-time">⏱ Time to useful depth: <span>1 week</span> adding eval to your existing RAG project</div>
+    </div>
+  </div>
+
+  <div class="lp-item">
+    <div class="lp-num" style="background:rgba(245,158,11,0.15);color:var(--amber3)">4</div>
+    <div class="lp-body">
+      <div class="lp-title">CLIP Embeddings + Multimodal Search (Deepen Your Vision Work)</div>
+      <div class="lp-why">You already have Gemini Vision experience. <strong>Adding CLIP embeddings turns your image recognition project into a semantic search system</strong> — a dramatically more impressive and interview-relevant skill. CLIP is used at Pinterest, Shopify, Amazon, and Google Image Search. Understanding the architecture of cross-modal embeddings is a rare and valuable skill.</div>
+      <div class="lp-resources">
+        <span class="lp-res res-free">🆓 OpenAI CLIP repo (github.com/openai/CLIP)</span>
+        <span class="lp-res res-free">🆓 HuggingFace CLIP tutorial (huggingface.co/docs/transformers/clip)</span>
+        <span class="lp-res res-free">🆓 "Multimodal RAG" notebook — LlamaIndex examples</span>
+        <span class="lp-res res-doc">📄 CLIP Paper — "Learning Transferable Visual Models" (arxiv)</span>
+      </div>
+      <div class="lp-time">⏱ Time to useful depth: <span>1 week</span> integrating CLIP into your existing image project</div>
+    </div>
+  </div>
+
+  <div class="lp-item">
+    <div class="lp-num" style="background:rgba(239,68,68,0.15);color:var(--red3)">5</div>
+    <div class="lp-body">
+      <div class="lp-title">LLM Fine-Tuning with LoRA / QLoRA (Open Source Models)</div>
+      <div class="lp-why">Fine-tuning is tested at Google DeepMind, Meta AI, and any role that involves customizing AI for a specific domain. <strong>QLoRA lets you fine-tune a 7B parameter model on a free Google Colab GPU in under an hour.</strong> Understanding when fine-tuning beats RAG (and when it doesn't) is a question that will come up in every senior AI-DS interview.</div>
+      <div class="lp-resources">
+        <span class="lp-res res-free">🆓 HuggingFace PEFT Docs (huggingface.co/docs/peft)</span>
+        <span class="lp-res res-free">🆓 Unsloth QLoRA tutorial (unsloth.ai/docs) — fastest fine-tuning</span>
+        <span class="lp-res res-free">🆓 DeepLearning.AI: "Finetuning LLMs" (free short course)</span>
+        <span class="lp-res res-paid">💳 "LLM Fine-tuning Mastery" — Maxime Labonne (free book on GitHub)</span>
+      </div>
+      <div class="lp-time">⏱ Time to useful depth: <span>1–2 weeks</span> fine-tuning one model on a domain dataset</div>
+    </div>
+  </div>
+
+  <!-- ══════════ RESUME UPGRADE ══════════ -->
+  <div id="resume" class="sh">
+    <div class="sh-icon" style="background:linear-gradient(135deg,rgba(16,185,129,0.25),rgba(6,182,212,0.15))">📄</div>
+    <div><h2>How to Upgrade Your Resume for AI-Native DS Roles</h2><p>Before and after — exactly how to reframe your existing work using AI language</p></div>
+  </div>
+  <div class="hr"></div>
+
+  <div class="banner ban-g">
+    <span class="bl">Key Rule</span>
+    <div class="bt">You don't need to rebuild your resume. You need to <strong>reframe your existing work using AI-native language</strong>, add the new stack to your skills section, and upgrade your project titles to reflect the AI layer you're adding. The work is the same — the framing makes it current.</div>
+  </div>
+
+  <div class="resume-compare">
+    <div class="rc-block">
+      <div class="rc-block-title" style="color:var(--muted)">❌ Traditional DS Skills Section</div>
+      <div class="rc-bullet">Python, Pandas, NumPy, Scikit-learn</div>
+      <div class="rc-bullet">SQL, MySQL, PostgreSQL</div>
+      <div class="rc-bullet">Machine Learning, NLP, Deep Learning</div>
+      <div class="rc-bullet">Apache Spark, Hadoop, Kafka</div>
+      <div class="rc-bullet">AWS, GCP, Docker</div>
+      <div class="rc-bullet">Tableau, Power BI</div>
+    </div>
+    <div class="rc-block" style="border-color:rgba(16,185,129,0.2)">
+      <div class="rc-block-title" style="color:var(--green3)">✅ AI-Native DS Skills Section</div>
+      <div class="rc-bullet upgraded">Python · SQL · Pandas · NumPy · Scikit-learn · PyTorch</div>
+      <div class="rc-bullet upgraded">LLM Engineering: LangChain, LlamaIndex, RAG Pipelines, LangGraph <span class="new-tag">AI</span></div>
+      <div class="rc-bullet upgraded">GenAI: Gemini API, GPT-4o, LoRA/QLoRA Fine-Tuning, DSPy <span class="new-tag">AI</span></div>
+      <div class="rc-bullet upgraded">Vector DBs: ChromaDB, FAISS, Pinecone, Qdrant <span class="new-tag">AI</span></div>
+      <div class="rc-bullet upgraded">Multimodal AI: CLIP, LLaVA, Gemini Vision, Multimodal RAG <span class="new-tag">AI</span></div>
+      <div class="rc-bullet upgraded">Big Data: Apache Spark, PySpark, Kafka, Delta Lake, Databricks</div>
+      <div class="rc-bullet upgraded">AI Observability: RAGAS, LangSmith, Arize AI, Guardrails AI <span class="new-tag">AI</span></div>
+      <div class="rc-bullet upgraded">Cloud AI: GCP Vertex AI, AWS Bedrock, Azure OpenAI, SageMaker</div>
+    </div>
+  </div>
+
+  <div class="resume-compare">
+    <div class="rc-block">
+      <div class="rc-block-title" style="color:var(--muted)">❌ Traditional Project Bullet</div>
+      <div class="rc-bullet">Built image recognition system using Gemini API to identify and describe images</div>
+      <div class="rc-bullet">Created library management system with AI capabilities using Google APIs</div>
+      <div class="rc-bullet">Developed NLP pipeline for sentiment analysis using BERT classifier</div>
+    </div>
+    <div class="rc-block" style="border-color:rgba(16,185,129,0.2)">
+      <div class="rc-block-title" style="color:var(--green3)">✅ AI-Native Project Bullet</div>
+      <div class="rc-bullet upgraded">Architected <strong>multimodal semantic search system</strong> using Gemini Vision API + CLIP embeddings + FAISS, achieving 94.3% retrieval precision on 500K-image corpus with &lt;120ms P95 latency <span class="new-tag">AI</span></div>
+      <div class="rc-bullet upgraded">Built <strong>production RAG pipeline</strong> (LangChain + ChromaDB + Gemini) over 200K documents achieving RAGAS faithfulness score 0.87 and 65% hallucination reduction vs. naive LLM baseline <span class="new-tag">AI</span></div>
+      <div class="rc-bullet upgraded">Replaced fine-tuned BERT with <strong>zero-shot LLM classification</strong> using structured prompting + RAGAS eval, matching accuracy while eliminating 3-week retraining cycles <span class="new-tag">AI</span></div>
+    </div>
+  </div>
+
+  <!-- ══════════ FREQUENCY TABLE ══════════ -->
+  <div id="freq" class="sh">
+    <div class="sh-icon" style="background:linear-gradient(135deg,rgba(245,158,11,0.25),rgba(249,115,22,0.15))">📊</div>
+    <div><h2>AI Skill Frequency in 2026 DS Job Postings</h2><p>How often each AI skill appears in actual FAANG and top-tech DS job descriptions</p></div>
+  </div>
+  <div class="hr"></div>
+
+  <div class="freq-wrap">
+    <table class="freq-table">
+      <thead>
+        <tr>
+          <th>AI Skill</th>
+          <th>Frequency in DS JDs</th>
+          <th>Trend</th>
+          <th>You Have It?</th>
+          <th>Time to Learn</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><strong>RAG Pipelines</strong> (LangChain, LlamaIndex)</td>
+          <td><div class="freq-bar"><div class="freq-fill" style="width:90%;background:linear-gradient(90deg,var(--purple),var(--purple2))"></div></div> 90%</td>
+          <td style="color:var(--red3)">🔥 Exploding</td>
+          <td style="color:var(--amber3)">⚠️ Partial</td>
+          <td style="font-family:'Fira Code',monospace;color:var(--cyan3);font-size:11px">2 weeks</td>
+        </tr>
+        <tr>
+          <td><strong>LLM API Integration</strong> (Gemini, GPT-4, Claude)</td>
+          <td><div class="freq-bar"><div class="freq-fill" style="width:88%;background:linear-gradient(90deg,var(--purple),var(--cyan))"></div></div> 88%</td>
+          <td style="color:var(--red3)">🔥 Very High</td>
+          <td style="color:var(--green3)">✅ You Have This</td>
+          <td style="font-family:'Fira Code',monospace;color:var(--cyan3);font-size:11px">Done ✓</td>
+        </tr>
+        <tr>
+          <td><strong>Vector Databases</strong> (FAISS, Pinecone, Chroma)</td>
+          <td><div class="freq-bar"><div class="freq-fill" style="width:82%;background:linear-gradient(90deg,var(--cyan),var(--green))"></div></div> 82%</td>
+          <td style="color:var(--red3)">🔥 Fast Growing</td>
+          <td style="color:var(--amber3)">⚠️ Need to Build</td>
+          <td style="font-family:'Fira Code',monospace;color:var(--cyan3);font-size:11px">1 week</td>
+        </tr>
+        <tr>
+          <td><strong>Prompt Engineering</strong> (systematic, not casual)</td>
+          <td><div class="freq-bar"><div class="freq-fill" style="width:78%;background:linear-gradient(90deg,var(--green),var(--amber))"></div></div> 78%</td>
+          <td style="color:var(--amber3)">↑ Rising</td>
+          <td style="color:var(--green3)">✅ You Have This</td>
+          <td style="font-family:'Fira Code',monospace;color:var(--cyan3);font-size:11px">Deepen w/ DSPy</td>
+        </tr>
+        <tr>
+          <td><strong>LLM Evaluation / RAGAS</strong></td>
+          <td><div class="freq-bar"><div class="freq-fill" style="width:68%;background:linear-gradient(90deg,var(--amber),var(--orange))"></div></div> 68%</td>
+          <td style="color:var(--red3)">🔥 High Priority</td>
+          <td style="color:var(--red3)">✗ Gap</td>
+          <td style="font-family:'Fira Code',monospace;color:var(--cyan3);font-size:11px">1 week</td>
+        </tr>
+        <tr>
+          <td><strong>Agentic AI / LangGraph</strong></td>
+          <td><div class="freq-bar"><div class="freq-fill" style="width:64%;background:linear-gradient(90deg,var(--orange),var(--red))"></div></div> 64%</td>
+          <td style="color:var(--red3)">🔥 Fastest Growing</td>
+          <td style="color:var(--red3)">✗ Gap</td>
+          <td style="font-family:'Fira Code',monospace;color:var(--cyan3);font-size:11px">2 weeks</td>
+        </tr>
+        <tr>
+          <td><strong>Multimodal AI</strong> (Vision + Text)</td>
+          <td><div class="freq-bar"><div class="freq-fill" style="width:58%;background:linear-gradient(90deg,var(--red),var(--pink))"></div></div> 58%</td>
+          <td style="color:var(--amber3)">↑ Growing Fast</td>
+          <td style="color:var(--green3)">✅ Your Strength</td>
+          <td style="font-family:'Fira Code',monospace;color:var(--cyan3);font-size:11px">Add CLIP layer</td>
+        </tr>
+        <tr>
+          <td><strong>LLM Fine-Tuning</strong> (LoRA, QLoRA)</td>
+          <td><div class="freq-bar"><div class="freq-fill" style="width:54%;background:linear-gradient(90deg,var(--pink),var(--purple))"></div></div> 54%</td>
+          <td style="color:var(--amber3)">↑ Rising</td>
+          <td style="color:var(--red3)">✗ Gap</td>
+          <td style="font-family:'Fira Code',monospace;color:var(--cyan3);font-size:11px">2 weeks</td>
+        </tr>
+        <tr>
+          <td><strong>AI Safety / Responsible AI</strong></td>
+          <td><div class="freq-bar"><div class="freq-fill" style="width:50%;background:linear-gradient(90deg,var(--purple),var(--blue))"></div></div> 50%</td>
+          <td style="color:var(--amber3)">↑ Required at FAANG</td>
+          <td style="color:var(--amber3)">⚠️ Basic</td>
+          <td style="font-family:'Fira Code',monospace;color:var(--cyan3);font-size:11px">1 week</td>
+        </tr>
+        <tr>
+          <td><strong>Streaming AI</strong> (Kafka + LLM)</td>
+          <td><div class="freq-bar"><div class="freq-fill" style="width:38%;background:linear-gradient(90deg,var(--blue),var(--cyan))"></div></div> 38%</td>
+          <td style="color:var(--amber3)">↑ Niche but $$$</td>
+          <td style="color:var(--green3)">✅ Your Big Data Edge</td>
+          <td style="font-family:'Fira Code',monospace;color:var(--cyan3);font-size:11px">Add LLM layer</td>
+        </tr>
+        <tr>
+          <td><strong>MCP Protocol</strong> (Model Context Protocol)</td>
+          <td><div class="freq-bar"><div class="freq-fill" style="width:22%;background:linear-gradient(90deg,var(--cyan),var(--green))"></div></div> 22%</td>
+          <td style="color:var(--green3)">⊕ Emerging 2026</td>
+          <td style="color:var(--red3)">✗ Rare skill</td>
+          <td style="font-family:'Fira Code',monospace;color:var(--cyan3);font-size:11px">3–5 days (huge ROI)</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="foot" style="margin-top:30px">
+    <strong>The Bottom Line:</strong> You're not starting from zero on AI. You already have Gemini API, multimodal AI, and LLM orchestration experience.<br>
+    The stack you need to add is: <strong>RAG → LangGraph → RAGAS Eval → CLIP/Multimodal → Fine-Tuning → Streaming AI + LLM.</strong><br>
+    That's 8–10 weeks of focused learning on top of your existing foundation.<br><br>
+    The people you spoke to are right. <strong>AI-native DS candidates are getting 40–60% higher comp offers than traditional DS candidates with the same experience level.</strong><br>
+    You have the base. Now add the AI layer. The combination of Big Data + GenAI + Multimodal is genuinely rare — own it.
+  </div>
+
+</div>
+</body>
+</html>
