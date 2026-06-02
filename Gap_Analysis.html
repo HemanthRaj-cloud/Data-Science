@@ -1,0 +1,1139 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Realistic Gap Analysis — How Close Are You?</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Fira+Code:wght@400;500;600&display=swap');
+
+  :root {
+    --bg: #07090f;
+    --s1: #0d1117;
+    --s2: #111827;
+    --s3: #1a2235;
+    --border: rgba(255,255,255,0.07);
+    --border2: rgba(255,255,255,0.12);
+    --text: #dde4f0;
+    --muted: #64748b;
+    --muted2: #8899b8;
+    --green: #10b981; --green2: #34d399; --green3: #6ee7b7;
+    --blue: #3b82f6;  --blue2: #60a5fa;  --blue3: #93c5fd;
+    --amber: #f59e0b; --amber2: #fbbf24; --amber3: #fcd34d;
+    --red: #ef4444;   --red2: #f87171;   --red3: #fca5a5;
+    --purple: #8b5cf6;--purple2: #a78bfa;--purple3: #c4b5fd;
+    --cyan: #06b6d4;  --cyan2: #22d3ee;  --cyan3: #67e8f9;
+    --orange: #f97316;--orange2: #fb923c;--orange3: #fdba74;
+    --r: 14px;
+  }
+
+  * { margin:0; padding:0; box-sizing:border-box; }
+  html { scroll-behavior: smooth; }
+  body { font-family:'Inter',sans-serif; background:var(--bg); color:var(--text); line-height:1.6; }
+
+  /* ── HERO ── */
+  .hero {
+    background: linear-gradient(160deg, #07090f 0%, #0f1520 45%, #0a0d1f 100%);
+    padding: 52px 40px 44px;
+    border-bottom: 1px solid var(--border);
+    position: relative; overflow: hidden;
+  }
+  .hero::before {
+    content:''; position:absolute; inset:0;
+    background: radial-gradient(ellipse at 10% 50%, rgba(239,68,68,0.12) 0%, transparent 55%),
+                radial-gradient(ellipse at 90% 20%, rgba(16,185,129,0.09) 0%, transparent 50%);
+  }
+  .hi { position:relative; max-width:1000px; margin:0 auto; }
+  .hero-eyebrow {
+    display:inline-flex; align-items:center; gap:8px;
+    background:rgba(239,68,68,0.1); border:1px solid rgba(239,68,68,0.25);
+    border-radius:100px; padding:5px 14px; font-size:11px; font-weight:700;
+    color:var(--red2); letter-spacing:.8px; text-transform:uppercase; margin-bottom:18px;
+  }
+  .hero h1 {
+    font-size: clamp(26px,4.5vw,44px); font-weight:900; line-height:1.12; margin-bottom:12px;
+    background: linear-gradient(135deg, #fff 20%, #fca5a5 55%, #f87171 100%);
+    -webkit-background-clip:text; -webkit-text-fill-color:transparent; background-clip:text;
+  }
+  .hero-desc { font-size:15px; color:var(--muted2); max-width:600px; margin-bottom:28px; line-height:1.7; }
+  .hero-desc strong { color:#e2e8f0; }
+  .hero-pills { display:flex; flex-wrap:wrap; gap:10px; }
+  .pill {
+    display:inline-flex; align-items:center; gap:7px; padding:7px 14px;
+    border-radius:100px; font-size:12px; font-weight:600; border:1px solid transparent;
+  }
+  .pill-r { background:rgba(239,68,68,0.09);  border-color:rgba(239,68,68,0.22);  color:var(--red3);  }
+  .pill-g { background:rgba(16,185,129,0.09); border-color:rgba(16,185,129,0.22); color:var(--green3);}
+  .pill-a { background:rgba(245,158,11,0.09); border-color:rgba(245,158,11,0.22); color:var(--amber3);}
+  .pill-b { background:rgba(99,102,241,0.09); border-color:rgba(99,102,241,0.22); color:#a5b4fc; }
+
+  /* ── WRAP / GRID ── */
+  .wrap { max-width:1000px; margin:0 auto; padding:0 24px 80px; }
+  .g2 { display:grid; grid-template-columns:1fr 1fr; gap:14px; }
+  .g3 { display:grid; grid-template-columns:1fr 1fr 1fr; gap:14px; }
+  @media(max-width:680px) { .g2,.g3 { grid-template-columns:1fr; } }
+
+  /* ── SECTION HEADER ── */
+  .sh { display:flex; align-items:center; gap:14px; margin:50px 0 20px; }
+  .sh-icon { width:44px; height:44px; border-radius:12px; display:flex; align-items:center; justify-content:center; font-size:20px; flex-shrink:0; }
+  .sh h2 { font-size:20px; font-weight:800; color:#fff; }
+  .sh p { font-size:13px; color:var(--muted); margin-top:2px; }
+  .hr { height:1px; background:var(--border); margin-bottom:24px; }
+
+  /* ── BIG READINESS METER ── */
+  .readiness-block {
+    background: linear-gradient(135deg, rgba(239,68,68,0.07), rgba(245,158,11,0.04));
+    border: 1px solid rgba(239,68,68,0.2);
+    border-radius: 20px; padding: 36px 40px; text-align:center; margin-bottom:20px;
+    position:relative; overflow:hidden;
+  }
+  .readiness-block::before {
+    content:''; position:absolute; inset:0;
+    background: radial-gradient(ellipse at 50% 0%, rgba(239,68,68,0.08) 0%, transparent 60%);
+  }
+  .r-inner { position:relative; }
+  .r-pct {
+    font-size: 88px; font-weight:900; font-family:'Fira Code',monospace;
+    background: linear-gradient(135deg, #f87171 0%, #fbbf24 100%);
+    -webkit-background-clip:text; -webkit-text-fill-color:transparent;
+    background-clip:text; line-height:1; margin-bottom:8px;
+  }
+  .r-label { font-size:18px; font-weight:700; color:#fff; margin-bottom:10px; }
+  .r-desc  { font-size:14px; color:var(--muted2); max-width:500px; margin:0 auto 24px; line-height:1.7; }
+  .r-bar-wrap { max-width:480px; margin:0 auto 10px; }
+  .r-bar {
+    height:10px; background:rgba(255,255,255,0.06);
+    border-radius:5px; overflow:hidden; margin-bottom:6px;
+  }
+  .r-fill {
+    height:100%;
+    background: linear-gradient(90deg, #ef4444 0%, #f59e0b 50%, #10b981 100%);
+    border-radius:5px; width:58%;
+    position:relative;
+  }
+  .r-fill::after {
+    content:'▲'; position:absolute; right:-6px; top:-16px;
+    font-size:12px; color:#fbbf24;
+  }
+  .r-scale { display:flex; justify-content:space-between; font-size:11px; color:var(--muted); }
+  .r-verdict {
+    display:inline-flex; align-items:center; gap:8px;
+    background:rgba(245,158,11,0.12); border:1px solid rgba(245,158,11,0.25);
+    border-radius:100px; padding:8px 20px; font-size:13px; font-weight:700; color:var(--amber3);
+    margin-top:16px;
+  }
+
+  /* ── SKILL INVENTORY CARD ── */
+  .skill-inv {
+    background:var(--s1); border:1px solid var(--border);
+    border-radius:var(--r); padding:22px; margin-bottom:12px;
+  }
+  .si-header {
+    display:flex; justify-content:space-between; align-items:center;
+    margin-bottom:14px; flex-wrap:wrap; gap:8px;
+  }
+  .si-title { font-size:14px; font-weight:800; color:#fff; display:flex; align-items:center; gap:8px; }
+  .si-source {
+    font-size:10px; font-weight:700; padding:2px 9px; border-radius:4px;
+    text-transform:uppercase; letter-spacing:.5px;
+  }
+  .src-ms   { background:rgba(99,102,241,0.15); color:#a5b4fc; }
+  .src-cert { background:rgba(245,158,11,0.15); color:var(--amber3); }
+  .src-work { background:rgba(16,185,129,0.15); color:var(--green3); }
+  .src-proj { background:rgba(239,68,68,0.15);  color:var(--red3); }
+  .skill-rows { display:flex; flex-direction:column; gap:8px; }
+  .skill-row { display:flex; align-items:center; gap:12px; }
+  .sr-label { font-size:12.5px; color:var(--text); min-width:160px; font-weight:500; }
+  .sr-bar { flex:1; height:5px; background:rgba(255,255,255,0.05); border-radius:3px; overflow:hidden; }
+  .sr-fill { height:100%; border-radius:3px; }
+  .sr-lvl { font-size:11px; font-weight:700; font-family:'Fira Code',monospace; min-width:100px; text-align:right; }
+
+  /* fill colors */
+  .fill-strong  { background: linear-gradient(90deg,#10b981,#34d399); }
+  .fill-good    { background: linear-gradient(90deg,#6366f1,#818cf8); }
+  .fill-basic   { background: linear-gradient(90deg,#f59e0b,#fbbf24); }
+  .fill-weak    { background: linear-gradient(90deg,#ef4444,#f87171); }
+  .fill-zero    { background: rgba(255,255,255,0.1); }
+
+  /* level colors */
+  .lv-strong { color:var(--green3); }
+  .lv-good   { color:#a5b4fc; }
+  .lv-basic  { color:var(--amber3); }
+  .lv-weak   { color:var(--red3); }
+  .lv-zero   { color:var(--muted); }
+
+  /* ── GAP TABLE ── */
+  .gap-row {
+    display:flex; gap:14px; padding:14px 16px;
+    background:var(--s1); border:1px solid var(--border);
+    border-radius:12px; margin-bottom:10px;
+    align-items:flex-start; transition:border-color .2s;
+  }
+  .gap-row:hover { border-color:rgba(255,255,255,0.12); }
+  .gap-icon { font-size:22px; flex-shrink:0; margin-top:2px; }
+  .gap-body { flex:1; }
+  .gap-title { font-size:14px; font-weight:800; color:#fff; margin-bottom:4px; }
+  .gap-desc  { font-size:12.5px; color:var(--muted2); line-height:1.65; margin-bottom:8px; }
+  .gap-desc strong { color:var(--text); }
+  .gap-meta { display:flex; gap:8px; flex-wrap:wrap; align-items:center; }
+  .gap-time  {
+    font-size:11px; font-weight:700; padding:3px 9px; border-radius:5px;
+    font-family:'Fira Code',monospace;
+  }
+  .gap-priority {
+    font-size:10px; font-weight:800; padding:2px 8px; border-radius:4px;
+    text-transform:uppercase; letter-spacing:.5px;
+  }
+  .p-urgent  { background:rgba(239,68,68,0.15); color:var(--red3); }
+  .p-high    { background:rgba(245,158,11,0.15); color:var(--amber3); }
+  .p-medium  { background:rgba(99,102,241,0.15); color:#a5b4fc; }
+  .p-low     { background:rgba(16,185,129,0.15); color:var(--green3); }
+  .t-urgent  { background:rgba(239,68,68,0.12); color:var(--red2); }
+  .t-high    { background:rgba(245,158,11,0.12); color:var(--amber2); }
+  .t-medium  { background:rgba(99,102,241,0.12); color:#818cf8; }
+  .t-low     { background:rgba(16,185,129,0.12); color:var(--green2); }
+  .gap-blocker {
+    font-size:11px; padding:5px 10px; border-radius:6px;
+    background:rgba(239,68,68,0.07); border:1px solid rgba(239,68,68,0.15);
+    color:var(--red3); line-height:1.5; margin-top:6px;
+  }
+  .gap-tip {
+    font-size:11px; padding:5px 10px; border-radius:6px;
+    background:rgba(16,185,129,0.07); border:1px solid rgba(16,185,129,0.15);
+    color:var(--green3); line-height:1.5; margin-top:6px;
+  }
+
+  /* ── WHAT TO LEARN NEXT ── */
+  .learn-card {
+    background:var(--s1); border:1px solid var(--border);
+    border-radius:var(--r); overflow:hidden; margin-bottom:14px;
+    transition:border-color .2s, transform .2s;
+  }
+  .learn-card:hover { transform:translateY(-2px); }
+  .lc-header {
+    padding:16px 20px; display:flex; align-items:center; gap:12px;
+    border-bottom:1px solid var(--border);
+  }
+  .lc-num {
+    width:32px; height:32px; border-radius:9px;
+    display:flex; align-items:center; justify-content:center;
+    font-size:13px; font-weight:800; flex-shrink:0; font-family:'Fira Code',monospace;
+  }
+  .lc-title { font-size:14px; font-weight:800; color:#fff; flex:1; }
+  .lc-badge {
+    font-size:11px; font-weight:700; padding:4px 10px; border-radius:20px;
+    text-transform:uppercase; letter-spacing:.4px; white-space:nowrap;
+  }
+  .lc-body { padding:18px 20px; }
+  .lc-why { font-size:13px; color:var(--muted2); margin-bottom:14px; line-height:1.65; }
+  .lc-why strong { color:var(--text); }
+  .lc-skills { display:flex; flex-wrap:wrap; gap:6px; margin-bottom:14px; }
+  .sk {
+    display:inline-block; padding:3px 9px; border-radius:6px;
+    font-size:11.5px; font-weight:600; font-family:'Fira Code',monospace;
+    border:1px solid transparent;
+  }
+  .sk-g { background:rgba(16,185,129,0.1); color:var(--green3); border-color:rgba(16,185,129,0.2); }
+  .sk-b { background:rgba(99,102,241,0.1); color:#a5b4fc; border-color:rgba(99,102,241,0.2); }
+  .sk-a { background:rgba(245,158,11,0.1); color:var(--amber3); border-color:rgba(245,158,11,0.2); }
+  .sk-r { background:rgba(239,68,68,0.1);  color:var(--red3);   border-color:rgba(239,68,68,0.2); }
+  .sk-c { background:rgba(6,182,212,0.1);  color:var(--cyan3);  border-color:rgba(6,182,212,0.2); }
+  .sk-p { background:rgba(139,92,246,0.1); color:var(--purple3);border-color:rgba(139,92,246,0.2);}
+  .lc-action {
+    background:rgba(255,255,255,0.03); border:1px solid var(--border);
+    border-radius:8px; padding:10px 14px; font-size:12.5px; color:var(--muted2); line-height:1.6;
+  }
+  .lc-action strong { color:#fff; }
+  .lc-time {
+    display:flex; align-items:center; gap:6px; margin-top:10px;
+    font-size:11.5px; color:var(--muted); font-weight:600;
+  }
+  .lc-time span { color:var(--amber2); font-family:'Fira Code',monospace; font-weight:700; }
+
+  /* ── HONEST VERDICT ── */
+  .verdict-block {
+    border-radius:16px; padding:28px 32px; margin-top:8px;
+  }
+  .vb-title { font-size:18px; font-weight:800; color:#fff; margin-bottom:16px; }
+  .vb-row   { display:flex; gap:14px; margin-bottom:14px; }
+  .vb-icon  { font-size:24px; flex-shrink:0; }
+  .vb-text  { font-size:13.5px; color:var(--muted2); line-height:1.7; }
+  .vb-text strong { color:#fff; }
+
+  /* ── BANNERS ── */
+  .banner {
+    border-radius:10px; padding:14px 18px; margin-bottom:14px;
+    display:flex; gap:12px; border:1px solid transparent;
+    align-items:flex-start;
+  }
+  .ban-red   { background:rgba(239,68,68,0.07); border-color:rgba(239,68,68,0.18); }
+  .ban-green { background:rgba(16,185,129,0.07);border-color:rgba(16,185,129,0.18);}
+  .ban-amber { background:rgba(245,158,11,0.07);border-color:rgba(245,158,11,0.18);}
+  .ban-blue  { background:rgba(99,102,241,0.07);border-color:rgba(99,102,241,0.18);}
+  .ban-cyan  { background:rgba(6,182,212,0.07); border-color:rgba(6,182,212,0.18); }
+  .bl { font-size:10px; font-weight:800; text-transform:uppercase; letter-spacing:.7px;
+        padding:2px 7px; border-radius:3px; white-space:nowrap; margin-top:2px; }
+  .ban-red   .bl { background:rgba(239,68,68,0.18); color:var(--red3); }
+  .ban-green .bl { background:rgba(16,185,129,0.18);color:var(--green3); }
+  .ban-amber .bl { background:rgba(245,158,11,0.18);color:var(--amber3); }
+  .ban-blue  .bl { background:rgba(99,102,241,0.18);color:#a5b4fc; }
+  .ban-cyan  .bl { background:rgba(6,182,212,0.18); color:var(--cyan3); }
+  .bt { font-size:13px; line-height:1.65; }
+  .bt strong { color:#fff; }
+
+  /* ── COMPARISON ── */
+  .vs-wrap { background:var(--s1); border:1px solid var(--border); border-radius:var(--r); overflow:hidden; }
+  .vs-table { width:100%; border-collapse:collapse; font-size:12.5px; }
+  .vs-table th {
+    padding:11px 16px; text-align:left; font-size:10.5px; font-weight:700;
+    text-transform:uppercase; letter-spacing:.6px; color:var(--muted);
+    background:rgba(255,255,255,0.02); border-bottom:1px solid var(--border2);
+  }
+  .vs-table td { padding:11px 16px; border-bottom:1px solid var(--border); vertical-align:top; line-height:1.5; }
+  .vs-table tr:last-child td { border-bottom:none; }
+  .vs-table tr:hover td { background:rgba(255,255,255,0.015); }
+  .v-have   { color:var(--green3); font-weight:600; }
+  .v-gap    { color:var(--red3);   font-weight:600; }
+  .v-part   { color:var(--amber3); font-weight:600; }
+  .v-weeks  { font-family:'Fira Code',monospace; font-size:11px; color:var(--cyan3); font-weight:600; }
+
+  /* ── TIMELINE BEFORE-APPLY ── */
+  .before-apply {
+    background: linear-gradient(135deg,rgba(16,185,129,0.06),rgba(6,182,212,0.03));
+    border:1px solid rgba(16,185,129,0.18); border-radius:var(--r); padding:28px;
+  }
+  .ba-title { font-size:16px; font-weight:800; color:#fff; margin-bottom:20px; }
+  .phase-strip { display:flex; gap:0; margin-bottom:20px; border-radius:8px; overflow:hidden; }
+  .ph-seg {
+    flex:1; padding:14px 12px; text-align:center; font-size:11px; font-weight:700;
+    border-right:1px solid rgba(0,0,0,0.3);
+    cursor:default;
+  }
+  .ph-seg:last-child { border-right:none; }
+  .ph-seg .ph-days { font-size:16px; font-weight:900; font-family:'Fira Code',monospace; display:block; }
+  .ph-seg .ph-name { display:block; margin-top:3px; opacity:.8; font-size:10px; }
+  .ph1-c { background:rgba(239,68,68,0.18); color:var(--red2); }
+  .ph2-c { background:rgba(245,158,11,0.18); color:var(--amber2); }
+  .ph3-c { background:rgba(99,102,241,0.18); color:#a5b4fc; }
+  .ph4-c { background:rgba(16,185,129,0.18); color:var(--green2); }
+
+  .ba-items { display:grid; grid-template-columns:1fr 1fr; gap:10px; }
+  @media(max-width:600px){ .ba-items{ grid-template-columns:1fr; } }
+  .ba-item {
+    background:rgba(0,0,0,0.2); border:1px solid var(--border);
+    border-radius:9px; padding:12px 14px; font-size:12.5px; line-height:1.6;
+  }
+  .ba-item strong { color:#fff; display:block; margin-bottom:3px; }
+
+  /* ── CATEGORY BREAKDOWN ── */
+  .cat-card {
+    background:var(--s1); border:1px solid var(--border);
+    border-radius:var(--r); padding:20px; 
+  }
+  .cat-title { font-size:13px; font-weight:800; color:#fff; margin-bottom:14px; display:flex; align-items:center; gap:8px; }
+  .cat-item {
+    display:flex; align-items:center; gap:10px; padding:7px 0;
+    border-bottom:1px solid var(--border);
+  }
+  .cat-item:last-child { border-bottom:none; }
+  .cat-name { font-size:12.5px; color:var(--text); flex:1; }
+  .cat-bar  { width:100px; height:5px; background:rgba(255,255,255,0.05); border-radius:3px; overflow:hidden; }
+  .cat-fill { height:100%; border-radius:3px; }
+  .cat-tag  { font-size:10px; font-weight:700; padding:2px 7px; border-radius:4px; min-width:72px; text-align:center; }
+  .have  { background:rgba(16,185,129,0.12); color:var(--green3); }
+  .basic { background:rgba(245,158,11,0.12); color:var(--amber3); }
+  .gap   { background:rgba(239,68,68,0.12);  color:var(--red3);   }
+  .none  { background:rgba(100,116,139,0.12);color:var(--muted2); }
+
+  /* ── NAV ── */
+  .nav { background:var(--s1); border:1px solid var(--border); border-radius:12px; padding:14px 18px; margin:24px 0; display:flex; flex-wrap:wrap; gap:7px; }
+  .nav a { color:var(--muted); text-decoration:none; font-size:12px; font-weight:600; padding:5px 11px; border-radius:6px; border:1px solid var(--border); background:rgba(255,255,255,0.02); transition:all .2s; }
+  .nav a:hover { color:#a5b4fc; border-color:rgba(99,102,241,0.3); background:rgba(99,102,241,0.06); }
+
+  /* ── FOOTER ── */
+  .foot {
+    margin-top:50px; padding:26px 30px; border-radius:var(--r);
+    background:linear-gradient(135deg,rgba(16,185,129,0.06),rgba(99,102,241,0.05));
+    border:1px solid rgba(16,185,129,0.15); text-align:center;
+    font-size:13px; color:var(--muted2); line-height:1.8;
+  }
+  .foot strong { color:#a5b4fc; }
+</style>
+</head>
+<body>
+
+<!-- HERO -->
+<div class="hero">
+  <div class="hi">
+    <div class="hero-eyebrow">⚡ Honest Skills Gap Analysis — No Sugarcoating</div>
+    <h1>How Close Are You,<br>Really?</h1>
+    <p class="hero-desc">
+      A precise, honest assessment of exactly <strong>where you stand today</strong>,
+      what you genuinely have from your M.S., Big Data cert, and work experience,
+      and <strong>exactly what's missing</strong> before you're ready to apply.
+    </p>
+    <div class="hero-pills">
+      <span class="pill pill-a">⏱ ~60 Days to Interview-Ready</span>
+      <span class="pill pill-g">✓ Strong Academic Base</span>
+      <span class="pill pill-r">✗ Interview Skills Not Yet Built</span>
+      <span class="pill pill-b">⚡ GenAI = Your #1 Edge</span>
+    </div>
+  </div>
+</div>
+
+<div class="wrap">
+
+  <div class="nav">
+    <a href="#readiness">📊 Readiness Score</a>
+    <a href="#have">✅ What You Have</a>
+    <a href="#gaps">❌ The Gaps</a>
+    <a href="#learn">📘 What to Learn Next</a>
+    <a href="#before-apply">🚀 Before You Apply</a>
+    <a href="#verdict">🎯 Final Verdict</a>
+  </div>
+
+  <!-- ══════════ OVERALL READINESS ══════════ -->
+  <div id="readiness" class="sh" style="margin-top:16px">
+    <div class="sh-icon" style="background:linear-gradient(135deg,rgba(245,158,11,0.25),rgba(239,68,68,0.15))">📊</div>
+    <div><h2>Your Overall DS Interview Readiness Today</h2><p>Broken down across every dimension FAANG teams actually assess</p></div>
+  </div>
+  <div class="hr"></div>
+
+  <div class="readiness-block">
+    <div class="r-inner">
+      <div class="r-pct">58%</div>
+      <div class="r-label">Interview-Ready for Data Scientist Roles</div>
+      <div class="r-desc">You have the <em>knowledge foundation</em> — but not yet the <em>interview execution skills</em>. Your credentials are strong, your projects are real, but the gap is in applied problem-solving speed, SQL fluency under pressure, and the ability to explain ML concepts clearly on a whiteboard.</div>
+      <div class="r-bar-wrap">
+        <div class="r-bar"><div class="r-fill"></div></div>
+        <div class="r-scale">
+          <span>0% — Zero prep</span>
+          <span>58% — You are here</span>
+          <span>85% — Apply to FAANG</span>
+          <span>100%</span>
+        </div>
+      </div>
+      <div class="r-verdict">⚡ Estimated 50–70 days of focused work to reach the 85% application-ready threshold</div>
+    </div>
+  </div>
+
+  <div class="g3" style="margin-top:14px">
+    <div style="background:rgba(16,185,129,0.07);border:1px solid rgba(16,185,129,0.18);border-radius:12px;padding:18px;text-align:center">
+      <div style="font-size:32px;font-weight:900;font-family:'Fira Code',monospace;color:var(--green3)">STRONG</div>
+      <div style="font-size:12px;font-weight:700;color:var(--green2);margin:6px 0">What's Working For You</div>
+      <div style="font-size:12px;color:var(--muted2);line-height:1.6">Academic depth, GenAI exposure, Big Data certification, real project experience, work experience framing</div>
+    </div>
+    <div style="background:rgba(245,158,11,0.07);border:1px solid rgba(245,158,11,0.18);border-radius:12px;padding:18px;text-align:center">
+      <div style="font-size:32px;font-weight:900;font-family:'Fira Code',monospace;color:var(--amber3)">PARTIAL</div>
+      <div style="font-size:12px;font-weight:700;color:var(--amber2);margin:6px 0">Needs Strengthening</div>
+      <div style="font-size:12px;color:var(--muted2);line-height:1.6">Python coding speed, SQL advanced queries, ML depth beyond theory, portfolio visibility, data storytelling</div>
+    </div>
+    <div style="background:rgba(239,68,68,0.07);border:1px solid rgba(239,68,68,0.18);border-radius:12px;padding:18px;text-align:center">
+      <div style="font-size:32px;font-weight:900;font-family:'Fira Code',monospace;color:var(--red3)">MISSING</div>
+      <div style="font-size:12px;font-weight:700;color:var(--red2);margin:6px 0">Not Yet Built</div>
+      <div style="font-size:12px;color:var(--muted2);line-height:1.6">LeetCode practice, A/B test design, product case studies, MLOps basics, deployed projects, mock interview reps</div>
+    </div>
+  </div>
+
+  <!-- ══════════ WHAT YOU HAVE ══════════ -->
+  <div id="have" class="sh">
+    <div class="sh-icon" style="background:linear-gradient(135deg,rgba(16,185,129,0.25),rgba(6,182,212,0.15))">✅</div>
+    <div><h2>What You Actually Have Right Now</h2><p>Skills earned through your M.S., Big Data cert, GenAI projects, and work experience</p></div>
+  </div>
+  <div class="hr"></div>
+
+  <div class="banner ban-green">
+    <span class="bl">Honest Context</span>
+    <div class="bt">Everything in this section is a <strong>real, verifiable skill</strong> — not just coursework. The level rating (Strong / Good / Basic / Weak) reflects how you'd perform if asked about it in a real interview <strong>today</strong>, not how well you understood it in class.</div>
+  </div>
+
+  <!-- From Masters -->
+  <div class="skill-inv">
+    <div class="si-header">
+      <div class="si-title">🎓 From Your M.S. Data Science & Analytics — FAU</div>
+      <span class="si-source src-ms">Master's Degree</span>
+    </div>
+    <div class="skill-rows">
+      <div class="skill-row">
+        <span class="sr-label">Python (general)</span>
+        <div class="sr-bar"><div class="sr-fill fill-good" style="width:65%"></div></div>
+        <span class="sr-lvl lv-good">Good — needs speed</span>
+      </div>
+      <div class="skill-row">
+        <span class="sr-label">Pandas / NumPy</span>
+        <div class="sr-bar"><div class="sr-fill fill-good" style="width:60%"></div></div>
+        <span class="sr-lvl lv-good">Good — practical gaps</span>
+      </div>
+      <div class="skill-row">
+        <span class="sr-label">ML Algorithms (theory)</span>
+        <div class="sr-bar"><div class="sr-fill fill-good" style="width:70%"></div></div>
+        <span class="sr-lvl lv-good">Good — theory solid</span>
+      </div>
+      <div class="skill-row">
+        <span class="sr-label">Statistics & Probability</span>
+        <div class="sr-bar"><div class="sr-fill fill-good" style="width:65%"></div></div>
+        <span class="sr-lvl lv-good">Good — needs interview polish</span>
+      </div>
+      <div class="skill-row">
+        <span class="sr-label">Data Visualization</span>
+        <div class="sr-bar"><div class="sr-fill fill-basic" style="width:55%"></div></div>
+        <span class="sr-lvl lv-basic">Basic — Matplotlib/Seaborn level</span>
+      </div>
+      <div class="skill-row">
+        <span class="sr-label">SQL (basic)</span>
+        <div class="sr-bar"><div class="sr-fill fill-basic" style="width:45%"></div></div>
+        <span class="sr-lvl lv-basic">Basic — SELECT, JOINs done</span>
+      </div>
+      <div class="skill-row">
+        <span class="sr-label">Deep Learning (theory)</span>
+        <div class="sr-bar"><div class="sr-fill fill-basic" style="width:50%"></div></div>
+        <span class="sr-lvl lv-basic">Basic — conceptual only</span>
+      </div>
+      <div class="skill-row">
+        <span class="sr-label">Linear Algebra / Math</span>
+        <div class="sr-bar"><div class="sr-fill fill-good" style="width:65%"></div></div>
+        <span class="sr-lvl lv-good">Good — covered in M.S.</span>
+      </div>
+      <div class="skill-row">
+        <span class="sr-label">Feature Engineering</span>
+        <div class="sr-bar"><div class="sr-fill fill-basic" style="width:50%"></div></div>
+        <span class="sr-lvl lv-basic">Basic — covered in coursework</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- From Big Data Cert -->
+  <div class="skill-inv">
+    <div class="si-header">
+      <div class="si-title">📊 From Your Big Data Analytics Certification — FAU</div>
+      <span class="si-source src-cert">Certification</span>
+    </div>
+    <div class="skill-rows">
+      <div class="skill-row">
+        <span class="sr-label">Apache Spark (concepts)</span>
+        <div class="sr-bar"><div class="sr-fill fill-basic" style="width:55%"></div></div>
+        <span class="sr-lvl lv-basic">Basic — knows concepts well</span>
+      </div>
+      <div class="skill-row">
+        <span class="sr-label">Hadoop / HDFS</span>
+        <div class="sr-bar"><div class="sr-fill fill-basic" style="width:45%"></div></div>
+        <span class="sr-lvl lv-basic">Basic — architecture understood</span>
+      </div>
+      <div class="skill-row">
+        <span class="sr-label">Distributed Systems thinking</span>
+        <div class="sr-bar"><div class="sr-fill fill-good" style="width:60%"></div></div>
+        <span class="sr-lvl lv-good">Good — strong conceptual base</span>
+      </div>
+      <div class="skill-row">
+        <span class="sr-label">Data Pipeline concepts</span>
+        <div class="sr-bar"><div class="sr-fill fill-basic" style="width:55%"></div></div>
+        <span class="sr-lvl lv-basic">Basic — understands ETL flow</span>
+      </div>
+      <div class="skill-row">
+        <span class="sr-label">PySpark (hands-on)</span>
+        <div class="sr-bar"><div class="sr-fill fill-weak" style="width:30%"></div></div>
+        <span class="sr-lvl lv-weak">Weak — needs actual project work</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- From GenAI Projects -->
+  <div class="skill-inv">
+    <div class="si-header">
+      <div class="si-title">🔥 From Your GenAI Projects (Library Orchestration + Image Recognition)</div>
+      <span class="si-source src-proj">Your Projects</span>
+    </div>
+    <div class="skill-rows">
+      <div class="skill-row">
+        <span class="sr-label">Gemini API (hands-on)</span>
+        <div class="sr-bar"><div class="sr-fill fill-strong" style="width:80%"></div></div>
+        <span class="sr-lvl lv-strong">Strong — real built experience</span>
+      </div>
+      <div class="skill-row">
+        <span class="sr-label">LLM API integration</span>
+        <div class="sr-bar"><div class="sr-fill fill-strong" style="width:75%"></div></div>
+        <span class="sr-lvl lv-strong">Strong — production-level work</span>
+      </div>
+      <div class="skill-row">
+        <span class="sr-label">Multimodal AI (vision + text)</span>
+        <div class="sr-bar"><div class="sr-fill fill-strong" style="width:72%"></div></div>
+        <span class="sr-lvl lv-strong">Strong — genuinely rare skill</span>
+      </div>
+      <div class="skill-row">
+        <span class="sr-label">System design / architecture</span>
+        <div class="sr-bar"><div class="sr-fill fill-basic" style="width:50%"></div></div>
+        <span class="sr-lvl lv-basic">Basic — built it, not yet documented</span>
+      </div>
+      <div class="skill-row">
+        <span class="sr-label">API / backend (FastAPI level)</span>
+        <div class="sr-bar"><div class="sr-fill fill-basic" style="width:48%"></div></div>
+        <span class="sr-lvl lv-basic">Basic — understands the concept</span>
+      </div>
+      <div class="skill-row">
+        <span class="sr-label">Prompt engineering</span>
+        <div class="sr-bar"><div class="sr-fill fill-good" style="width:65%"></div></div>
+        <span class="sr-lvl lv-good">Good — practiced through projects</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- From Work Experience -->
+  <div class="skill-inv">
+    <div class="si-header">
+      <div class="si-title">💼 From Your ~3.8 Years of Work Experience</div>
+      <span class="si-source src-work">Work Experience</span>
+    </div>
+    <div class="banner ban-amber" style="margin-bottom:14px">
+      <span class="bl">Important</span>
+      <div class="bt">You haven't shared the specific roles/titles you've held. <strong>The skills below assume general analyst or data-adjacent work.</strong> If your roles were closer to pure DS/ML, adjust these upward significantly. Share your actual role titles for a more precise assessment.</div>
+    </div>
+    <div class="skill-rows">
+      <div class="skill-row">
+        <span class="sr-label">Data analysis mindset</span>
+        <div class="sr-bar"><div class="sr-fill fill-strong" style="width:78%"></div></div>
+        <span class="sr-lvl lv-strong">Strong — years of practice</span>
+      </div>
+      <div class="skill-row">
+        <span class="sr-label">Stakeholder communication</span>
+        <div class="sr-bar"><div class="sr-fill fill-strong" style="width:75%"></div></div>
+        <span class="sr-lvl lv-strong">Strong — huge interview asset</span>
+      </div>
+      <div class="skill-row">
+        <span class="sr-label">Business problem framing</span>
+        <div class="sr-bar"><div class="sr-fill fill-good" style="width:65%"></div></div>
+        <span class="sr-lvl lv-good">Good — real-world exposure</span>
+      </div>
+      <div class="skill-row">
+        <span class="sr-label">Tools (Excel/BI/reporting)</span>
+        <div class="sr-bar"><div class="sr-fill fill-good" style="width:68%"></div></div>
+        <span class="sr-lvl lv-good">Good — depends on actual role</span>
+      </div>
+      <div class="skill-row">
+        <span class="sr-label">Project delivery / deadlines</span>
+        <div class="sr-bar"><div class="sr-fill fill-strong" style="width:80%"></div></div>
+        <span class="sr-lvl lv-strong">Strong — 3.8 years of proof</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- ══════════ THE GAPS ══════════ -->
+  <div id="gaps" class="sh">
+    <div class="sh-icon" style="background:linear-gradient(135deg,rgba(239,68,68,0.25),rgba(236,72,153,0.15))">❌</div>
+    <div><h2>The Real Gaps — Brutally Honest</h2><p>These are the specific things that will get you rejected if not addressed</p></div>
+  </div>
+  <div class="hr"></div>
+
+  <div class="banner ban-red">
+    <span class="bl">Hard Truth</span>
+    <div class="bt">None of these gaps mean you're unqualified. They mean you're <strong>not yet interview-ready</strong>. Every single one of these can be closed in 4–10 weeks with daily practice. The candidates who get offers aren't smarter — they're just more deliberate about closing these specific gaps.</div>
+  </div>
+
+  <!-- Gap 1 -->
+  <div class="gap-row">
+    <div class="gap-icon">🚨</div>
+    <div class="gap-body">
+      <div class="gap-title">SQL — You Know Basics, But Will Fail the Interview Round</div>
+      <div class="gap-desc">You can write SELECT queries and basic JOINs — that's it. FAANG DS SQL rounds test <strong>window functions, CTEs, self-joins, correlated subqueries, LEAD/LAG, CASE WHEN chains, and multi-table analytical queries</strong>. These aren't edge cases — they are the standard. Without these, you will fail the SQL round even if you ace everything else. This is the #1 gap to close first because it's the most predictable and testable blocker.</div>
+      <div class="gap-meta">
+        <span class="gap-priority p-urgent">🔴 Urgent</span>
+        <span class="gap-time t-urgent">Start Day 1</span>
+        <span style="font-size:11px;color:var(--muted)">4–5 weeks to interview-ready</span>
+      </div>
+      <div class="gap-blocker">💀 Interview Killer: "Write a query to find users who logged in 3 consecutive days" — this requires window functions. Without them, you can't answer it.</div>
+    </div>
+  </div>
+
+  <!-- Gap 2 -->
+  <div class="gap-row">
+    <div class="gap-icon">🚨</div>
+    <div class="gap-body">
+      <div class="gap-title">Coding / LeetCode — You've Never Practiced Algorithmic Thinking</div>
+      <div class="gap-desc">Your Python is functional — you can write scripts and work with Pandas — but DS coding interviews test <strong>algorithmic problem-solving under time pressure</strong>: hash maps, two pointers, sliding window, recursion, binary search. These patterns don't come from data science coursework. You need to solve ~120–150 problems before your first interview. This takes deliberate, consistent daily practice and cannot be rushed.</div>
+      <div class="gap-meta">
+        <span class="gap-priority p-urgent">🔴 Urgent</span>
+        <span class="gap-time t-urgent">Start Day 1</span>
+        <span style="font-size:11px;color:var(--muted)">6–8 weeks to reach interview-ready</span>
+      </div>
+      <div class="gap-blocker">💀 Interview Killer: "Given an array, find the two numbers that sum to a target" — sounds easy. Under pressure, without hash map pattern practice, many candidates freeze.</div>
+    </div>
+  </div>
+
+  <!-- Gap 3 -->
+  <div class="gap-row">
+    <div class="gap-icon">⚠️</div>
+    <div class="gap-body">
+      <div class="gap-title">ML Explanation — You Know It, But Can't Explain It Interview-Style</div>
+      <div class="gap-desc">You've studied Random Forest, XGBoost, regression, etc. in your M.S. — but there's a big difference between understanding a concept and <strong>explaining it clearly, precisely, and confidently under interview pressure</strong>. "Explain gradient boosting in simple terms." "Why does L1 regularization produce sparse weights?" "How would you handle class imbalance in production?" — these require rehearsed, clear verbal articulation, not just conceptual understanding. You have the knowledge. You need to build the delivery.</div>
+      <div class="gap-meta">
+        <span class="gap-priority p-high">🟡 High</span>
+        <span class="gap-time t-high">Week 2 onward</span>
+        <span style="font-size:11px;color:var(--muted)">3–4 weeks of daily practice</span>
+      </div>
+      <div class="gap-tip">✅ Fix: Record yourself answering 1 ML theory question per day. Play it back. Iterate. After 30 days you'll sound like an expert.</div>
+    </div>
+  </div>
+
+  <!-- Gap 4 -->
+  <div class="gap-row">
+    <div class="gap-icon">⚠️</div>
+    <div class="gap-body">
+      <div class="gap-title">A/B Testing & Experimentation Design — A FAANG Core Skill You Lack</div>
+      <div class="gap-desc">This is one of the most tested topics in DS interviews at Google, Meta, and Amazon — and it's almost entirely missing from your profile. <strong>Designing an A/B test from scratch</strong>, calculating sample sizes, interpreting p-values in a product context, identifying pitfalls (novelty effect, network effects, multiple testing), understanding when NOT to ship a result — these are day-1 skills for a DS at any FAANG company. Your statistics foundation from your M.S. will help here, but you need applied product framing on top of it.</div>
+      <div class="gap-meta">
+        <span class="gap-priority p-high">🟡 High</span>
+        <span class="gap-time t-high">Week 2 onward</span>
+        <span style="font-size:11px;color:var(--muted)">3 weeks focused study</span>
+      </div>
+      <div class="gap-blocker">💀 Interview Killer: "How would you A/B test a new feature on Instagram Stories?" — without a practiced framework, you'll ramble and miss key components (guardrail metrics, traffic split, duration, analysis plan).</div>
+    </div>
+  </div>
+
+  <!-- Gap 5 -->
+  <div class="gap-row">
+    <div class="gap-icon">⚠️</div>
+    <div class="gap-body">
+      <div class="gap-title">No Deployed, Publicly Accessible Projects — Your Portfolio is Invisible</div>
+      <div class="gap-desc">You've built real things — the Gemini image recognition system, the library orchestration tool — but <strong>none of it is visible online right now</strong>. A recruiter who Googles your name or visits your GitHub finds nothing. This is fixable in a single week, but it's a critical gap. In 2026, every serious DS candidate has at minimum: a GitHub with pinned projects, a live demo URL for at least 1 project, and a README that explains the architecture, tools, and results. Right now you have the work but not the evidence.</div>
+      <div class="gap-meta">
+        <span class="gap-priority p-high">🟡 High</span>
+        <span class="gap-time t-high">Week 1 — fastest win</span>
+        <span style="font-size:11px;color:var(--muted)">1 week to fix entirely</span>
+      </div>
+      <div class="gap-tip">✅ Fastest fix in this entire list. Push code to GitHub, deploy to Streamlit Cloud (free, 5 minutes), record a 2-min Loom demo. Do this first.</div>
+    </div>
+  </div>
+
+  <!-- Gap 6 -->
+  <div class="gap-row">
+    <div class="gap-icon">🔵</div>
+    <div class="gap-body">
+      <div class="gap-title">Product Case Studies — You Have No Framework Yet</div>
+      <div class="gap-desc">Product DS case interviews are unlike anything in an M.S. program. "Instagram engagement dropped 10% — diagnose and solve" requires a structured, practiced mental model for: breaking down metrics hierarchically, forming hypotheses, prioritizing them, suggesting experiments, and communicating tradeoffs. This is a learned skill through repetition. You haven't started yet, but it's the most improvable skill on this list — <strong>30 hours of deliberate practice can take you from 0 to interview-ready here</strong>.</div>
+      <div class="gap-meta">
+        <span class="gap-priority p-medium">🔵 Medium</span>
+        <span class="gap-time t-medium">Week 3 onward</span>
+        <span style="font-size:11px;color:var(--muted)">3–4 weeks of daily case practice</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- Gap 7 -->
+  <div class="gap-row">
+    <div class="gap-icon">🔵</div>
+    <div class="gap-body">
+      <div class="gap-title">Scikit-learn Pipelines & Production ML — Theory vs. Real Code</div>
+      <div class="gap-desc">You know how Random Forest and XGBoost work theoretically. But can you build a <strong>full ML pipeline in scikit-learn</strong> — with custom transformers, cross-validation, feature selection, hyperparameter tuning via GridSearchCV/Optuna, and proper train/val/test splits — from memory, cleanly, in 30 minutes during an interview? Probably not yet. This is the gap between academic ML and interview ML. It requires building complete end-to-end models repeatedly until it becomes muscle memory.</div>
+      <div class="gap-meta">
+        <span class="gap-priority p-medium">🔵 Medium</span>
+        <span class="gap-time t-medium">Week 2 onward</span>
+        <span style="font-size:11px;color:var(--muted)">3 weeks of daily coding</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- Gap 8 -->
+  <div class="gap-row">
+    <div class="gap-icon">⚪</div>
+    <div class="gap-body">
+      <div class="gap-title">RAG / Vector Databases — Your GenAI Work Needs This Layer</div>
+      <div class="gap-desc">You've used Gemini API which is great — but the next layer that companies are hiring for is <strong>RAG (Retrieval-Augmented Generation) pipelines</strong>. Connecting LLMs to vector databases (ChromaDB, Pinecone, FAISS), building semantic search, handling chunking and embedding strategies, evaluating retrieval quality — this is the architecture skill that separates "called an API" from "built an LLM system." Your library project is the perfect place to add this.</div>
+      <div class="gap-meta">
+        <span class="gap-priority p-low">🟢 Strategic Add-on</span>
+        <span class="gap-time t-low">Week 3–4</span>
+        <span style="font-size:11px;color:var(--muted)">2 weeks — high ROI on your existing project</span>
+      </div>
+      <div class="gap-tip">✅ Adding RAG to your existing library project takes it from "called an API" to "built a production LLM retrieval system" — a massive resume upgrade with 2 weeks of work.</div>
+    </div>
+  </div>
+
+  <!-- Gap 9 -->
+  <div class="gap-row">
+    <div class="gap-icon">⚪</div>
+    <div class="gap-body">
+      <div class="gap-title">MLOps Basics — Docker, MLflow, Model Deployment</div>
+      <div class="gap-desc">Senior DS roles (which your experience level qualifies for) increasingly expect you to know how models go from notebook to production. <strong>Docker for containerization, MLflow for experiment tracking, FastAPI for model serving</strong> — these aren't advanced DevOps, they're table stakes for L4+ DS roles. You don't need deep expertise, but you need to have used them in at least one project.</div>
+      <div class="gap-meta">
+        <span class="gap-priority p-low">🟢 Important but not blocking</span>
+        <span class="gap-time t-low">Week 4–6</span>
+        <span style="font-size:11px;color:var(--muted)">2–3 weeks alongside projects</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- ══════════ SKILLS FULL BREAKDOWN ══════════ -->
+  <div class="sh">
+    <div class="sh-icon" style="background:linear-gradient(135deg,rgba(99,102,241,0.25),rgba(168,85,247,0.15))">📋</div>
+    <div><h2>Complete Skills Inventory — Every Area Mapped</h2><p>Every skill a DS interview could test — exactly where you stand</p></div>
+  </div>
+  <div class="hr"></div>
+
+  <div class="g2">
+    <div class="cat-card">
+      <div class="cat-title">🐍 Python & Coding</div>
+      <div class="cat-item"><span class="cat-name">Basic Python syntax & scripting</span><div class="cat-bar"><div class="cat-fill" style="width:75%;background:linear-gradient(90deg,#10b981,#34d399)"></div></div><span class="cat-tag have">Have</span></div>
+      <div class="cat-item"><span class="cat-name">Pandas data manipulation</span><div class="cat-bar"><div class="cat-fill" style="width:60%;background:linear-gradient(90deg,#6366f1,#818cf8)"></div></div><span class="cat-tag basic">Partial</span></div>
+      <div class="cat-item"><span class="cat-name">NumPy & vectorization</span><div class="cat-bar"><div class="cat-fill" style="width:55%;background:linear-gradient(90deg,#6366f1,#818cf8)"></div></div><span class="cat-tag basic">Partial</span></div>
+      <div class="cat-item"><span class="cat-name">OOP in Python</span><div class="cat-bar"><div class="cat-fill" style="width:45%;background:linear-gradient(90deg,#f59e0b,#fbbf24)"></div></div><span class="cat-tag basic">Basic</span></div>
+      <div class="cat-item"><span class="cat-name">LeetCode / DSA patterns</span><div class="cat-bar"><div class="cat-fill" style="width:10%;background:linear-gradient(90deg,#ef4444,#f87171)"></div></div><span class="cat-tag gap">Gap 🔴</span></div>
+      <div class="cat-item"><span class="cat-name">Algorithm speed under pressure</span><div class="cat-bar"><div class="cat-fill" style="width:5%;background:rgba(255,255,255,0.08)"></div></div><span class="cat-tag gap">Gap 🔴</span></div>
+    </div>
+    <div class="cat-card">
+      <div class="cat-title">🗄️ SQL</div>
+      <div class="cat-item"><span class="cat-name">SELECT, WHERE, GROUP BY</span><div class="cat-bar"><div class="cat-fill" style="width:70%;background:linear-gradient(90deg,#10b981,#34d399)"></div></div><span class="cat-tag have">Have</span></div>
+      <div class="cat-item"><span class="cat-name">JOINs (INNER, LEFT, RIGHT)</span><div class="cat-bar"><div class="cat-fill" style="width:60%;background:linear-gradient(90deg,#6366f1,#818cf8)"></div></div><span class="cat-tag basic">Partial</span></div>
+      <div class="cat-item"><span class="cat-name">Subqueries</span><div class="cat-bar"><div class="cat-fill" style="width:40%;background:linear-gradient(90deg,#f59e0b,#fbbf24)"></div></div><span class="cat-tag basic">Basic</span></div>
+      <div class="cat-item"><span class="cat-name">Window functions (ROW_NUMBER, RANK, LAG)</span><div class="cat-bar"><div class="cat-fill" style="width:8%;background:rgba(255,255,255,0.08)"></div></div><span class="cat-tag gap">Gap 🔴</span></div>
+      <div class="cat-item"><span class="cat-name">CTEs (WITH clause)</span><div class="cat-bar"><div class="cat-fill" style="width:15%;background:linear-gradient(90deg,#ef4444,#f87171)"></div></div><span class="cat-tag gap">Gap 🔴</span></div>
+      <div class="cat-item"><span class="cat-name">Analytical / product SQL</span><div class="cat-bar"><div class="cat-fill" style="width:5%;background:rgba(255,255,255,0.08)"></div></div><span class="cat-tag gap">Gap 🔴</span></div>
+    </div>
+    <div class="cat-card">
+      <div class="cat-title">🤖 Machine Learning</div>
+      <div class="cat-item"><span class="cat-name">Linear / Logistic Regression</span><div class="cat-bar"><div class="cat-fill" style="width:72%;background:linear-gradient(90deg,#10b981,#34d399)"></div></div><span class="cat-tag have">Have</span></div>
+      <div class="cat-item"><span class="cat-name">Decision Trees / Random Forest</span><div class="cat-bar"><div class="cat-fill" style="width:65%;background:linear-gradient(90deg,#6366f1,#818cf8)"></div></div><span class="cat-tag have">Have</span></div>
+      <div class="cat-item"><span class="cat-name">XGBoost / LightGBM</span><div class="cat-bar"><div class="cat-fill" style="width:45%;background:linear-gradient(90deg,#f59e0b,#fbbf24)"></div></div><span class="cat-tag basic">Basic</span></div>
+      <div class="cat-item"><span class="cat-name">Clustering (K-Means, DBSCAN)</span><div class="cat-bar"><div class="cat-fill" style="width:55%;background:linear-gradient(90deg,#6366f1,#818cf8)"></div></div><span class="cat-tag basic">Partial</span></div>
+      <div class="cat-item"><span class="cat-name">Scikit-learn Pipelines (production)</span><div class="cat-bar"><div class="cat-fill" style="width:25%;background:linear-gradient(90deg,#ef4444,#f87171)"></div></div><span class="cat-tag gap">Gap ⚠️</span></div>
+      <div class="cat-item"><span class="cat-name">Feature engineering (hands-on)</span><div class="cat-bar"><div class="cat-fill" style="width:40%;background:linear-gradient(90deg,#f59e0b,#fbbf24)"></div></div><span class="cat-tag basic">Basic</span></div>
+      <div class="cat-item"><span class="cat-name">Model evaluation & metrics</span><div class="cat-bar"><div class="cat-fill" style="width:60%;background:linear-gradient(90deg,#6366f1,#818cf8)"></div></div><span class="cat-tag basic">Partial</span></div>
+    </div>
+    <div class="cat-card">
+      <div class="cat-title">📐 Statistics</div>
+      <div class="cat-item"><span class="cat-name">Probability distributions</span><div class="cat-bar"><div class="cat-fill" style="width:65%;background:linear-gradient(90deg,#6366f1,#818cf8)"></div></div><span class="cat-tag have">Have</span></div>
+      <div class="cat-item"><span class="cat-name">Hypothesis testing (t-test, chi²)</span><div class="cat-bar"><div class="cat-fill" style="width:60%;background:linear-gradient(90deg,#6366f1,#818cf8)"></div></div><span class="cat-tag basic">Partial</span></div>
+      <div class="cat-item"><span class="cat-name">Central Limit Theorem</span><div class="cat-bar"><div class="cat-fill" style="width:65%;background:linear-gradient(90deg,#10b981,#34d399)"></div></div><span class="cat-tag have">Have</span></div>
+      <div class="cat-item"><span class="cat-name">Confidence intervals</span><div class="cat-bar"><div class="cat-fill" style="width:55%;background:linear-gradient(90deg,#6366f1,#818cf8)"></div></div><span class="cat-tag basic">Partial</span></div>
+      <div class="cat-item"><span class="cat-name">A/B test design (product context)</span><div class="cat-bar"><div class="cat-fill" style="width:15%;background:linear-gradient(90deg,#ef4444,#f87171)"></div></div><span class="cat-tag gap">Gap ⚠️</span></div>
+      <div class="cat-item"><span class="cat-name">Bayesian statistics</span><div class="cat-bar"><div class="cat-fill" style="width:35%;background:linear-gradient(90deg,#f59e0b,#fbbf24)"></div></div><span class="cat-tag basic">Basic</span></div>
+    </div>
+    <div class="cat-card">
+      <div class="cat-title">🔥 GenAI / LLM</div>
+      <div class="cat-item"><span class="cat-name">Gemini API (hands-on built)</span><div class="cat-bar"><div class="cat-fill" style="width:80%;background:linear-gradient(90deg,#10b981,#34d399)"></div></div><span class="cat-tag have">Strong ✓</span></div>
+      <div class="cat-item"><span class="cat-name">LLM orchestration (built it)</span><div class="cat-bar"><div class="cat-fill" style="width:70%;background:linear-gradient(90deg,#10b981,#34d399)"></div></div><span class="cat-tag have">Strong ✓</span></div>
+      <div class="cat-item"><span class="cat-name">Multimodal AI (image + text)</span><div class="cat-bar"><div class="cat-fill" style="width:72%;background:linear-gradient(90deg,#10b981,#34d399)"></div></div><span class="cat-tag have">Strong ✓</span></div>
+      <div class="cat-item"><span class="cat-name">Prompt engineering</span><div class="cat-bar"><div class="cat-fill" style="width:65%;background:linear-gradient(90deg,#6366f1,#818cf8)"></div></div><span class="cat-tag have">Have</span></div>
+      <div class="cat-item"><span class="cat-name">RAG / Vector DB pipelines</span><div class="cat-bar"><div class="cat-fill" style="width:10%;background:rgba(255,255,255,0.08)"></div></div><span class="cat-tag gap">Gap ⚠️</span></div>
+      <div class="cat-item"><span class="cat-name">LangChain / LlamaIndex</span><div class="cat-bar"><div class="cat-fill" style="width:15%;background:linear-gradient(90deg,#ef4444,#f87171)"></div></div><span class="cat-tag gap">Gap ⚠️</span></div>
+      <div class="cat-item"><span class="cat-name">LLM evaluation (RAGAS etc)</span><div class="cat-bar"><div class="cat-fill" style="width:5%;background:rgba(255,255,255,0.08)"></div></div><span class="cat-tag none">Not Yet</span></div>
+    </div>
+    <div class="cat-card">
+      <div class="cat-title">⚡ Big Data & Cloud</div>
+      <div class="cat-item"><span class="cat-name">Spark architecture (concepts)</span><div class="cat-bar"><div class="cat-fill" style="width:60%;background:linear-gradient(90deg,#6366f1,#818cf8)"></div></div><span class="cat-tag basic">Partial</span></div>
+      <div class="cat-item"><span class="cat-name">PySpark hands-on coding</span><div class="cat-bar"><div class="cat-fill" style="width:25%;background:linear-gradient(90deg,#ef4444,#f87171)"></div></div><span class="cat-tag gap">Gap ⚠️</span></div>
+      <div class="cat-item"><span class="cat-name">Kafka (streaming concepts)</span><div class="cat-bar"><div class="cat-fill" style="width:20%;background:linear-gradient(90deg,#ef4444,#f87171)"></div></div><span class="cat-tag gap">Gap ⚠️</span></div>
+      <div class="cat-item"><span class="cat-name">AWS / GCP basics</span><div class="cat-bar"><div class="cat-fill" style="width:20%;background:linear-gradient(90deg,#f59e0b,#fbbf24)"></div></div><span class="cat-tag basic">Basic</span></div>
+      <div class="cat-item"><span class="cat-name">Docker / containerization</span><div class="cat-bar"><div class="cat-fill" style="width:10%;background:rgba(255,255,255,0.08)"></div></div><span class="cat-tag gap">Gap ⚠️</span></div>
+      <div class="cat-item"><span class="cat-name">MLflow / experiment tracking</span><div class="cat-bar"><div class="cat-fill" style="width:5%;background:rgba(255,255,255,0.08)"></div></div><span class="cat-tag none">Not Yet</span></div>
+    </div>
+  </div>
+
+  <!-- ══════════ WHAT TO LEARN NEXT ══════════ -->
+  <div id="learn" class="sh">
+    <div class="sh-icon" style="background:linear-gradient(135deg,rgba(6,182,212,0.25),rgba(59,130,246,0.15))">📘</div>
+    <div><h2>Exactly What to Learn — In This Order</h2><p>Prioritized by interview impact. Do not skip ahead.</p></div>
+  </div>
+  <div class="hr"></div>
+
+  <div class="banner ban-red">
+    <span class="bl">Do Not Multitask</span>
+    <div class="bt">The biggest mistake candidates make is trying to learn everything at once. <strong>Go deep on one skill at a time.</strong> Finish Level 1 before starting Level 2. Shallow coverage of 10 skills loses to deep mastery of 5 skills every time in technical interviews.</div>
+  </div>
+
+  <!-- Learn 1: SQL -->
+  <div class="learn-card" style="border-color:rgba(239,68,68,0.25)">
+    <div class="lc-header" style="background:rgba(239,68,68,0.05)">
+      <div class="lc-num" style="background:rgba(239,68,68,0.2);color:var(--red3)">1</div>
+      <div class="lc-title">Advanced SQL — Window Functions, CTEs, Analytical Queries</div>
+      <span class="lc-badge" style="background:rgba(239,68,68,0.15);color:var(--red3)">Start Today</span>
+    </div>
+    <div class="lc-body">
+      <div class="lc-why">
+        This is the <strong>highest-probability interview killer on your list</strong>. 90% of DS interviews have a SQL round. Right now you'd fail it. 
+        The good news: SQL is the most learnable skill here — 4 weeks of daily practice transforms you from "knows basics" to "passes every SQL round."
+      </div>
+      <div class="lc-skills">
+        <span class="sk sk-r">Window Functions</span>
+        <span class="sk sk-r">ROW_NUMBER / RANK / DENSE_RANK</span>
+        <span class="sk sk-r">LAG / LEAD</span>
+        <span class="sk sk-r">CTEs (WITH clause)</span>
+        <span class="sk sk-r">Correlated subqueries</span>
+        <span class="sk sk-r">Self-joins</span>
+        <span class="sk sk-r">CASE WHEN (complex)</span>
+        <span class="sk sk-r">Cohort / retention queries</span>
+      </div>
+      <div class="lc-action">
+        <strong>Exact action:</strong> Open StrataScratch.com → filter by company (Meta, Google, Amazon) → solve 5 problems per day minimum. 
+        Start with Medium difficulty. Do NOT use hints for the first 20 minutes. 
+        After 150 problems you'll pass any DS SQL round. Use Mode Analytics SQL tutorial for window functions — it's the clearest free resource.
+      </div>
+      <div class="lc-time">⏱ Time to interview-ready: <span>4 weeks</span> at 5 problems/day</div>
+    </div>
+  </div>
+
+  <!-- Learn 2: LeetCode -->
+  <div class="learn-card" style="border-color:rgba(245,158,11,0.25)">
+    <div class="lc-header" style="background:rgba(245,158,11,0.05)">
+      <div class="lc-num" style="background:rgba(245,158,11,0.2);color:var(--amber3)">2</div>
+      <div class="lc-title">LeetCode — Arrays, Hash Maps, Two Pointers, Sliding Window (Python)</div>
+      <span class="lc-badge" style="background:rgba(245,158,11,0.15);color:var(--amber3)">Start Day 1 Parallel</span>
+    </div>
+    <div class="lc-body">
+      <div class="lc-why">
+        DS coding interviews are easier than SWE but still require ~5 core patterns. <strong>You don't need to know DP or graphs deeply — you need Arrays, Hash Maps, Two Pointers, Sliding Window, and Basic Recursion cold.</strong> 
+        The secret is pattern recognition, not raw intelligence. Once you've solved 20 hash map problems, you see the pattern everywhere.
+      </div>
+      <div class="lc-skills">
+        <span class="sk sk-a">Arrays & Strings</span>
+        <span class="sk sk-a">Hash Maps (most common)</span>
+        <span class="sk sk-a">Two Pointers</span>
+        <span class="sk sk-a">Sliding Window</span>
+        <span class="sk sk-a">Binary Search</span>
+        <span class="sk sk-a">Basic Recursion</span>
+        <span class="sk sk-a">Sorting algorithms</span>
+        <span class="sk sk-a">Stack / Queue</span>
+      </div>
+      <div class="lc-action">
+        <strong>Exact action:</strong> Go to LeetCode → sort by Easy → solve 5/day for 2 weeks. Then move to Medium, 3–5/day. 
+        When you get stuck, spend 20 min max then look at the solution — understand the pattern, don't just memorize it. 
+        Track your progress in a Notion doc. At 120 problems you're ready. Focus on Python exclusively.
+      </div>
+      <div class="lc-time">⏱ Time to interview-ready: <span>6 weeks</span> at 5 problems/day</div>
+    </div>
+  </div>
+
+  <!-- Learn 3: ML Verbal -->
+  <div class="learn-card" style="border-color:rgba(99,102,241,0.25)">
+    <div class="lc-header" style="background:rgba(99,102,241,0.05)">
+      <div class="lc-num" style="background:rgba(99,102,241,0.2);color:#a5b4fc">3</div>
+      <div class="lc-title">ML Concepts — Verbal Explanation Practice (Not More Theory)</div>
+      <span class="lc-badge" style="background:rgba(99,102,241,0.15);color:#a5b4fc">Week 2</span>
+    </div>
+    <div class="lc-body">
+      <div class="lc-why">
+        You already know the theory. What you lack is the ability to <strong>explain it clearly, precisely, and conversationally under pressure</strong>. 
+        "Walk me through how a Random Forest works" is a fundamentally different challenge than understanding it from a textbook. 
+        This is a communication skill, not a knowledge skill. Build it through daily verbal practice.
+      </div>
+      <div class="lc-skills">
+        <span class="sk sk-b">Bias-Variance tradeoff</span>
+        <span class="sk sk-b">Gradient Boosting intuition</span>
+        <span class="sk sk-b">L1 vs L2 Regularization</span>
+        <span class="sk sk-b">Overfitting solutions</span>
+        <span class="sk sk-b">Class imbalance handling</span>
+        <span class="sk sk-b">AUC-ROC interpretation</span>
+        <span class="sk sk-b">Train/val/test split rationale</span>
+        <span class="sk sk-b">Feature importance methods</span>
+      </div>
+      <div class="lc-action">
+        <strong>Exact action:</strong> Pick 1 ML concept per day. Set a 5-minute timer. Explain it out loud like you're talking to a PM who is smart but not technical. 
+        Record on your phone. Play it back. Does it make sense? Is it under 3 minutes? 
+        Use "Ace the Data Science Interview" by Nick Singh — the best book for this exact type of practice.
+      </div>
+      <div class="lc-time">⏱ Time to interview-ready: <span>3–4 weeks</span> of daily 15-min practice</div>
+    </div>
+  </div>
+
+  <!-- Learn 4: Scikit-learn -->
+  <div class="learn-card" style="border-color:rgba(6,182,212,0.25)">
+    <div class="lc-header" style="background:rgba(6,182,212,0.05)">
+      <div class="lc-num" style="background:rgba(6,182,212,0.2);color:var(--cyan3)">4</div>
+      <div class="lc-title">Scikit-learn End-to-End — Build Full ML Pipelines From Memory</div>
+      <span class="lc-badge" style="background:rgba(6,182,212,0.15);color:var(--cyan3)">Week 2</span>
+    </div>
+    <div class="lc-body">
+      <div class="lc-why">
+        Stop reading about ML. Start building complete models — <strong>preprocessing → feature engineering → model selection → cross-validation → hyperparameter tuning → evaluation → interpretation</strong> — all in one clean notebook, from memory, in under 30 minutes. 
+        Do this on 3–4 different real datasets and you'll nail any take-home challenge or live coding DS round.
+      </div>
+      <div class="lc-skills">
+        <span class="sk sk-c">Pipeline + ColumnTransformer</span>
+        <span class="sk sk-c">StandardScaler / OneHotEncoder</span>
+        <span class="sk sk-c">CrossValidation (StratifiedKFold)</span>
+        <span class="sk sk-c">GridSearchCV / RandomizedSearchCV</span>
+        <span class="sk sk-c">SHAP values</span>
+        <span class="sk sk-c">Confusion Matrix / ROC Curve</span>
+        <span class="sk sk-c">Imbalanced-learn (SMOTE)</span>
+        <span class="sk sk-c">Optuna (modern HP tuning)</span>
+      </div>
+      <div class="lc-action">
+        <strong>Exact action:</strong> Pick the Titanic, Heart Disease, and Churn prediction datasets (all free on Kaggle). 
+        Build a complete sklearn Pipeline for each — from raw CSV to final trained model with evaluation report. 
+        Do it from a blank notebook, no copy-pasting. After 3 complete builds, this becomes muscle memory.
+      </div>
+      <div class="lc-time">⏱ Time to interview-ready: <span>3 weeks</span> building 1 full pipeline every 2 days</div>
+    </div>
+  </div>
+
+  <!-- Learn 5: A/B Testing -->
+  <div class="learn-card" style="border-color:rgba(16,185,129,0.25)">
+    <div class="lc-header" style="background:rgba(16,185,129,0.05)">
+      <div class="lc-num" style="background:rgba(16,185,129,0.2);color:var(--green3)">5</div>
+      <div class="lc-title">A/B Testing & Experimentation — Product Context Statistics</div>
+      <span class="lc-badge" style="background:rgba(16,185,129,0.15);color:var(--green3)">Week 3</span>
+    </div>
+    <div class="lc-body">
+      <div class="lc-why">
+        Your M.S. stats knowledge is the foundation — now you need the <strong>product application layer</strong>. 
+        How to frame a business experiment as a statistical test. How to calculate sample size before running it. 
+        How to check for novelty effects, network effects, and p-hacking. How to report results to a PM clearly. 
+        This is one of the most reliably tested skills at Meta, Google, Amazon, and Airbnb.
+      </div>
+      <div class="lc-skills">
+        <span class="sk sk-g">Sample size calculation</span>
+        <span class="sk sk-g">Power analysis (β, α)</span>
+        <span class="sk sk-g">Multiple testing correction</span>
+        <span class="sk sk-g">Guardrail metrics</span>
+        <span class="sk sk-g">Network effects handling</span>
+        <span class="sk sk-g">Novelty effect identification</span>
+        <span class="sk sk-g">Bayesian A/B testing</span>
+        <span class="sk sk-g">Confidence interval interpretation</span>
+      </div>
+      <div class="lc-action">
+        <strong>Exact action:</strong> Read "Trustworthy Online Controlled Experiments" (Kohavi et al.) — first 5 chapters cover everything. 
+        Then build the A/B Testing Streamlit app from the roadmap — this forces you to implement the math, not just read it. 
+        Practice answering 1 product case per day: "How would you A/B test X feature?" using the full framework.
+      </div>
+      <div class="lc-time">⏱ Time to interview-ready: <span>3 weeks</span> of structured reading + building</div>
+    </div>
+  </div>
+
+  <!-- Learn 6: RAG / GenAI depth -->
+  <div class="learn-card" style="border-color:rgba(139,92,246,0.25)">
+    <div class="lc-header" style="background:rgba(139,92,246,0.05)">
+      <div class="lc-num" style="background:rgba(139,92,246,0.2);color:var(--purple3)">6</div>
+      <div class="lc-title">RAG Pipelines + LangChain — Deepen Your GenAI Advantage</div>
+      <span class="lc-badge" style="background:rgba(139,92,246,0.15);color:var(--purple3)">Week 3–4</span>
+    </div>
+    <div class="lc-body">
+      <div class="lc-why">
+        You already have the Gemini API experience — <strong>add RAG and you become one of the rarest DS candidates on the market</strong>. 
+        LangChain/LlamaIndex for orchestration, ChromaDB/Pinecone for vector storage, chunking and embedding strategies, 
+        and RAGAS for evaluation — this is the full LLM engineering stack that companies are actively hiring for in 2026. 
+        Best of all, you can add it to your existing library project in 2 weeks.
+      </div>
+      <div class="lc-skills">
+        <span class="sk sk-p">LangChain basics</span>
+        <span class="sk sk-p">LlamaIndex</span>
+        <span class="sk sk-p">ChromaDB (local vector DB)</span>
+        <span class="sk sk-p">Text chunking strategies</span>
+        <span class="sk sk-p">Embedding models (OpenAI / HF)</span>
+        <span class="sk sk-p">Retrieval evaluation (RAGAS)</span>
+        <span class="sk sk-p">Semantic search</span>
+      </div>
+      <div class="lc-action">
+        <strong>Exact action:</strong> LangChain has a free crash course on YouTube (1BillionTech / James Briggs channels). 
+        Build a simple RAG system in 3 days: PDF ingestion → chunking → ChromaDB → Gemini query → grounded response. 
+        Then integrate this into your library orchestration project. Publish the upgrade on GitHub and write a Medium article about it.
+      </div>
+      <div class="lc-time">⏱ Time to useful depth: <span>2 weeks</span> building one RAG system end-to-end</div>
+    </div>
+  </div>
+
+  <!-- ══════════ BEFORE YOU APPLY ══════════ -->
+  <div id="before-apply" class="sh">
+    <div class="sh-icon" style="background:linear-gradient(135deg,rgba(16,185,129,0.25),rgba(6,182,212,0.15))">🚀</div>
+    <div><h2>The Minimum Bar Before You Apply</h2><p>Do not send a single FAANG application until these are checked off</p></div>
+  </div>
+  <div class="hr"></div>
+
+  <div class="before-apply">
+    <div class="ba-title">📍 Your Application Readiness Phases</div>
+    <div class="phase-strip">
+      <div class="ph-seg ph1-c"><span class="ph-days">Day 1–7</span><span class="ph-name">Portfolio Visible</span></div>
+      <div class="ph-seg ph2-c"><span class="ph-days">Day 7–30</span><span class="ph-name">SQL + LC Started</span></div>
+      <div class="ph-seg ph3-c"><span class="ph-days">Day 30–55</span><span class="ph-name">Interview Practice</span></div>
+      <div class="ph-seg ph4-c"><span class="ph-days">Day 55+</span><span class="ph-name">Apply Aggressively</span></div>
+    </div>
+    <div class="ba-items">
+      <div class="ba-item">
+        <strong>✅ Portfolio — Complete by Day 7</strong>
+        All master's projects pushed to GitHub with full READMEs. Gemini image recognition deployed to Streamlit Cloud with a live URL. 2-minute Loom demo recorded. LinkedIn headline updated with GenAI keywords.
+      </div>
+      <div class="ba-item">
+        <strong>✅ SQL — Complete by Day 30</strong>
+        100+ StrataScratch problems solved. Window functions, CTEs, LEAD/LAG mastered. Can solve a Medium FAANG SQL question in under 15 minutes without hints.
+      </div>
+      <div class="ba-item">
+        <strong>✅ LeetCode — Complete by Day 45</strong>
+        120+ problems solved (mix Easy/Medium). Core patterns memorized: hash map, two pointer, sliding window, binary search. Can solve an Easy problem in under 10 minutes.
+      </div>
+      <div class="ba-item">
+        <strong>✅ ML Verbal — Complete by Day 35</strong>
+        Can explain 15+ ML concepts clearly in under 2 minutes each without notes. Practiced out loud, not just read. Test yourself: record it, play it back.
+      </div>
+      <div class="ba-item">
+        <strong>✅ A/B Testing Framework — Complete by Day 45</strong>
+        Can design a complete A/B test from scratch: hypothesis → metric → sample size → analysis plan → interpretation. Practice on 10 product case questions.
+      </div>
+      <div class="ba-item">
+        <strong>✅ Mock Interview — Complete before first application</strong>
+        Do 2 mock interviews on Pramp (free). At least 1 technical (coding + SQL) and 1 behavioral. Know your STAR stories cold: 3 impact, 2 failure, 2 leadership.
+      </div>
+      <div class="ba-item">
+        <strong>✅ RAG Project — Complete by Day 40</strong>
+        Library orchestration upgraded with RAG pipeline. Deployed, documented, with architecture diagram. This upgrade alone will generate recruiter inbound messages.
+      </div>
+      <div class="ba-item">
+        <strong>✅ Resume — Finalized by Day 10</strong>
+        1 page, every bullet quantified ("analyzed 500K records", "reduced latency by 40%"). Include Gemini API project prominently. ATS score 80+ via Jobscan for each JD you apply to.
+      </div>
+    </div>
+  </div>
+
+  <!-- ══════════ FINAL VERDICT ══════════ -->
+  <div id="verdict" class="sh">
+    <div class="sh-icon" style="background:linear-gradient(135deg,rgba(245,158,11,0.25),rgba(16,185,129,0.15))">🎯</div>
+    <div><h2>The Final Honest Verdict</h2><p>What this all means and what to do Monday morning</p></div>
+  </div>
+  <div class="hr"></div>
+
+  <div class="verdict-block" style="background:linear-gradient(135deg,rgba(245,158,11,0.06),rgba(16,185,129,0.04));border:1px solid rgba(245,158,11,0.18);border-radius:16px;">
+    <div class="vb-title">Here's the complete picture, no softening:</div>
+    <div class="vb-row">
+      <div class="vb-icon">🟢</div>
+      <div class="vb-text"><strong>Your knowledge base is genuinely good.</strong> An M.S. in Data Science, real GenAI experience with Gemini API, a Big Data certification, and 3.8 years of work experience — this is not a weak starting point. Many candidates with 2 years of experience and a B.S. are applying to the same roles. You have more raw material than most.</div>
+    </div>
+    <div class="vb-row">
+      <div class="vb-icon">🔴</div>
+      <div class="vb-text"><strong>But you are not interview-ready yet — and that's the only thing that matters at this stage.</strong> Knowing machine learning and being able to perform under a 45-minute technical interview are entirely different skills. The interviewers don't see your degree during the coding round. They see whether you can write clean Python to solve a sliding window problem in 20 minutes. Right now, you probably can't — not from practice.</div>
+    </div>
+    <div class="vb-row">
+      <div class="vb-icon">🟡</div>
+      <div class="vb-text"><strong>The gap is specific and closeable, not fundamental.</strong> You're not missing a year of study. You're missing about <strong>60 days of deliberate, structured practice</strong> in the exact skills that interviews test: SQL window functions, LeetCode patterns, ML verbal fluency, and A/B test design. These aren't complex. They require repetition and volume, not genius.</div>
+    </div>
+    <div class="vb-row">
+      <div class="vb-icon">⚡</div>
+      <div class="vb-text"><strong>Your GenAI work is your unfair advantage — but only if you make it visible and deepen it.</strong> The Gemini API + multimodal image recognition experience is something most DS candidates simply don't have. Adding RAG to your library project, deploying it publicly, and writing a clear Medium article about it could generate inbound recruiter messages before you even start applying. Do this in Week 1.</div>
+    </div>
+    <div class="vb-row">
+      <div class="vb-icon">📅</div>
+      <div class="vb-text"><strong>Realistic timeline: 55–70 days to your first quality application, 90–120 days to first offer.</strong> If you do SQL + LeetCode + ML verbal daily (even 1–2 hours/day), your portfolio is deployed in Week 1, and you get 1 referral from a FAU alumni — you could have an offer in hand by mid-September 2026. That's faster than most. The question is consistency, not capability.</div>
+    </div>
+  </div>
+
+  <div style="background:var(--s1);border:1px solid var(--border);border-radius:12px;padding:22px;margin-top:16px">
+    <div style="font-size:14px;font-weight:800;color:#fff;margin-bottom:14px">📌 Monday Morning — Do These 3 Things First</div>
+    <div style="display:flex;flex-direction:column;gap:10px">
+      <div style="display:flex;gap:12px;align-items:flex-start;font-size:13px;color:var(--muted2);background:rgba(239,68,68,0.05);border:1px solid rgba(239,68,68,0.15);border-radius:9px;padding:12px">
+        <span style="font-size:20px;flex-shrink:0">1️⃣</span>
+        <div><strong style="color:#fff">Open StrataScratch — solve your first 5 SQL problems right now.</strong> Don't plan it. Don't research it. Just go to strataScratch.com, filter by Meta, click a Medium problem, and start. This is the highest-leverage 45 minutes you can spend today. SQL is your biggest gap and the most predictable interview topic.</div>
+      </div>
+      <div style="display:flex;gap:12px;align-items:flex-start;font-size:13px;color:var(--muted2);background:rgba(245,158,11,0.05);border:1px solid rgba(245,158,11,0.15);border-radius:9px;padding:12px">
+        <span style="font-size:20px;flex-shrink:0">2️⃣</span>
+        <div><strong style="color:#fff">Push your Gemini image recognition project to a public GitHub repo — today.</strong> Just push the existing code with even a basic README. It doesn't need to be perfect. Being public and findable is infinitely better than being local on your machine. You can improve the README tomorrow. Deploy it to Streamlit Cloud this week.</div>
+      </div>
+      <div style="display:flex;gap:12px;align-items:flex-start;font-size:13px;color:var(--muted2);background:rgba(16,185,129,0.05);border:1px solid rgba(16,185,129,0.15);border-radius:9px;padding:12px">
+        <span style="font-size:20px;flex-shrink:0">3️⃣</span>
+        <div><strong style="color:#fff">Open LeetCode — solve 3 Easy Array problems in Python.</strong> Not to become an expert today. To start the habit, find your baseline, and begin the counter. Every competitive candidate you'll interview against has solved 150+ problems. The only way to close that gap is starting today, not next week.</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="foot">
+    <strong>Bottom Line:</strong> You're closer than you think in terms of knowledge. You're further than you think in terms of interview execution.<br>
+    The bridge between those two things is <strong>daily, deliberate practice on exactly the right skills — starting today.</strong><br><br>
+    58% → 85% in <strong>60 days</strong> is absolutely realistic. The question is whether you start on Monday or "next week."
+  </div>
+
+</div>
+</body>
+</html>
