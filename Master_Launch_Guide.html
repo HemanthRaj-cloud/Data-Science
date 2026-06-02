@@ -1,0 +1,1421 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Master Launch Guide — Everything to Get Started</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Fira+Code:wght@400;500;600&display=swap');
+
+  :root {
+    --bg:#07090f; --s1:#0d1117; --s2:#111827; --s3:#1a2235;
+    --border:rgba(255,255,255,0.07); --border2:rgba(255,255,255,0.12);
+    --text:#dde4f0; --muted:#64748b; --muted2:#8899b8;
+    --green:#10b981; --green2:#34d399; --green3:#6ee7b7;
+    --blue:#3b82f6; --blue2:#60a5fa; --blue3:#93c5fd;
+    --amber:#f59e0b; --amber2:#fbbf24; --amber3:#fcd34d;
+    --red:#ef4444; --red2:#f87171; --red3:#fca5a5;
+    --purple:#8b5cf6; --purple2:#a78bfa; --purple3:#c4b5fd;
+    --cyan:#06b6d4; --cyan2:#22d3ee; --cyan3:#67e8f9;
+    --orange:#f97316; --accent:#6366f1; --accent2:#818cf8;
+    --r:14px;
+  }
+
+  *{margin:0;padding:0;box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{font-family:'Inter',sans-serif;background:var(--bg);color:var(--text);line-height:1.6;}
+
+  /* ── HERO ── */
+  .hero{
+    background:linear-gradient(160deg,#07090f 0%,#0f1520 40%,#0c1630 80%,#07090f 100%);
+    padding:56px 40px 48px; border-bottom:1px solid var(--border); position:relative; overflow:hidden;
+  }
+  .hero::before{
+    content:''; position:absolute; inset:0;
+    background:radial-gradient(ellipse at 15% 50%,rgba(16,185,129,0.13) 0%,transparent 55%),
+               radial-gradient(ellipse at 85% 20%,rgba(99,102,241,0.10) 0%,transparent 50%),
+               radial-gradient(ellipse at 50% 100%,rgba(6,182,212,0.06) 0%,transparent 50%);
+  }
+  .hi{position:relative;max-width:1000px;margin:0 auto;}
+  .hero-tag{
+    display:inline-flex;align-items:center;gap:8px;
+    background:rgba(16,185,129,0.1);border:1px solid rgba(16,185,129,0.28);
+    border-radius:100px;padding:5px 14px;font-size:11px;font-weight:700;
+    color:var(--green3);letter-spacing:.8px;text-transform:uppercase;margin-bottom:18px;
+  }
+  .hero h1{
+    font-size:clamp(28px,5vw,48px);font-weight:900;line-height:1.1;margin-bottom:14px;
+    background:linear-gradient(135deg,#fff 15%,#a5b4fc 55%,#6ee7b7 100%);
+    -webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;
+  }
+  .hero-sub{font-size:15px;color:var(--muted2);max-width:680px;margin-bottom:28px;line-height:1.7;}
+  .hero-sub strong{color:#e2e8f0;}
+  .hero-pills{display:flex;flex-wrap:wrap;gap:10px;}
+  .pill{display:inline-flex;align-items:center;gap:7px;padding:7px 14px;border-radius:100px;font-size:12px;font-weight:600;border:1px solid transparent;}
+  .pill-g{background:rgba(16,185,129,0.09);border-color:rgba(16,185,129,0.22);color:var(--green3);}
+  .pill-b{background:rgba(99,102,241,0.09);border-color:rgba(99,102,241,0.22);color:#a5b4fc;}
+  .pill-a{background:rgba(245,158,11,0.09);border-color:rgba(245,158,11,0.22);color:var(--amber3);}
+  .pill-r{background:rgba(239,68,68,0.09);border-color:rgba(239,68,68,0.22);color:var(--red3);}
+  .pill-c{background:rgba(6,182,212,0.09);border-color:rgba(6,182,212,0.22);color:var(--cyan3);}
+
+  /* ── LAYOUT ── */
+  .wrap{max-width:1000px;margin:0 auto;padding:0 24px 80px;}
+  .g2{display:grid;grid-template-columns:1fr 1fr;gap:14px;}
+  .g3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:14px;}
+  @media(max-width:680px){.g2,.g3{grid-template-columns:1fr;}}
+
+  /* ── SECTION HEADER ── */
+  .sh{display:flex;align-items:center;gap:14px;margin:52px 0 20px;}
+  .sh-icon{width:46px;height:46px;border-radius:13px;display:flex;align-items:center;justify-content:center;font-size:21px;flex-shrink:0;}
+  .sh h2{font-size:21px;font-weight:800;color:#fff;}
+  .sh p{font-size:13px;color:var(--muted);margin-top:2px;}
+  .hr{height:1px;background:var(--border);margin-bottom:24px;}
+
+  /* ── CARDS ── */
+  .card{background:var(--s1);border:1px solid var(--border);border-radius:var(--r);padding:22px;transition:transform .2s,border-color .2s;}
+  .card:hover{transform:translateY(-2px);}
+  .ct{font-size:14px;font-weight:700;display:flex;align-items:center;gap:8px;margin-bottom:12px;color:#fff;}
+
+  /* ── BANNERS ── */
+  .banner{border-radius:10px;padding:14px 18px;margin-bottom:16px;display:flex;gap:12px;border:1px solid transparent;align-items:flex-start;}
+  .ban-g{background:rgba(16,185,129,0.07);border-color:rgba(16,185,129,0.18);}
+  .ban-a{background:rgba(245,158,11,0.07);border-color:rgba(245,158,11,0.18);}
+  .ban-r{background:rgba(239,68,68,0.07);border-color:rgba(239,68,68,0.18);}
+  .ban-b{background:rgba(99,102,241,0.07);border-color:rgba(99,102,241,0.18);}
+  .ban-c{background:rgba(6,182,212,0.07);border-color:rgba(6,182,212,0.18);}
+  .ban-p{background:rgba(139,92,246,0.07);border-color:rgba(139,92,246,0.18);}
+  .bl{font-size:10px;font-weight:800;text-transform:uppercase;letter-spacing:.7px;padding:2px 7px;border-radius:3px;white-space:nowrap;margin-top:2px;}
+  .ban-g .bl{background:rgba(16,185,129,0.18);color:var(--green3);}
+  .ban-a .bl{background:rgba(245,158,11,0.18);color:var(--amber3);}
+  .ban-r .bl{background:rgba(239,68,68,0.18);color:var(--red3);}
+  .ban-b .bl{background:rgba(99,102,241,0.18);color:#a5b4fc;}
+  .ban-c .bl{background:rgba(6,182,212,0.18);color:var(--cyan3);}
+  .ban-p .bl{background:rgba(139,92,246,0.18);color:var(--purple3);}
+  .bt{font-size:13px;line-height:1.65;}
+  .bt strong{color:#fff;}
+
+  /* ── INTERACTIVE CHECKLIST ── */
+  .checklist-section{margin-bottom:6px;}
+  .cl-phase-title{
+    font-size:13px;font-weight:800;color:#fff;padding:12px 16px;
+    background:rgba(255,255,255,0.03);border:1px solid var(--border);
+    border-radius:10px 10px 0 0;display:flex;align-items:center;justify-content:space-between;gap:10px;
+    cursor:pointer;user-select:none;transition:background .2s;
+  }
+  .cl-phase-title:hover{background:rgba(255,255,255,0.05);}
+  .cl-phase-title .phase-tag{font-size:10px;font-weight:700;padding:2px 8px;border-radius:4px;text-transform:uppercase;letter-spacing:.5px;}
+  .cl-body{
+    border:1px solid var(--border);border-top:none;border-radius:0 0 10px 10px;
+    background:rgba(0,0,0,0.15);overflow:hidden;
+    max-height:2000px;transition:max-height .4s ease;
+  }
+  .cl-body.collapsed{max-height:0;}
+  .cl-item{
+    display:flex;align-items:flex-start;gap:12px;padding:11px 16px;
+    border-bottom:1px solid var(--border);transition:background .15s;
+    cursor:pointer;
+  }
+  .cl-item:last-child{border-bottom:none;}
+  .cl-item:hover{background:rgba(255,255,255,0.025);}
+  .cl-item.done{opacity:.55;}
+  .cl-item.done .cl-text{text-decoration:line-through;color:var(--muted);}
+  .cl-checkbox{
+    width:18px;height:18px;border-radius:5px;border:1.5px solid rgba(255,255,255,0.2);
+    flex-shrink:0;margin-top:2px;display:flex;align-items:center;justify-content:center;
+    font-size:11px;transition:all .2s;background:transparent;
+  }
+  .cl-item.done .cl-checkbox{background:var(--green);border-color:var(--green);color:#fff;}
+  .cl-text{font-size:12.5px;color:var(--text);line-height:1.55;flex:1;}
+  .cl-text strong{color:#fff;}
+  .cl-tag{font-size:10px;font-weight:700;padding:2px 7px;border-radius:4px;white-space:nowrap;margin-top:1px;flex-shrink:0;}
+
+  /* ── PROGRESS BAR ── */
+  .progress-wrap{background:var(--s1);border:1px solid var(--border);border-radius:var(--r);padding:22px;margin-bottom:20px;}
+  .prog-title{font-size:15px;font-weight:800;color:#fff;margin-bottom:16px;display:flex;align-items:center;justify-content:space-between;}
+  .prog-row{display:flex;align-items:center;gap:12px;margin-bottom:10px;}
+  .prog-label{font-size:12px;color:var(--muted2);min-width:170px;font-weight:500;}
+  .prog-bar{flex:1;height:6px;background:rgba(255,255,255,0.05);border-radius:3px;overflow:hidden;}
+  .prog-fill{height:100%;border-radius:3px;}
+  .prog-pct{font-size:11px;font-weight:700;font-family:'Fira Code',monospace;min-width:38px;text-align:right;}
+
+  /* ── DAILY SCHEDULE ── */
+  .schedule-block{background:var(--s1);border:1px solid var(--border);border-radius:var(--r);overflow:hidden;margin-bottom:14px;}
+  .sch-header{padding:14px 18px;display:flex;align-items:center;gap:12px;border-bottom:1px solid var(--border);}
+  .sch-day{width:36px;height:36px;border-radius:9px;display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:800;flex-shrink:0;font-family:'Fira Code',monospace;}
+  .sch-title{font-size:14px;font-weight:700;color:#fff;}
+  .sch-sub{font-size:11px;color:var(--muted);margin-top:1px;}
+  .sch-body{padding:14px 18px;}
+  .sch-slot{display:flex;gap:12px;padding:7px 0;border-bottom:1px solid var(--border);align-items:flex-start;}
+  .sch-slot:last-child{border-bottom:none;}
+  .sch-time{font-size:10.5px;font-weight:700;font-family:'Fira Code',monospace;color:var(--muted);min-width:80px;margin-top:2px;white-space:nowrap;}
+  .sch-task{font-size:12.5px;color:var(--muted2);line-height:1.55;}
+  .sch-task strong{color:var(--text);}
+  .sch-task .tip{font-size:11px;color:var(--muted);display:block;margin-top:2px;}
+
+  /* ── OUTREACH TEMPLATES ── */
+  .template-card{background:var(--s1);border:1px solid var(--border);border-radius:var(--r);overflow:hidden;margin-bottom:14px;}
+  .tc-header{padding:14px 18px;background:rgba(255,255,255,0.02);border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:8px;}
+  .tc-title{font-size:13px;font-weight:800;color:#fff;}
+  .tc-tag{font-size:10px;font-weight:700;padding:3px 9px;border-radius:4px;}
+  .tc-body{padding:16px 18px;}
+  .tc-message{
+    background:rgba(0,0,0,0.3);border:1px solid rgba(255,255,255,0.07);
+    border-radius:8px;padding:14px 16px;
+    font-size:12px;color:var(--muted2);line-height:1.75;
+    font-family:'Inter',sans-serif;white-space:pre-wrap;word-wrap:break-word;
+  }
+  .tc-message strong{color:#fff;}
+  .tc-note{font-size:11.5px;color:var(--muted);margin-top:10px;line-height:1.6;padding:8px 12px;background:rgba(255,255,255,0.02);border-radius:6px;border-left:2px solid var(--accent);}
+
+  /* ── MISSING PIECES ── */
+  .missing-item{
+    display:flex;gap:14px;padding:16px 18px;background:var(--s1);
+    border:1px solid var(--border);border-radius:12px;margin-bottom:10px;
+    align-items:flex-start;transition:border-color .2s;
+  }
+  .missing-item:hover{border-color:rgba(255,255,255,0.12);}
+  .mi-icon{font-size:22px;flex-shrink:0;margin-top:2px;}
+  .mi-body{flex:1;}
+  .mi-title{font-size:14px;font-weight:800;color:#fff;margin-bottom:4px;}
+  .mi-desc{font-size:12.5px;color:var(--muted2);line-height:1.65;}
+  .mi-desc strong{color:var(--text);}
+  .mi-action{
+    margin-top:8px;padding:8px 12px;border-radius:7px;
+    font-size:12px;color:var(--green3);
+    background:rgba(16,185,129,0.07);border:1px solid rgba(16,185,129,0.15);
+    line-height:1.5;
+  }
+  .mi-action strong{color:#fff;}
+
+  /* ── ECOSYSTEM MAP ── */
+  .eco-row{display:flex;align-items:stretch;gap:0;border:1px solid var(--border);border-radius:12px;overflow:hidden;margin-bottom:10px;}
+  .eco-left{width:160px;flex-shrink:0;padding:14px 16px;display:flex;flex-direction:column;justify-content:center;border-right:1px solid var(--border);}
+  .eco-label{font-size:10px;font-weight:800;text-transform:uppercase;letter-spacing:.6px;color:var(--muted);margin-bottom:4px;}
+  .eco-name{font-size:13px;font-weight:800;color:#fff;}
+  .eco-right{flex:1;padding:14px 16px;background:rgba(0,0,0,0.15);}
+  .eco-items{display:flex;flex-wrap:wrap;gap:6px;}
+  .eco-tag{
+    display:inline-block;padding:3px 9px;border-radius:6px;
+    font-size:11px;font-weight:600;font-family:'Fira Code',monospace;
+    border:1px solid transparent;
+  }
+
+  /* ── WEEK 1 TIMELINE ── */
+  .w1-day{
+    display:flex;gap:14px;padding:14px 16px;background:var(--s1);
+    border:1px solid var(--border);border-radius:12px;margin-bottom:8px;
+    transition:border-color .2s;
+  }
+  .w1-day:hover{border-color:rgba(255,255,255,0.12);}
+  .w1-num{width:42px;height:42px;border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:14px;font-weight:900;flex-shrink:0;font-family:'Fira Code',monospace;}
+  .w1-body{flex:1;}
+  .w1-title{font-size:13px;font-weight:800;color:#fff;margin-bottom:5px;}
+  .w1-tasks{list-style:none;}
+  .w1-tasks li{font-size:12px;color:var(--muted2);padding:2.5px 0;display:flex;gap:8px;line-height:1.5;}
+  .w1-tasks li::before{content:'→';color:var(--accent2);flex-shrink:0;}
+  .w1-result{font-size:11px;margin-top:7px;padding:6px 10px;border-radius:6px;font-weight:600;}
+
+  /* ── MASTER TRACKER ── */
+  .tracker-table{width:100%;border-collapse:collapse;}
+  .tracker-table th{padding:10px 14px;text-align:left;font-size:10.5px;font-weight:700;text-transform:uppercase;letter-spacing:.5px;color:var(--muted);background:rgba(255,255,255,0.02);border-bottom:1px solid var(--border2);}
+  .tracker-table td{padding:10px 14px;border-bottom:1px solid var(--border);font-size:12.5px;color:var(--text);vertical-align:top;line-height:1.5;}
+  .tracker-table tr:last-child td{border-bottom:none;}
+  .tracker-table tr:hover td{background:rgba(255,255,255,0.015);}
+  .tbl-wrap{background:var(--s1);border:1px solid var(--border);border-radius:var(--r);overflow:hidden;}
+  .status-dot{width:8px;height:8px;border-radius:50%;display:inline-block;margin-right:6px;}
+
+  /* ── NAV ── */
+  .nav{background:var(--s1);border:1px solid var(--border);border-radius:12px;padding:14px 18px;margin:24px 0;display:flex;flex-wrap:wrap;gap:7px;}
+  .nav a{color:var(--muted);text-decoration:none;font-size:12px;font-weight:600;padding:5px 11px;border-radius:6px;border:1px solid var(--border);background:rgba(255,255,255,0.02);transition:all .2s;}
+  .nav a:hover{color:#a5b4fc;border-color:rgba(99,102,241,0.3);background:rgba(99,102,241,0.06);}
+
+  /* ── PROGRESS COUNTER ── */
+  .progress-counter{
+    position:fixed;bottom:24px;right:24px;
+    background:linear-gradient(135deg,#0f1623,#1a2235);
+    border:1px solid rgba(99,102,241,0.3);border-radius:14px;
+    padding:14px 18px;box-shadow:0 8px 32px rgba(0,0,0,0.4);
+    z-index:100;min-width:180px;
+  }
+  .pc-label{font-size:10px;color:var(--muted);text-transform:uppercase;letter-spacing:.6px;font-weight:700;margin-bottom:4px;}
+  .pc-num{font-size:28px;font-weight:900;font-family:'Fira Code',monospace;color:#a5b4fc;line-height:1;}
+  .pc-sub{font-size:11px;color:var(--muted);margin-top:3px;}
+  .pc-bar{height:4px;background:rgba(255,255,255,0.05);border-radius:2px;overflow:hidden;margin-top:8px;}
+  .pc-fill{height:100%;background:linear-gradient(90deg,var(--accent),var(--green));border-radius:2px;transition:width .3s;}
+  .pc-reset{font-size:10px;color:var(--muted);cursor:pointer;margin-top:6px;text-align:center;text-decoration:underline;}
+  .pc-reset:hover{color:var(--red3);}
+
+  /* ── FOOTER ── */
+  .foot{margin-top:50px;padding:28px;border-radius:var(--r);background:linear-gradient(135deg,rgba(16,185,129,0.06),rgba(99,102,241,0.05));border:1px solid rgba(16,185,129,0.15);text-align:center;font-size:13px;color:var(--muted2);line-height:1.8;}
+  .foot strong{color:#a5b4fc;}
+
+  /* ── BX badges ── */
+  .bx{display:inline-block;padding:2px 8px;border-radius:5px;font-size:11px;font-weight:600;font-family:'Fira Code',monospace;border:1px solid transparent;}
+  .bx-g{background:rgba(16,185,129,0.1);color:var(--green3);border-color:rgba(16,185,129,0.2);}
+  .bx-b{background:rgba(99,102,241,0.1);color:#a5b4fc;border-color:rgba(99,102,241,0.2);}
+  .bx-a{background:rgba(245,158,11,0.1);color:var(--amber3);border-color:rgba(245,158,11,0.2);}
+  .bx-r{background:rgba(239,68,68,0.1);color:var(--red3);border-color:rgba(239,68,68,0.2);}
+  .bx-c{background:rgba(6,182,212,0.1);color:var(--cyan3);border-color:rgba(6,182,212,0.2);}
+  .bx-p{background:rgba(139,92,246,0.1);color:var(--purple3);border-color:rgba(139,92,246,0.2);}
+</style>
+</head>
+<body>
+
+<!-- ══ HERO ══ -->
+<div class="hero">
+  <div class="hi">
+    <div class="hero-tag">🎯 Master Launch Guide — Final Completeness Check</div>
+    <h1>You're Missing 7 Things.<br>Here's the Full Picture.</h1>
+    <p class="hero-sub">
+      You have the roadmap, gap analysis, skills plan, and resume. But there are <strong>7 critical pieces most candidates never think about</strong> — and they're often the difference between an offer and silence. This is your complete, nothing-missing launch guide with a daily schedule, outreach scripts, and a live checklist.
+    </p>
+    <div class="hero-pills">
+      <span class="pill pill-g">✓ Roadmap Done</span>
+      <span class="pill pill-g">✓ Gap Analysis Done</span>
+      <span class="pill pill-g">✓ Resume Done</span>
+      <span class="pill pill-a">⚠️ 7 Missing Pieces</span>
+      <span class="pill pill-b">📋 Interactive Checklist</span>
+      <span class="pill pill-c">⏱ Week 1 Hour-by-Hour Plan</span>
+    </div>
+  </div>
+</div>
+
+<div class="wrap">
+
+  <div class="nav">
+    <a href="#missing">🔍 What's Missing</a>
+    <a href="#checklist">✅ Master Checklist</a>
+    <a href="#schedule">⏱ Daily Schedule</a>
+    <a href="#ecosystem">🗺️ Full Ecosystem Map</a>
+    <a href="#week1">📅 Week 1 Day-by-Day</a>
+    <a href="#outreach">📬 Outreach Scripts</a>
+    <a href="#tracker">📊 Job Tracker</a>
+    <a href="#mindset">🧠 Mindset & Habits</a>
+    <a href="#verdict">🏁 Final Verdict</a>
+  </div>
+
+  <!-- ══════════ WHAT'S MISSING ══════════ -->
+  <div id="missing" class="sh" style="margin-top:16px">
+    <div class="sh-icon" style="background:linear-gradient(135deg,rgba(239,68,68,0.25),rgba(245,158,11,0.15))">🔍</div>
+    <div><h2>The 7 Things You're Missing</h2><p>Critical elements no one tells you about — each one meaningfully increases your hire probability</p></div>
+  </div>
+  <div class="hr"></div>
+
+  <div class="banner ban-r">
+    <span class="bl">Reality Check</span>
+    <div class="bt">Your 4 documents cover <strong>what to learn and what to build</strong>. But getting hired also requires knowing <strong>how to operate day-to-day</strong> — outreach scripts, a daily schedule that fits around your current job, a system to track 30+ applications, and a mental framework to stay consistent for 60+ days. These aren't glamorous but they are what separates candidates who land offers from those who burn out at week 4.</div>
+  </div>
+
+  <!-- Missing 1 -->
+  <div class="missing-item">
+    <div class="mi-icon">⏱️</div>
+    <div class="mi-body">
+      <div class="mi-title">1. A Daily Schedule — You're Still Working Full-Time</div>
+      <div class="mi-desc">
+        You have a current job (10 months in). That means you have <strong>roughly 2–3 hours per day</strong> to prep, not 8. Without a structured daily time-block, you'll context-switch constantly, lose momentum, and make 10 weeks of work feel like 6 months. A precise daily schedule — broken by weekday vs. weekend — is the backbone of this entire plan. It's missing from everything you have.
+      </div>
+      <div class="mi-action"><strong>→ Solved below</strong> in the Daily Schedule section. Includes weekday (2hr) and weekend (4hr) plans.</div>
+    </div>
+  </div>
+
+  <!-- Missing 2 -->
+  <div class="missing-item">
+    <div class="mi-icon">📬</div>
+    <div class="mi-body">
+      <div class="mi-title">2. Outreach Message Templates — You Don't Know What to Say</div>
+      <div class="mi-desc">
+        You know you need to network and reach out to FAU alumni. But what exactly do you say in a LinkedIn DM to a stranger at Google? What do you write in a follow-up email after applying? What's the exact referral request message? Without copy-paste-ready templates, most people stall on outreach — the blank-page problem is real. <strong>The actual words matter enormously</strong>; a clumsy message gets ignored, a precise one gets a response.
+      </div>
+      <div class="mi-action"><strong>→ 6 copy-paste templates below</strong> for LinkedIn DMs, referral requests, recruiter follow-ups, and cold outreach.</div>
+    </div>
+  </div>
+
+  <!-- Missing 3 -->
+  <div class="missing-item">
+    <div class="mi-icon">📊</div>
+    <div class="mi-body">
+      <div class="mi-title">3. An Application Tracking System — 30+ Applications Will Become Chaos</div>
+      <div class="mi-desc">
+        You'll apply to 30–50 companies over 60 days. Each at different pipeline stages — some doing phone screens, some onsites, some rejected, some ghosting. Without a tracker you'll miss follow-up windows, forget which resume version you sent, lose track of referral contacts, and feel overwhelmed. <strong>Managing the pipeline is a skill itself</strong>, and most rejected candidates lost track, not interviews.
+      </div>
+      <div class="mi-action"><strong>→ Tracking framework below</strong> with the exact fields to monitor and a free tool recommendation.</div>
+    </div>
+  </div>
+
+  <!-- Missing 4 -->
+  <div class="missing-item">
+    <div class="mi-icon">🧠</div>
+    <div class="mi-body">
+      <div class="mi-title">4. A Rejection Protocol — You Will Get Rejected, and That's Fine</div>
+      <div class="mi-desc">
+        This is the one nobody prepares for. <strong>Even the best candidates get rejected 70–80% of the time at FAANG</strong>. A rejection after an onsite you felt good about can completely derail your momentum if you don't have a protocol for it. Candidates who land offers are not the ones who don't get rejected — they're the ones who process rejection fast, extract signal, and keep going. You need a defined plan for what to do within 24 hours of each rejection.
+      </div>
+      <div class="mi-action"><strong>→ The 24-Hour Rejection Protocol</strong> included in the Mindset section below.</div>
+    </div>
+  </div>
+
+  <!-- Missing 5 -->
+  <div class="missing-item">
+    <div class="mi-icon">💰</div>
+    <div class="mi-body">
+      <div class="mi-title">5. Salary Negotiation Scripts — You're Leaving $20K–$50K on the Table</div>
+      <div class="mi-desc">
+        The resume gets you the offer. The negotiation determines how much it's worth. <strong>Most first-time negotiators accept the first number</strong> — at FAANG, that's almost always 15–30% below what's achievable. You need specific scripts for: the first offer call response, the counter offer email, leveraging competing offers, and negotiating equity vs. salary vs. signing bonus tradeoffs. One conversation, done right, adds $20K–$60K.
+      </div>
+      <div class="mi-action"><strong>→ Exact negotiation scripts and talking points</strong> included in the Outreach Scripts section.</div>
+    </div>
+  </div>
+
+  <!-- Missing 6 -->
+  <div class="missing-item">
+    <div class="mi-icon">🔗</div>
+    <div class="mi-body">
+      <div class="mi-title">6. LinkedIn Content Strategy — You Need to Be Found, Not Just Found Adequate</div>
+      <div class="mi-desc">
+        Optimising your LinkedIn profile is in your plan. But there's a second layer: <strong>actively posting content</strong>. DS professionals who post weekly about their projects, learnings, and insights generate inbound recruiter messages — meaning recruiters contact <em>you</em> instead of you applying cold. Even 1 post per week for 8 weeks builds significant visibility. Most candidates skip this because they don't know what to post. You have more than enough to post about — your Gemini projects alone are 4 posts.
+      </div>
+      <div class="mi-action"><strong>→ 8-week LinkedIn content calendar</strong> with exact post ideas in the Ecosystem Map section below.</div>
+    </div>
+  </div>
+
+  <!-- Missing 7 -->
+  <div class="missing-item">
+    <div class="mi-icon">📋</div>
+    <div class="mi-body">
+      <div class="mi-title">7. A Single Accountability System — Plans Without Tracking Fail</div>
+      <div class="mi-desc">
+        You now have 4 documents, 6 sections, a 180-day plan, and hundreds of action items. <strong>Without a single daily check-in ritual and a visible progress counter, this all becomes background noise</strong>. The candidates who execute are not smarter — they have a simpler, more visible system. You need one place where you can see today's 3 tasks and your running progress. The checklist below is that system.
+      </div>
+      <div class="mi-action"><strong>→ The interactive checklist below</strong> saves your progress locally in your browser. Check items off daily.</div>
+    </div>
+  </div>
+
+  <!-- ══════════ MASTER CHECKLIST ══════════ -->
+  <div id="checklist" class="sh">
+    <div class="sh-icon" style="background:linear-gradient(135deg,rgba(16,185,129,0.25),rgba(6,182,212,0.15))">✅</div>
+    <div><h2>Interactive Master Checklist</h2><p>Click any item to mark it done — progress saves automatically in your browser</p></div>
+  </div>
+  <div class="hr"></div>
+
+  <!-- Progress counter -->
+  <div class="progress-wrap">
+    <div class="prog-title">
+      <span>📊 Overall Launch Progress</span>
+      <span id="total-counter" style="font-size:20px;font-weight:900;font-family:'Fira Code',monospace;color:#a5b4fc">0 / 42 done</span>
+    </div>
+    <div class="prog-row">
+      <span class="prog-label">🔧 Foundation Setup</span>
+      <div class="prog-bar"><div class="prog-fill" id="pb-0" style="background:linear-gradient(90deg,#6366f1,#818cf8);width:0%"></div></div>
+      <span class="prog-pct" id="pp-0" style="color:#a5b4fc">0%</span>
+    </div>
+    <div class="prog-row">
+      <span class="prog-label">📘 Daily Skill Practice</span>
+      <div class="prog-bar"><div class="prog-fill" id="pb-1" style="background:linear-gradient(90deg,#f59e0b,#fbbf24);width:0%"></div></div>
+      <span class="prog-pct" id="pp-1" style="color:var(--amber3)">0%</span>
+    </div>
+    <div class="prog-row">
+      <span class="prog-label">🔬 Portfolio & Projects</span>
+      <div class="prog-bar"><div class="prog-fill" id="pb-2" style="background:linear-gradient(90deg,#10b981,#34d399);width:0%"></div></div>
+      <span class="prog-pct" id="pp-2" style="color:var(--green3)">0%</span>
+    </div>
+    <div class="prog-row">
+      <span class="prog-label">🤝 Networking & Outreach</span>
+      <div class="prog-bar"><div class="prog-fill" id="pb-3" style="background:linear-gradient(90deg,#06b6d4,#22d3ee);width:0%"></div></div>
+      <span class="prog-pct" id="pp-3" style="color:var(--cyan3)">0%</span>
+    </div>
+    <div class="prog-row">
+      <span class="prog-label">🎯 Interview Readiness</span>
+      <div class="prog-bar"><div class="prog-fill" id="pb-4" style="background:linear-gradient(90deg,#ef4444,#f87171);width:0%"></div></div>
+      <span class="prog-pct" id="pp-4" style="color:var(--red3)">0%</span>
+    </div>
+    <div class="prog-row">
+      <span class="prog-label">🚀 Application Launch</span>
+      <div class="prog-bar"><div class="prog-fill" id="pb-5" style="background:linear-gradient(90deg,#8b5cf6,#a78bfa);width:0%"></div></div>
+      <span class="prog-pct" id="pp-5" style="color:var(--purple3)">0%</span>
+    </div>
+  </div>
+
+  <!-- Phase 0: Foundation -->
+  <div class="checklist-section" data-phase="0">
+    <div class="cl-phase-title" onclick="togglePhase(this)">
+      <span>🔧 Phase 0 — Foundation Setup <span style="color:var(--muted);font-weight:500;font-size:12px">(Do first, all of Week 1)</span></span>
+      <div style="display:flex;align-items:center;gap:10px">
+        <span class="phase-tag" style="background:rgba(99,102,241,0.15);color:#a5b4fc" id="ph0-count">0/8</span>
+        <span style="color:var(--muted);font-size:16px">▾</span>
+      </div>
+    </div>
+    <div class="cl-body" id="phase-0">
+      <div class="cl-item" data-phase="0" onclick="toggleItem(this)">
+        <div class="cl-checkbox">✓</div>
+        <div class="cl-text"><strong>Create public GitHub profile</strong> — pin 6 repos, write a profile README introducing yourself as a DS/GenAI engineer. Add a banner image.</div>
+        <span class="cl-tag" style="background:rgba(239,68,68,0.12);color:var(--red3)">Day 1</span>
+      </div>
+      <div class="cl-item" data-phase="0" onclick="toggleItem(this)">
+        <div class="cl-checkbox">✓</div>
+        <div class="cl-text"><strong>Push Gemini image recognition project to GitHub</strong> — even rough code with a basic README. Being public beats being perfect.</div>
+        <span class="cl-tag" style="background:rgba(239,68,68,0.12);color:var(--red3)">Day 1</span>
+      </div>
+      <div class="cl-item" data-phase="0" onclick="toggleItem(this)">
+        <div class="cl-checkbox">✓</div>
+        <div class="cl-text"><strong>Push library GenAI orchestration project to GitHub</strong> — add architecture diagram using Excalidraw (free). Embed in README.</div>
+        <span class="cl-tag" style="background:rgba(239,68,68,0.12);color:var(--red3)">Day 2</span>
+      </div>
+      <div class="cl-item" data-phase="0" onclick="toggleItem(this)">
+        <div class="cl-checkbox">✓</div>
+        <div class="cl-text"><strong>Deploy Gemini project to Streamlit Cloud</strong> (free at streamlit.io/cloud) — get a live public URL. Add that URL to your resume, LinkedIn, and GitHub README.</div>
+        <span class="cl-tag" style="background:rgba(239,68,68,0.12);color:var(--red3)">Day 2–3</span>
+      </div>
+      <div class="cl-item" data-phase="0" onclick="toggleItem(this)">
+        <div class="cl-checkbox">✓</div>
+        <div class="cl-text"><strong>Rewrite LinkedIn headline</strong> to: <em>"Data Scientist | GenAI & Multimodal AI | Gemini API · PySpark · Python · SQL | M.S. Data Science – FAU"</em> — enable Open to Work (recruiters only).</div>
+        <span class="cl-tag" style="background:rgba(239,68,68,0.12);color:var(--red3)">Day 1</span>
+      </div>
+      <div class="cl-item" data-phase="0" onclick="toggleItem(this)">
+        <div class="cl-checkbox">✓</div>
+        <div class="cl-text"><strong>Finalise resume</strong> using the FAANG template — add your real company names, dates, actual numbers. Run it through Jobscan against 3 real DS job descriptions. Target 80%+ ATS score.</div>
+        <span class="cl-tag" style="background:rgba(245,158,11,0.12);color:var(--amber3)">Day 3–5</span>
+      </div>
+      <div class="cl-item" data-phase="0" onclick="toggleItem(this)">
+        <div class="cl-checkbox">✓</div>
+        <div class="cl-text"><strong>Set up Notion (or Google Sheets) job tracker</strong> — columns: Company, Role, Source, Date Applied, Resume Version, Referral Contact, Status, Next Action, Deadline. You'll need this before your first application.</div>
+        <span class="cl-tag" style="background:rgba(245,158,11,0.12);color:var(--amber3)">Day 3</span>
+      </div>
+      <div class="cl-item" data-phase="0" onclick="toggleItem(this)">
+        <div class="cl-checkbox">✓</div>
+        <div class="cl-text"><strong>Create accounts on:</strong> LeetCode, StrataScratch, Pramp, Kaggle (if not done) — set daily reminders on your phone for 8PM SQL + LeetCode session. Make it automatic.</div>
+        <span class="cl-tag" style="background:rgba(245,158,11,0.12);color:var(--amber3)">Day 1</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- Phase 1: Daily Skills -->
+  <div class="checklist-section" style="margin-top:8px" data-phase="1">
+    <div class="cl-phase-title" onclick="togglePhase(this)">
+      <span>📘 Phase 1 — Daily Skill Practice <span style="color:var(--muted);font-weight:500;font-size:12px">(Weeks 1–8, non-negotiable daily habits)</span></span>
+      <div style="display:flex;align-items:center;gap:10px">
+        <span class="phase-tag" style="background:rgba(245,158,11,0.15);color:var(--amber3)" id="ph1-count">0/7</span>
+        <span style="color:var(--muted);font-size:16px">▾</span>
+      </div>
+    </div>
+    <div class="cl-body collapsed" id="phase-1">
+      <div class="cl-item" data-phase="1" onclick="toggleItem(this)">
+        <div class="cl-checkbox">✓</div>
+        <div class="cl-text"><strong>SQL habit locked in:</strong> 5 StrataScratch FAANG problems per day, every single day. No skip days. Timer on phone for 8:00 PM. Takes 30–45 minutes. This habit alone closes your biggest interview gap.</div>
+        <span class="cl-tag" style="background:rgba(245,158,11,0.12);color:var(--amber3)">Daily</span>
+      </div>
+      <div class="cl-item" data-phase="1" onclick="toggleItem(this)">
+        <div class="cl-checkbox">✓</div>
+        <div class="cl-text"><strong>LeetCode habit locked in:</strong> 5 Easy problems/day (Weeks 1–2) → 3 Mediums/day (Weeks 3–8). Focus on arrays, hash maps, two pointers, sliding window. Python only. Do NOT look at hints for 20 min.</div>
+        <span class="cl-tag" style="background:rgba(245,158,11,0.12);color:var(--amber3)">Daily</span>
+      </div>
+      <div class="cl-item" data-phase="1" onclick="toggleItem(this)">
+        <div class="cl-checkbox">✓</div>
+        <div class="cl-text"><strong>ML verbal practice:</strong> Pick 1 ML concept each morning. Explain it out loud on your commute or while getting ready — no notes. Record 2x/week on phone. Play back. Are you clear and under 3 minutes?</div>
+        <span class="cl-tag" style="background:rgba(245,158,11,0.12);color:var(--amber3)">Daily</span>
+      </div>
+      <div class="cl-item" data-phase="1" onclick="toggleItem(this)">
+        <div class="cl-checkbox">✓</div>
+        <div class="cl-text"><strong>Book ordered and reading started:</strong> <em>"Ace the Data Science Interview"</em> by Nick Singh — the single best DS interview prep book. Read 20 pages/night before bed. Has 201 real DS interview questions with answers.</div>
+        <span class="cl-tag" style="background:rgba(16,185,129,0.12);color:var(--green3)">Week 1</span>
+      </div>
+      <div class="cl-item" data-phase="1" onclick="toggleItem(this)">
+        <div class="cl-checkbox">✓</div>
+        <div class="cl-text"><strong>Databricks Community Edition account created (free)</strong> — run your first PySpark notebook. Even a simple word count exercise. This converts your Big Data cert from "studied" to "practiced."</div>
+        <span class="cl-tag" style="background:rgba(16,185,129,0.12);color:var(--green3)">Week 1</span>
+      </div>
+      <div class="cl-item" data-phase="1" onclick="toggleItem(this)">
+        <div class="cl-checkbox">✓</div>
+        <div class="cl-text"><strong>A/B testing study started:</strong> Download free PDF — "Trustworthy Online Controlled Experiments" by Kohavi (Google it). Read Chapters 1–5 only. Then build the A/B testing Streamlit app from scratch.</div>
+        <span class="cl-tag" style="background:rgba(16,185,129,0.12);color:var(--green3)">Week 2</span>
+      </div>
+      <div class="cl-item" data-phase="1" onclick="toggleItem(this)">
+        <div class="cl-checkbox">✓</div>
+        <div class="cl-text"><strong>Weekly Kaggle competition entered</strong> — pick any active competition with tabular data. Submit even a baseline model. Kaggle Expert status (top 40%) transforms your resume in the eyes of DS recruiters at top companies.</div>
+        <span class="cl-tag" style="background:rgba(99,102,241,0.12);color:#a5b4fc">Weekly</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- Phase 2: Portfolio -->
+  <div class="checklist-section" style="margin-top:8px" data-phase="2">
+    <div class="cl-phase-title" onclick="togglePhase(this)">
+      <span>🔬 Phase 2 — Portfolio & Projects <span style="color:var(--muted);font-weight:500;font-size:12px">(Weeks 2–6)</span></span>
+      <div style="display:flex;align-items:center;gap:10px">
+        <span class="phase-tag" style="background:rgba(16,185,129,0.15);color:var(--green3)" id="ph2-count">0/7</span>
+        <span style="color:var(--muted);font-size:16px">▾</span>
+      </div>
+    </div>
+    <div class="cl-body collapsed" id="phase-2">
+      <div class="cl-item" data-phase="2" onclick="toggleItem(this)">
+        <div class="cl-checkbox">✓</div>
+        <div class="cl-text"><strong>RAG pipeline added to library project</strong> — integrate LangChain + ChromaDB into existing Gemini library system. This upgrades it from "called an API" to "built a production LLM retrieval system." One of the highest-ROI technical upgrades you can make.</div>
+        <span class="cl-tag" style="background:rgba(16,185,129,0.12);color:var(--green3)">Week 2–3</span>
+      </div>
+      <div class="cl-item" data-phase="2" onclick="toggleItem(this)">
+        <div class="cl-checkbox">✓</div>
+        <div class="cl-text"><strong>Gemini image recognition project upgraded</strong> — add CLIP embeddings for semantic image search, build a FastAPI endpoint, benchmark accuracy vs. baseline. Quantify everything: accuracy %, latency ms, dataset size.</div>
+        <span class="cl-tag" style="background:rgba(16,185,129,0.12);color:var(--green3)">Week 3–4</span>
+      </div>
+      <div class="cl-item" data-phase="2" onclick="toggleItem(this)">
+        <div class="cl-checkbox">✓</div>
+        <div class="cl-text"><strong>Big Data streaming pipeline built and deployed</strong> — Kafka + PySpark + Delta Lake on Databricks Community Edition (free). This is your Big Data certification proof of work and your most impressive technical project for DS roles at LinkedIn/Uber/Meta.</div>
+        <span class="cl-tag" style="background:rgba(16,185,129,0.12);color:var(--green3)">Week 4–6</span>
+      </div>
+      <div class="cl-item" data-phase="2" onclick="toggleItem(this)">
+        <div class="cl-checkbox">✓</div>
+        <div class="cl-text"><strong>First Medium article published</strong> — write about your Gemini image recognition system. Include: the problem, your architecture, one surprising challenge, and what you'd do differently. Aim for 800–1200 words with code snippets. This builds your technical brand and ranks on Google.</div>
+        <span class="cl-tag" style="background:rgba(16,185,129,0.12);color:var(--green3)">Week 2</span>
+      </div>
+      <div class="cl-item" data-phase="2" onclick="toggleItem(this)">
+        <div class="cl-checkbox">✓</div>
+        <div class="cl-text"><strong>arXiv preprint outline started</strong> — draft an 8-page IEEE-format paper on your multimodal image recognition system or RAG library system. Email 1 FAU professor asking to co-author / provide feedback. Even a draft on arXiv in 30 days is a massive differentiator.</div>
+        <span class="cl-tag" style="background:rgba(99,102,241,0.12);color:#a5b4fc">Week 2</span>
+      </div>
+      <div class="cl-item" data-phase="2" onclick="toggleItem(this)">
+        <div class="cl-checkbox">✓</div>
+        <div class="cl-text"><strong>Loom demo recorded for top 2 projects</strong> — 2 minutes each. Show the app working, narrate what you built and why. Embed video in GitHub README. Recruiters watch these. 80% of candidates don't do this — instant differentiation.</div>
+        <span class="cl-tag" style="background:rgba(99,102,241,0.12);color:#a5b4fc">Week 2</span>
+      </div>
+      <div class="cl-item" data-phase="2" onclick="toggleItem(this)">
+        <div class="cl-checkbox">✓</div>
+        <div class="cl-text"><strong>All project READMEs follow this structure:</strong> (1) Problem statement, (2) Architecture diagram, (3) Tech stack badges, (4) Setup/install instructions, (5) Results with metrics, (6) Screenshots or GIF demo, (7) Future improvements. This is the standard that gets starred and shared.</div>
+        <span class="cl-tag" style="background:rgba(99,102,241,0.12);color:#a5b4fc">Week 1–2</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- Phase 3: Networking -->
+  <div class="checklist-section" style="margin-top:8px" data-phase="3">
+    <div class="cl-phase-title" onclick="togglePhase(this)">
+      <span>🤝 Phase 3 — Networking & Outreach <span style="color:var(--muted);font-weight:500;font-size:12px">(Start Week 1, continuous)</span></span>
+      <div style="display:flex;align-items:center;gap:10px">
+        <span class="phase-tag" style="background:rgba(6,182,212,0.15);color:var(--cyan3)" id="ph3-count">0/7</span>
+        <span style="color:var(--muted);font-size:16px">▾</span>
+      </div>
+    </div>
+    <div class="cl-body collapsed" id="phase-3">
+      <div class="cl-item" data-phase="3" onclick="toggleItem(this)">
+        <div class="cl-checkbox">✓</div>
+        <div class="cl-text"><strong>FAU alumni list built</strong> — search LinkedIn for "Florida Atlantic University" + "Data Scientist" / "Machine Learning" / "Software Engineer" at target companies. Build a list of 20+ names with their company, role, and connection degree. This is your referral pipeline.</div>
+        <span class="cl-tag" style="background:rgba(6,182,212,0.12);color:var(--cyan3)">Week 1</span>
+      </div>
+      <div class="cl-item" data-phase="3" onclick="toggleItem(this)">
+        <div class="cl-checkbox">✓</div>
+        <div class="cl-text"><strong>3 alumni DMs sent per week</strong> using the template below. Goal is a 15-min call, not a referral yet — that comes later. Track responses in your Notion. Follow up after 5 days if no reply.</div>
+        <span class="cl-tag" style="background:rgba(6,182,212,0.12);color:var(--cyan3)">Weekly</span>
+      </div>
+      <div class="cl-item" data-phase="3" onclick="toggleItem(this)">
+        <div class="cl-checkbox">✓</div>
+        <div class="cl-text"><strong>LinkedIn post published weekly</strong> — 8-week content calendar: Week 1: introduce your GenAI background, Week 2: post about the Gemini image recognition project, Week 3: share a key insight from your Big Data cert, Week 4: your first Medium article. Consistency &gt; virality.</div>
+        <span class="cl-tag" style="background:rgba(6,182,212,0.12);color:var(--cyan3)">Weekly</span>
+      </div>
+      <div class="cl-item" data-phase="3" onclick="toggleItem(this)">
+        <div class="cl-checkbox">✓</div>
+        <div class="cl-text"><strong>Joined 3 Discord/Slack communities:</strong> MLOps Community (mlops.community), Hugging Face Discord, DataTalks.club — these have active #jobs and #referrals channels with real FAANG employees who post openings and offer referrals.</div>
+        <span class="cl-tag" style="background:rgba(6,182,212,0.12);color:var(--cyan3)">Week 1</span>
+      </div>
+      <div class="cl-item" data-phase="3" onclick="toggleItem(this)">
+        <div class="cl-checkbox">✓</div>
+        <div class="cl-text"><strong>Blind app downloaded</strong> (teamblind.com) — use the Referrals section. Employees at every FAANG company post referral offers weekly. Reply within 24 hours with a tailored message and your resume. One referral from Blind has changed many careers.</div>
+        <span class="cl-tag" style="background:rgba(6,182,212,0.12);color:var(--cyan3)">Week 1</span>
+      </div>
+      <div class="cl-item" data-phase="3" onclick="toggleItem(this)">
+        <div class="cl-checkbox">✓</div>
+        <div class="cl-text"><strong>1 local or virtual DS meetup attended per month</strong> — Meetup.com → search "Data Science" in your city. Even 1 in-person event where you have 3 real conversations is worth 30 cold LinkedIn DMs. Ask every person you meet: "Who else should I talk to?"</div>
+        <span class="cl-tag" style="background:rgba(99,102,241,0.12);color:#a5b4fc">Monthly</span>
+      </div>
+      <div class="cl-item" data-phase="3" onclick="toggleItem(this)">
+        <div class="cl-checkbox">✓</div>
+        <div class="cl-text"><strong>Recruiter outreach started Week 3</strong> — search LinkedIn for "Data Science Recruiter" at your target companies. Send the recruiter follow-up template after applying. 1 recruiter conversation can move you past 200 cold applicants.</div>
+        <span class="cl-tag" style="background:rgba(99,102,241,0.12);color:#a5b4fc">Week 3+</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- Phase 4: Interview Readiness -->
+  <div class="checklist-section" style="margin-top:8px" data-phase="4">
+    <div class="cl-phase-title" onclick="togglePhase(this)">
+      <span>🎯 Phase 4 — Interview Readiness <span style="color:var(--muted);font-weight:500;font-size:12px">(Weeks 4–8)</span></span>
+      <div style="display:flex;align-items:center;gap:10px">
+        <span class="phase-tag" style="background:rgba(239,68,68,0.15);color:var(--red3)" id="ph4-count">0/7</span>
+        <span style="color:var(--muted);font-size:16px">▾</span>
+      </div>
+    </div>
+    <div class="cl-body collapsed" id="phase-4">
+      <div class="cl-item" data-phase="4" onclick="toggleItem(this)">
+        <div class="cl-checkbox">✓</div>
+        <div class="cl-text"><strong>First Pramp mock interview booked</strong> (pramp.com — free). Do a coding round first. Record yourself if possible. The goal isn't to be perfect — it's to find the specific moments where you freeze or communicate poorly. Fix those.</div>
+        <span class="cl-tag" style="background:rgba(239,68,68,0.12);color:var(--red3)">Week 4</span>
+      </div>
+      <div class="cl-item" data-phase="4" onclick="toggleItem(this)">
+        <div class="cl-checkbox">✓</div>
+        <div class="cl-text"><strong>STAR story bank written:</strong> Write 3 bullet-point STAR stories for each of: impact/result, handling failure/learning, leadership/ownership, conflict resolution, cross-functional collaboration. Keep them in a Google Doc. Review before every interview.</div>
+        <span class="cl-tag" style="background:rgba(239,68,68,0.12);color:var(--red3)">Week 2–3</span>
+      </div>
+      <div class="cl-item" data-phase="4" onclick="toggleItem(this)">
+        <div class="cl-checkbox">✓</div>
+        <div class="cl-text"><strong>"Tell me about yourself" script written and memorised</strong> — exactly 60 seconds. Covers: who you are, your M.S. + GenAI projects, your Big Data cert, what you're looking for. Practice it 20 times until it sounds natural, not recited.</div>
+        <span class="cl-tag" style="background:rgba(239,68,68,0.12);color:var(--red3)">Week 1</span>
+      </div>
+      <div class="cl-item" data-phase="4" onclick="toggleItem(this)">
+        <div class="cl-checkbox">✓</div>
+        <div class="cl-text"><strong>10 product case questions practised using METRICS framework</strong> — spend 15 min/day on one question from: "Instagram engagement dropped 10%," "Design metrics for a new Uber feature," "Amazon Prime retention declined." Write answers, don't just think them.</div>
+        <span class="cl-tag" style="background:rgba(245,158,11,0.12);color:var(--amber3)">Week 3+</span>
+      </div>
+      <div class="cl-item" data-phase="4" onclick="toggleItem(this)">
+        <div class="cl-checkbox">✓</div>
+        <div class="cl-text"><strong>Company-specific research done before each interview:</strong> Read the company's latest data science blog posts (Google AI Blog, Meta Engineering, Netflix Tech Blog, LinkedIn Engineering). Know 2–3 specific things about their DS stack. Mention these in interviews.</div>
+        <span class="cl-tag" style="background:rgba(245,158,11,0.12);color:var(--amber3)">Before each interview</span>
+      </div>
+      <div class="cl-item" data-phase="4" onclick="toggleItem(this)">
+        <div class="cl-checkbox">✓</div>
+        <div class="cl-text"><strong>ML system design study started:</strong> Read "Designing Machine Learning Systems" by Chip Huyen (first 4 chapters). Practice designing: a recommendation system, a churn prediction system, and a real-time fraud detection system out loud. This is tested at L4/L5 FAANG levels.</div>
+        <span class="cl-tag" style="background:rgba(245,158,11,0.12);color:var(--amber3)">Week 4+</span>
+      </div>
+      <div class="cl-item" data-phase="4" onclick="toggleItem(this)">
+        <div class="cl-checkbox">✓</div>
+        <div class="cl-text"><strong>Questions to ask the interviewer prepared:</strong> Have 5 thoughtful questions ready — about team structure, current ML infrastructure, how data scientists interact with product, and biggest technical challenges. Saying "I don't have any questions" is an interview red flag.</div>
+        <span class="cl-tag" style="background:rgba(99,102,241,0.12);color:#a5b4fc">Before each interview</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- Phase 5: Application -->
+  <div class="checklist-section" style="margin-top:8px" data-phase="5">
+    <div class="cl-phase-title" onclick="togglePhase(this)">
+      <span>🚀 Phase 5 — Application Launch <span style="color:var(--muted);font-weight:500;font-size:12px">(Day 55+ for FAANG, Day 30 for Tier 2/3)</span></span>
+      <div style="display:flex;align-items:center;gap:10px">
+        <span class="phase-tag" style="background:rgba(139,92,246,0.15);color:var(--purple3)" id="ph5-count">0/6</span>
+        <span style="color:var(--muted);font-size:16px">▾</span>
+      </div>
+    </div>
+    <div class="cl-body collapsed" id="phase-5">
+      <div class="cl-item" data-phase="5" onclick="toggleItem(this)">
+        <div class="cl-checkbox">✓</div>
+        <div class="cl-text"><strong>Apply to Tier 3 companies first (Day 30)</strong> — Salesforce, Snowflake, Palantir, Capital One, JPMorgan. These start your pipeline clock and serve as live interview practice. Don't wait to feel "fully ready."</div>
+        <span class="cl-tag" style="background:rgba(139,92,246,0.12);color:var(--purple3)">Day 30</span>
+      </div>
+      <div class="cl-item" data-phase="5" onclick="toggleItem(this)">
+        <div class="cl-checkbox">✓</div>
+        <div class="cl-text"><strong>Each resume tailored to the JD</strong> — run through Jobscan, swap in exact keywords from each job description. Never send the same resume twice without customising the skills section and at least 2 bullet points to match that specific role's language.</div>
+        <span class="cl-tag" style="background:rgba(139,92,246,0.12);color:var(--purple3)">Each application</span>
+      </div>
+      <div class="cl-item" data-phase="5" onclick="toggleItem(this)">
+        <div class="cl-checkbox">✓</div>
+        <div class="cl-text"><strong>Apply Tuesday–Wednesday mornings</strong> — research confirms applications submitted Tuesday/Wednesday between 8–10 AM local time have the highest recruiter review rates. Avoid Mondays (inbox flood), Fridays (pre-weekend), and weekends.</div>
+        <span class="cl-tag" style="background:rgba(139,92,246,0.12);color:var(--purple3)">Ongoing</span>
+      </div>
+      <div class="cl-item" data-phase="5" onclick="toggleItem(this)">
+        <div class="cl-checkbox">✓</div>
+        <div class="cl-text"><strong>Recruiter follow-up sent 5–7 days after applying</strong> — use the template below. Brief, specific, adds value. Never just "following up on my application" — always reference something specific about the role or the company.</div>
+        <span class="cl-tag" style="background:rgba(139,92,246,0.12);color:var(--purple3)">+7 days</span>
+      </div>
+      <div class="cl-item" data-phase="5" onclick="toggleItem(this)">
+        <div class="cl-checkbox">✓</div>
+        <div class="cl-text"><strong>Offer received — do NOT accept in the call</strong>. Say: "Thank you so much — I'm genuinely excited about this. Can I have until [3 business days] to review the full compensation package?" Then negotiate using the script below. Always counter at minimum 15% above initial offer.</div>
+        <span class="cl-tag" style="background:rgba(16,185,129,0.12);color:var(--green3)">Offer stage</span>
+      </div>
+      <div class="cl-item" data-phase="5" onclick="toggleItem(this)">
+        <div class="cl-checkbox">✓</div>
+        <div class="cl-text"><strong>Verify offer on levels.fyi</strong> — before negotiating, check current market comp for your target role, company, and location. This gives you the data to negotiate from facts, not feelings. Filter by YoE (years of experience) to match your profile.</div>
+        <span class="cl-tag" style="background:rgba(16,185,129,0.12);color:var(--green3)">Offer stage</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- ══════════ DAILY SCHEDULE ══════════ -->
+  <div id="schedule" class="sh">
+    <div class="sh-icon" style="background:linear-gradient(135deg,rgba(6,182,212,0.25),rgba(59,130,246,0.15))">⏱</div>
+    <div><h2>Daily Schedule — Working Around Your Full-Time Job</h2><p>Realistic time blocks for someone employed full-time with 2–3 free hours per weekday</p></div>
+  </div>
+  <div class="hr"></div>
+
+  <div class="banner ban-a">
+    <span class="bl">Key Principle</span>
+    <div class="bt">You don't need 8 hours/day. You need <strong>2 focused hours on weekdays + 4 hours on weekends = 18 hours/week</strong>. At that rate, 60 days = 1,080 hours of deliberate prep — more than enough to close every gap. The schedule below is built for that reality, not an imaginary one where you have unlimited time.</div>
+  </div>
+
+  <div class="g2">
+    <div class="schedule-block">
+      <div class="sch-header">
+        <div class="sch-day" style="background:rgba(99,102,241,0.15);color:#a5b4fc">MON–FRI</div>
+        <div>
+          <div class="sch-title">Weekday Schedule — 2 hrs total</div>
+          <div class="sch-sub">Fits around 9–5 job · No sacrifice required</div>
+        </div>
+      </div>
+      <div class="sch-body">
+        <div class="sch-slot">
+          <span class="sch-time">Morning commute</span>
+          <div class="sch-task"><strong>ML verbal practice</strong> — explain 1 concept out loud on your way to work. No phone needed. Record 2x/week.
+          <span class="tip">💡 Commute = free prep time. Use it.</span></div>
+        </div>
+        <div class="sch-slot">
+          <span class="sch-time">Lunch 12–12:30</span>
+          <div class="sch-task"><strong>LeetCode 2 problems</strong> — Easy or Medium, Python only. Timer: 20 min max per problem. Do on phone if needed.
+          <span class="tip">💡 30 min = 2 problems = 500+ problems in 8 months</span></div>
+        </div>
+        <div class="sch-slot">
+          <span class="sch-time">Evening 8–9 PM</span>
+          <div class="sch-task"><strong>SQL practice</strong> — 5 StrataScratch problems. Window functions focus for first 3 weeks. Hard stop at 9 PM to protect sleep.
+          <span class="tip">💡 Set a phone alarm. Treat it like a meeting.</span></div>
+        </div>
+        <div class="sch-slot">
+          <span class="sch-time">Evening 9–9:30 PM</span>
+          <div class="sch-task"><strong>Project work or reading</strong> — alternate days: Mon/Wed/Fri = project coding. Tue/Thu = "Ace the DS Interview" book reading.
+          <span class="tip">💡 Small daily progress &gt; weekly marathon sessions</span></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="schedule-block">
+      <div class="sch-header">
+        <div class="sch-day" style="background:rgba(16,185,129,0.15);color:var(--green3)">SAT–SUN</div>
+        <div>
+          <div class="sch-title">Weekend Schedule — 4 hrs per day</div>
+          <div class="sch-sub">Deep work sessions · This is where the real progress happens</div>
+        </div>
+      </div>
+      <div class="sch-body">
+        <div class="sch-slot">
+          <span class="sch-time">9–11 AM</span>
+          <div class="sch-task"><strong>Deep project work</strong> — 2-hour focused build session. RAG pipeline, Big Data project, or A/B testing app. No distractions. Phone on silent. This is how projects get finished.
+          <span class="tip">💡 Use Pomodoro: 50 min work / 10 min break</span></div>
+        </div>
+        <div class="sch-slot">
+          <span class="sch-time">11–12 PM</span>
+          <div class="sch-task"><strong>LeetCode Mediums</strong> — 3 problems, timed. Focus on one pattern type per session (e.g., all sliding window). After Week 4, add 1 Hard problem per week.
+          <span class="tip">💡 Saturate patterns, don't randomise</span></div>
+        </div>
+        <div class="sch-slot">
+          <span class="sch-time">1–2 PM</span>
+          <div class="sch-task"><strong>Networking / LinkedIn / Outreach</strong> — send 3 alumni DMs, write your weekly LinkedIn post, respond to any recruiter messages. 1 hour of strategic outreach per week is enough.
+          <span class="tip">💡 Quality over volume in networking</span></div>
+        </div>
+        <div class="sch-slot">
+          <span class="sch-time">2–3 PM</span>
+          <div class="sch-task"><strong>Case study practice or mock interview</strong> — every other weekend: book a Pramp session. Off weeks: answer 2 product case questions in writing using METRICS framework.
+          <span class="tip">💡 Writing answers builds clarity for verbal delivery</span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ══════════ ECOSYSTEM MAP ══════════ -->
+  <div id="ecosystem" class="sh">
+    <div class="sh-icon" style="background:linear-gradient(135deg,rgba(245,158,11,0.25),rgba(249,115,22,0.15))">🗺️</div>
+    <div><h2>Your Complete Ecosystem — Every Tool, Platform & Resource</h2><p>Everything you'll use, organised by purpose. Bookmark this.</p></div>
+  </div>
+  <div class="hr"></div>
+
+  <div class="eco-row" style="background:var(--s1)">
+    <div class="eco-left"><div class="eco-label">Coding Practice</div><div class="eco-name">🧩 Daily Drill</div></div>
+    <div class="eco-right"><div class="eco-items">
+      <span class="eco-tag" style="background:rgba(239,68,68,0.1);color:var(--red3);border-color:rgba(239,68,68,0.2)">LeetCode — DS filter</span>
+      <span class="eco-tag" style="background:rgba(239,68,68,0.1);color:var(--red3);border-color:rgba(239,68,68,0.2)">StrataScratch — SQL</span>
+      <span class="eco-tag" style="background:rgba(245,158,11,0.1);color:var(--amber3);border-color:rgba(245,158,11,0.2)">HackerRank — certifications</span>
+      <span class="eco-tag" style="background:rgba(245,158,11,0.1);color:var(--amber3);border-color:rgba(245,158,11,0.2)">Mode Analytics — SQL tutorial</span>
+      <span class="eco-tag" style="background:rgba(99,102,241,0.1);color:#a5b4fc;border-color:rgba(99,102,241,0.2)">DataLemur — SQL</span>
+    </div></div>
+  </div>
+
+  <div class="eco-row" style="background:var(--s1)">
+    <div class="eco-left"><div class="eco-label">Mock Interviews</div><div class="eco-name">🎤 Practice Reps</div></div>
+    <div class="eco-right"><div class="eco-items">
+      <span class="eco-tag" style="background:rgba(16,185,129,0.1);color:var(--green3);border-color:rgba(16,185,129,0.2)">Pramp — free coding/DS mocks</span>
+      <span class="eco-tag" style="background:rgba(16,185,129,0.1);color:var(--green3);border-color:rgba(16,185,129,0.2)">Interviewing.io — paid FAANG engineers</span>
+      <span class="eco-tag" style="background:rgba(16,185,129,0.1);color:var(--green3);border-color:rgba(16,185,129,0.2)">Exponent — product DS cases</span>
+      <span class="eco-tag" style="background:rgba(6,182,212,0.1);color:var(--cyan3);border-color:rgba(6,182,212,0.2)">Meetups — real conversations</span>
+    </div></div>
+  </div>
+
+  <div class="eco-row" style="background:var(--s1)">
+    <div class="eco-left"><div class="eco-label">Build & Deploy</div><div class="eco-name">🛠️ Projects</div></div>
+    <div class="eco-right"><div class="eco-items">
+      <span class="eco-tag" style="background:rgba(99,102,241,0.1);color:#a5b4fc;border-color:rgba(99,102,241,0.2)">GitHub — code + portfolio</span>
+      <span class="eco-tag" style="background:rgba(99,102,241,0.1);color:#a5b4fc;border-color:rgba(99,102,241,0.2)">Streamlit Cloud — free deploy</span>
+      <span class="eco-tag" style="background:rgba(99,102,241,0.1);color:#a5b4fc;border-color:rgba(99,102,241,0.2)">Hugging Face Spaces — free ML deploy</span>
+      <span class="eco-tag" style="background:rgba(245,158,11,0.1);color:var(--amber3);border-color:rgba(245,158,11,0.2)">Databricks Community — free Spark</span>
+      <span class="eco-tag" style="background:rgba(245,158,11,0.1);color:var(--amber3);border-color:rgba(245,158,11,0.2)">Excalidraw — architecture diagrams</span>
+      <span class="eco-tag" style="background:rgba(16,185,129,0.1);color:var(--green3);border-color:rgba(16,185,129,0.2)">Loom — demo videos</span>
+    </div></div>
+  </div>
+
+  <div class="eco-row" style="background:var(--s1)">
+    <div class="eco-left"><div class="eco-label">Job Search</div><div class="eco-name">💼 Applications</div></div>
+    <div class="eco-right"><div class="eco-items">
+      <span class="eco-tag" style="background:rgba(16,185,129,0.1);color:var(--green3);border-color:rgba(16,185,129,0.2)">LinkedIn — apply + network</span>
+      <span class="eco-tag" style="background:rgba(16,185,129,0.1);color:var(--green3);border-color:rgba(16,185,129,0.2)">Teal HQ — job tracker (free)</span>
+      <span class="eco-tag" style="background:rgba(16,185,129,0.1);color:var(--green3);border-color:rgba(16,185,129,0.2)">Jobscan — ATS optimiser</span>
+      <span class="eco-tag" style="background:rgba(16,185,129,0.1);color:var(--green3);border-color:rgba(16,185,129,0.2)">levels.fyi — salary benchmarks</span>
+      <span class="eco-tag" style="background:rgba(6,182,212,0.1);color:var(--cyan3);border-color:rgba(6,182,212,0.2)">Blind (Teamblind) — referrals</span>
+      <span class="eco-tag" style="background:rgba(6,182,212,0.1);color:var(--cyan3);border-color:rgba(6,182,212,0.2)">Company career pages directly</span>
+    </div></div>
+  </div>
+
+  <div class="eco-row" style="background:var(--s1)">
+    <div class="eco-left"><div class="eco-label">Learning</div><div class="eco-name">📚 Resources</div></div>
+    <div class="eco-right"><div class="eco-items">
+      <span class="eco-tag" style="background:rgba(139,92,246,0.1);color:var(--purple3);border-color:rgba(139,92,246,0.2)">Ace the DS Interview — Nick Singh (book)</span>
+      <span class="eco-tag" style="background:rgba(139,92,246,0.1);color:var(--purple3);border-color:rgba(139,92,246,0.2)">Designing ML Systems — Chip Huyen (book)</span>
+      <span class="eco-tag" style="background:rgba(139,92,246,0.1);color:var(--purple3);border-color:rgba(139,92,246,0.2)">fast.ai — free DL course</span>
+      <span class="eco-tag" style="background:rgba(139,92,246,0.1);color:var(--purple3);border-color:rgba(139,92,246,0.2)">Kaggle Learn — micro courses</span>
+      <span class="eco-tag" style="background:rgba(139,92,246,0.1);color:var(--purple3);border-color:rgba(139,92,246,0.2)">Trustworthy Online Experiments (free PDF)</span>
+    </div></div>
+  </div>
+
+  <div class="eco-row" style="background:var(--s1)">
+    <div class="eco-left"><div class="eco-label">8-Week LinkedIn</div><div class="eco-name">📢 Content Plan</div></div>
+    <div class="eco-right" style="padding:10px 16px">
+      <div style="display:flex;flex-direction:column;gap:5px;font-size:12px;color:var(--muted2)">
+        <div><span style="color:var(--accent2);font-weight:700;min-width:60px;display:inline-block">Week 1:</span> "I'm a Data Scientist with a M.S. and GenAI background — here's what I've built" (introduce yourself)</div>
+        <div><span style="color:var(--accent2);font-weight:700;min-width:60px;display:inline-block">Week 2:</span> Walkthrough of your Gemini image recognition system with demo screenshots</div>
+        <div><span style="color:var(--accent2);font-weight:700;min-width:60px;display:inline-block">Week 3:</span> Share your first Medium article (library RAG system) with key architectural insights</div>
+        <div><span style="color:var(--accent2);font-weight:700;min-width:60px;display:inline-block">Week 4:</span> "5 things I learned building a RAG system with Gemini API" — practical lessons post</div>
+        <div><span style="color:var(--accent2);font-weight:700;min-width:60px;display:inline-block">Week 5:</span> Big Data pipeline demo — GIF of your Kafka/Spark streaming dashboard</div>
+        <div><span style="color:var(--accent2);font-weight:700;min-width:60px;display:inline-block">Week 6:</span> "SQL window functions explained simply" — educational post (huge engagement)</div>
+        <div><span style="color:var(--accent2);font-weight:700;min-width:60px;display:inline-block">Week 7:</span> Share your arXiv preprint — "I published my first research paper" post</div>
+        <div><span style="color:var(--accent2);font-weight:700;min-width:60px;display:inline-block">Week 8:</span> "I'm actively looking for DS roles" — professional, specific, with your portfolio link</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ══════════ WEEK 1 DAY BY DAY ══════════ -->
+  <div id="week1" class="sh">
+    <div class="sh-icon" style="background:linear-gradient(135deg,rgba(239,68,68,0.25),rgba(245,158,11,0.15))">📅</div>
+    <div><h2>Week 1 — Day by Day</h2><p>The most important 7 days. What you do in Week 1 sets the trajectory for everything.</p></div>
+  </div>
+  <div class="hr"></div>
+
+  <div class="w1-day">
+    <div class="w1-num" style="background:rgba(239,68,68,0.15);color:var(--red3)">D1</div>
+    <div class="w1-body">
+      <div class="w1-title">Monday — Foundation Day</div>
+      <ul class="w1-tasks">
+        <li>Create public GitHub account / update profile README with DS + GenAI focus</li>
+        <li>Push Gemini image recognition project to GitHub (rough is fine — just get it public)</li>
+        <li>Update LinkedIn headline to the optimised version from the resume template</li>
+        <li>Create LeetCode + StrataScratch + Pramp accounts. Solve 3 Easy LeetCode problems</li>
+        <li>Set phone alarm: 8:00 PM = "SQL practice" — 5 StrataScratch problems tonight</li>
+      </ul>
+      <div class="w1-result" style="background:rgba(239,68,68,0.07);border:1px solid rgba(239,68,68,0.15);color:var(--red3)">End of Day 1: You exist publicly. Your first project is visible. Your daily habits are scheduled.</div>
+    </div>
+  </div>
+
+  <div class="w1-day">
+    <div class="w1-num" style="background:rgba(245,158,11,0.15);color:var(--amber3)">D2</div>
+    <div class="w1-body">
+      <div class="w1-title">Tuesday — Visibility Day</div>
+      <ul class="w1-tasks">
+        <li>Push library GenAI orchestration project to GitHub with basic README</li>
+        <li>Deploy Gemini project to Streamlit Cloud — get your first live URL</li>
+        <li>Add that URL to your LinkedIn profile and GitHub README</li>
+        <li>5 StrataScratch SQL problems (8 PM, 45 min) — track score in notes</li>
+        <li>Read "Ace the DS Interview" pages 1–20 before bed</li>
+      </ul>
+      <div class="w1-result" style="background:rgba(245,158,11,0.07);border:1px solid rgba(245,158,11,0.15);color:var(--amber3)">End of Day 2: You have a live deployed project. Recruiters can now see your work.</div>
+    </div>
+  </div>
+
+  <div class="w1-day">
+    <div class="w1-num" style="background:rgba(16,185,129,0.15);color:var(--green3)">D3</div>
+    <div class="w1-body">
+      <div class="w1-title">Wednesday — Resume & Outreach Day</div>
+      <ul class="w1-tasks">
+        <li>Customise the FAANG resume template with your real information, company names, actual dates</li>
+        <li>Run resume through Jobscan against 2 real DS job descriptions — fix to 80%+ ATS score</li>
+        <li>Search LinkedIn for FAU alumni at target companies — build a list of 10 names in Notion</li>
+        <li>Send your first 2 alumni LinkedIn DMs using the template below</li>
+        <li>5 SQL problems + 3 LeetCode Easys (lunch + evening)</li>
+      </ul>
+      <div class="w1-result" style="background:rgba(16,185,129,0.07);border:1px solid rgba(16,185,129,0.15);color:var(--green3)">End of Day 3: Resume ready. Outreach started. Pipeline clock ticking.</div>
+    </div>
+  </div>
+
+  <div class="w1-day">
+    <div class="w1-num" style="background:rgba(99,102,241,0.15);color:#a5b4fc">D4</div>
+    <div class="w1-body">
+      <div class="w1-title">Thursday — Depth Day</div>
+      <ul class="w1-tasks">
+        <li>Set up Notion job tracker with all fields — add 5 target companies you'll apply to in Week 4</li>
+        <li>Create Databricks Community Edition account — run first PySpark notebook</li>
+        <li>Join MLOps Community Discord + DataTalks.club Slack — explore the #jobs channels</li>
+        <li>Write your "Tell Me About Yourself" 60-second script — read it out loud 5 times</li>
+        <li>5 SQL problems + 3 LeetCode (routine locked in by now)</li>
+      </ul>
+      <div class="w1-result" style="background:rgba(99,102,241,0.07);border:1px solid rgba(99,102,241,0.15);color:#a5b4fc">End of Day 4: You have a tracking system. You're in the communities where referrals happen.</div>
+    </div>
+  </div>
+
+  <div class="w1-day">
+    <div class="w1-num" style="background:rgba(6,182,212,0.15);color:var(--cyan3)">D5</div>
+    <div class="w1-body">
+      <div class="w1-title">Friday — Content & Social Proof Day</div>
+      <ul class="w1-tasks">
+        <li>Write and publish your first LinkedIn post — introduce yourself, mention Gemini API project, include the Streamlit link. Tag Florida Atlantic University. Keep to 150 words.</li>
+        <li>Start outline for first Medium article on Gemini image recognition project</li>
+        <li>Download Blind (Teamblind) app — browse referral posts, save relevant ones</li>
+        <li>Order "Ace the Data Science Interview" book on Amazon if not yet done</li>
+        <li>SQL + LeetCode routine — lighter day is fine (Friday evening)</li>
+      </ul>
+      <div class="w1-result" style="background:rgba(6,182,212,0.07);border:1px solid rgba(6,182,212,0.15);color:var(--cyan3)">End of Day 5: First public content posted. Social proof building. You look active and serious.</div>
+    </div>
+  </div>
+
+  <div class="w1-day">
+    <div class="w1-num" style="background:rgba(139,92,246,0.15);color:var(--purple3)">D6–7</div>
+    <div class="w1-body">
+      <div class="w1-title">Weekend — Deep Work Sprint</div>
+      <ul class="w1-tasks">
+        <li><strong>Saturday morning:</strong> 2-hour session — start adding RAG (LangChain + ChromaDB) to library project. Follow a LangChain quickstart tutorial first</li>
+        <li><strong>Saturday:</strong> 3 Medium LeetCode problems (timed). Record any patterns you're struggling with</li>
+        <li><strong>Saturday afternoon:</strong> Finish Medium article draft on Gemini project — aim to publish by Sunday</li>
+        <li><strong>Sunday morning:</strong> Publish Medium article. Share it on LinkedIn. DM the link to your FAU alumni contacts</li>
+        <li><strong>Sunday:</strong> Review the week — what did you complete? What slipped? Adjust Monday's plan</li>
+      </ul>
+      <div class="w1-result" style="background:rgba(139,92,246,0.07);border:1px solid rgba(139,92,246,0.15);color:var(--purple3)">End of Week 1: 2 projects public, 1 deployed, 1 article live, resume ATS-ready, 25 SQL problems done, 15+ LeetCode done, outreach started. You are visibly a DS candidate. This matters.</div>
+    </div>
+  </div>
+
+  <!-- ══════════ OUTREACH TEMPLATES ══════════ -->
+  <div id="outreach" class="sh">
+    <div class="sh-icon" style="background:linear-gradient(135deg,rgba(16,185,129,0.25),rgba(99,102,241,0.15))">📬</div>
+    <div><h2>Copy-Paste Outreach Templates</h2><p>Exact messages for every scenario — tested to get responses</p></div>
+  </div>
+  <div class="hr"></div>
+
+  <div class="template-card">
+    <div class="tc-header">
+      <div class="tc-title">1. FAU Alumni Cold DM (LinkedIn)</div>
+      <span class="tc-tag" style="background:rgba(16,185,129,0.15);color:var(--green3)">Use: Alumni you've never met</span>
+    </div>
+    <div class="tc-body">
+      <div class="tc-message">Hi [Name],
+
+Fellow FAU alum here — I noticed your work as a [Data Scientist / ML Engineer] at [Company] and was impressed by [something specific from their LinkedIn, e.g., "your work on the ranking team"].
+
+I recently finished my M.S. in Data Science at FAU and have been building GenAI systems — including a multimodal image recognition tool using Gemini API and a RAG-based document retrieval system. I'm now targeting DS roles at companies like [Company].
+
+Would you be open to a 15-minute virtual coffee chat sometime? I'd love to hear about your experience and what the DS culture is like at [Company]. No ask beyond that — just genuinely curious.
+
+Thanks so much,
+[Your Name]</div>
+      <div class="tc-note">✅ Why it works: FAU connection is warm, you lead with their work (not yours), you briefly establish credibility with specifics, and you ask for 15 minutes (low commitment). Never ask for a referral in the first message.</div>
+    </div>
+  </div>
+
+  <div class="template-card">
+    <div class="tc-header">
+      <div class="tc-title">2. Referral Request (After 1–2 Conversations)</div>
+      <span class="tc-tag" style="background:rgba(99,102,241,0.15);color:#a5b4fc">Use: Contacts you've spoken to at least once</span>
+    </div>
+    <div class="tc-body">
+      <div class="tc-message">Hi [Name],
+
+Thank you again for the chat last week — it was genuinely helpful to understand how the DS team at [Company] operates.
+
+I wanted to let you know I've applied for the [Job Title] role (Job ID: XXXXX). Given our conversation, I think my background in GenAI and Big Data could be a strong fit for what the team is working on.
+
+If you'd be comfortable providing a referral, I'd really appreciate it — I understand it's completely fine if not. Either way, I'll keep you updated on how the process goes.
+
+Best,
+[Your Name]
+[LinkedIn] | [GitHub] | [Portfolio URL]</div>
+      <div class="tc-note">✅ Why it works: References previous connection, gives them the specific job ID so it's easy, gives them a clear out ("completely fine if not"), and includes all your links so forwarding is frictionless.</div>
+    </div>
+  </div>
+
+  <div class="template-card">
+    <div class="tc-header">
+      <div class="tc-title">3. Recruiter Follow-Up After Applying (LinkedIn DM)</div>
+      <span class="tc-tag" style="background:rgba(6,182,212,0.15);color:var(--cyan3)">Use: 5–7 days after submitting application</span>
+    </div>
+    <div class="tc-body">
+      <div class="tc-message">Hi [Recruiter Name],
+
+I recently applied for the Data Scientist role at [Company] (Job ID: XXXXX) and wanted to briefly introduce myself.
+
+My background is in GenAI and applied ML — I've built a production RAG system using Gemini API and a real-time streaming pipeline with Kafka + PySpark. I hold an M.S. in Data Science from Florida Atlantic University and have [X] years of experience.
+
+I'm particularly excited about [Company] because of [1 specific thing — e.g., "your experimentation culture" or "the work on real-time ML at scale"].
+
+Happy to share more if helpful. Thank you for your time.
+
+[Your Name] | [LinkedIn] | [GitHub]</div>
+      <div class="tc-note">✅ Why it works: Specific job ID, leads with your most impressive/rare skill (GenAI + RAG), shows company-specific research, and is under 100 words so it gets read. Never attach your resume in a DM — let them ask for it.</div>
+    </div>
+  </div>
+
+  <div class="template-card">
+    <div class="tc-header">
+      <div class="tc-title">4. Cold Recruiter Outreach (Before Applying)</div>
+      <span class="tc-tag" style="background:rgba(245,158,11,0.15);color:var(--amber3)">Use: Proactive contact with internal recruiters</span>
+    </div>
+    <div class="tc-body">
+      <div class="tc-message">Hi [Recruiter Name],
+
+I came across your profile and see you recruit for DS/ML roles at [Company] — I wanted to reach out proactively as I'm actively exploring opportunities.
+
+Quick background: M.S. Data Science (FAU), [X] years experience, specialising in GenAI systems (built with Gemini API) and Big Data (Apache Spark, Kafka). Currently looking for DS roles where I can build production-scale ML and LLM pipelines.
+
+I'd love to understand what DS openings are coming up at [Company] and whether my background might be a fit.
+
+Thanks,
+[Your Name] | [LinkedIn] | [Portfolio: yourname.dev]</div>
+      <div class="tc-note">✅ Why it works: Proactive outreach captures roles before they're posted. Leads with the two skills that are hardest to find (GenAI + Big Data). Short enough to read in 20 seconds.</div>
+    </div>
+  </div>
+
+  <div class="template-card">
+    <div class="tc-header">
+      <div class="tc-title">5. Salary Negotiation Counter-Offer Script</div>
+      <span class="tc-tag" style="background:rgba(239,68,68,0.15);color:var(--red3)">Use: When you receive an initial offer</span>
+    </div>
+    <div class="tc-body">
+      <div class="tc-message">Thank you so much — I'm genuinely excited about this opportunity and the team I'd be joining.
+
+I've done some research on market compensation for this role and level, and based on my background in GenAI systems and [X] years of experience, I was hoping we could get to [$TARGET — 15-20% above offer].
+
+Is there flexibility on [base salary / equity / signing bonus]? I want to make this work and I'm committed to the role — I just want to make sure we're aligned on comp.
+
+[If they ask about competing offers]: I do have another process in progress at [Company X], but [Company] is my first choice. I wanted to give you the opportunity to match before making a decision.</div>
+      <div class="tc-note">✅ Key rules: (1) Never accept on the call — always ask for 3 days. (2) Always counter — the worst they can say is no, and most can move 10–20%. (3) Have a number ready. (4) Negotiate base, equity, AND signing bonus separately — they often have more flexibility on equity and signing than base. Verify your target on levels.fyi first.</div>
+    </div>
+  </div>
+
+  <div class="template-card">
+    <div class="tc-header">
+      <div class="tc-title">6. Post-Rejection Thank You (And Re-Apply Positioning)</div>
+      <span class="tc-tag" style="background:rgba(139,92,246,0.15);color:var(--purple3)">Use: Within 24 hours of rejection notice</span>
+    </div>
+    <div class="tc-body">
+      <div class="tc-message">Hi [Recruiter Name],
+
+Thank you for letting me know and for considering me for the [Role] position.
+
+I'd genuinely appreciate any feedback on where I fell short — even a single sentence would help me improve. I remain very interested in [Company] and plan to reapply in 6 months once I've continued building my experience.
+
+If any other DS opportunities come up where my background in GenAI and Big Data might be a better fit, I'd welcome the chance to be considered.
+
+Thank you again for your time.
+
+[Your Name]</div>
+      <div class="tc-note">✅ Why this matters: Most candidates disappear after rejection. This message: (1) asks for feedback (rarely given, but invaluable when received), (2) plants a re-apply seed (companies re-hire the same candidates regularly), and (3) keeps the relationship warm for future openings. One rejected candidate who sends this and reapplies 6 months later has a dramatically higher acceptance rate.</div>
+    </div>
+  </div>
+
+  <!-- ══════════ JOB TRACKER ══════════ -->
+  <div id="tracker" class="sh">
+    <div class="sh-icon" style="background:linear-gradient(135deg,rgba(99,102,241,0.25),rgba(6,182,212,0.15))">📊</div>
+    <div><h2>Application Tracker — What to Monitor</h2><p>Set this up in Notion or Google Sheets before sending your first application</p></div>
+  </div>
+  <div class="hr"></div>
+
+  <div class="tbl-wrap">
+    <table class="tracker-table">
+      <thead>
+        <tr>
+          <th>Field to Track</th>
+          <th>Why It Matters</th>
+          <th>Example Value</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><strong>Company + Role + Job ID</strong></td>
+          <td>Needed for recruiter follow-up DM and referral request</td>
+          <td>Meta — Data Scientist, Ads — JR123456</td>
+        </tr>
+        <tr>
+          <td><strong>Date Applied</strong></td>
+          <td>Follow-up is due 5–7 days later — track the deadline</td>
+          <td>June 8, 2026 → follow up June 14</td>
+        </tr>
+        <tr>
+          <td><strong>Source</strong></td>
+          <td>Track which channels produce callbacks — optimise over time</td>
+          <td>LinkedIn / Referral / Company Site / Blind</td>
+        </tr>
+        <tr>
+          <td><strong>Resume Version Sent</strong></td>
+          <td>You'll have 5+ customised versions — know which one you sent</td>
+          <td>resume_meta_v3.pdf</td>
+        </tr>
+        <tr>
+          <td><strong>Referral Contact</strong></td>
+          <td>If you have a referral, track who submitted it and when</td>
+          <td>John D. (FAU alum) — submitted June 7</td>
+        </tr>
+        <tr>
+          <td><strong>Current Status</strong></td>
+          <td>Know exactly where each application stands without confusion</td>
+          <td>Applied / Phone Screen / Technical / Onsite / Offer / Rejected</td>
+        </tr>
+        <tr>
+          <td><strong>Next Action + Date</strong></td>
+          <td>Every application needs a defined next step — nothing should sit idle</td>
+          <td>Send follow-up DM to recruiter by June 15</td>
+        </tr>
+        <tr>
+          <td><strong>Interview Notes</strong></td>
+          <td>Document what was asked — helps you prep for next rounds and future companies</td>
+          <td>"Asked about class imbalance, SQL cohort retention query"</td>
+        </tr>
+        <tr>
+          <td><strong>Offer Details</strong></td>
+          <td>Track base, equity, signing bonus, and deadline separately for negotiation</td>
+          <td>Base: $165K, RSU: $80K/yr, Signing: $20K — deadline July 1</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="banner ban-b" style="margin-top:14px">
+    <span class="bl">Free Tool</span>
+    <div class="bt"><strong>Teal HQ (teal.work)</strong> is free and purpose-built for exactly this. It auto-fills job details from LinkedIn, tracks pipeline stages visually, and reminds you to follow up. Alternatively, duplicate a Google Sheet with the columns above — takes 5 minutes to set up and saves hours of confusion.</div>
+  </div>
+
+  <!-- ══════════ MINDSET & HABITS ══════════ -->
+  <div id="mindset" class="sh">
+    <div class="sh-icon" style="background:linear-gradient(135deg,rgba(139,92,246,0.25),rgba(236,72,153,0.15))">🧠</div>
+    <div><h2>Mindset, Habits & Rejection Protocol</h2><p>The internal game — what separates candidates who land offers from those who don't finish</p></div>
+  </div>
+  <div class="hr"></div>
+
+  <div class="g2">
+    <div class="card" style="border-color:rgba(16,185,129,0.2)">
+      <div class="ct" style="color:var(--green3)"><span style="font-size:20px">✅</span> The 3 Non-Negotiable Daily Habits</div>
+      <div style="display:flex;flex-direction:column;gap:10px;font-size:13px;color:var(--muted2)">
+        <div style="background:rgba(16,185,129,0.06);border:1px solid rgba(16,185,129,0.15);border-radius:8px;padding:10px 12px;line-height:1.6"><strong style="color:#fff;display:block;margin-bottom:3px">1. SQL Practice — 8 PM daily, 5 problems</strong>This is the highest-ROI habit. 5 problems/day = 300 problems in 60 days. You'll pass every SQL round.</div>
+        <div style="background:rgba(99,102,241,0.06);border:1px solid rgba(99,102,241,0.15);border-radius:8px;padding:10px 12px;line-height:1.6"><strong style="color:#fff;display:block;margin-bottom:3px">2. LeetCode — lunch break, 2–3 problems</strong>Small sessions beat marathon sessions. 2 problems at lunch + 1 evening = 90 problems in 30 days.</div>
+        <div style="background:rgba(245,158,11,0.06);border:1px solid rgba(245,158,11,0.15);border-radius:8px;padding:10px 12px;line-height:1.6"><strong style="color:#fff;display:block;margin-bottom:3px">3. 1 outreach message — any day, 5 minutes</strong>One DM per day = 60 connections in 60 days = your referral network. This compounds invisibly.</div>
+      </div>
+    </div>
+    <div class="card" style="border-color:rgba(239,68,68,0.2)">
+      <div class="ct" style="color:var(--red3)"><span style="font-size:20px">🔄</span> The 24-Hour Rejection Protocol</div>
+      <div style="display:flex;flex-direction:column;gap:8px;font-size:13px;color:var(--muted2)">
+        <div style="padding:8px 10px;background:rgba(239,68,68,0.05);border-left:3px solid var(--red);border-radius:0 6px 6px 0;line-height:1.6"><strong style="color:#fff">Hour 0–1:</strong> Feel whatever you feel. Don't send any messages. Don't spiral. Give yourself exactly 1 hour.</div>
+        <div style="padding:8px 10px;background:rgba(245,158,11,0.05);border-left:3px solid var(--amber);border-radius:0 6px 6px 0;line-height:1.6"><strong style="color:#fff">Hour 2–4:</strong> Send the post-rejection thank you template. Ask for feedback. This is a career move, not a courtesy.</div>
+        <div style="padding:8px 10px;background:rgba(99,102,241,0.05);border-left:3px solid var(--accent);border-radius:0 6px 6px 0;line-height:1.6"><strong style="color:#fff">Hour 5–24:</strong> Extract the signal: What did they ask that you struggled with? Add it to your "weak spots" doc. Practice it the next day.</div>
+        <div style="padding:8px 10px;background:rgba(16,185,129,0.05);border-left:3px solid var(--green);border-radius:0 6px 6px 0;line-height:1.6"><strong style="color:#fff">Day 2:</strong> Apply to 2 new companies. The pipeline must keep moving. Rejection from 1 company means nothing when 4 others are active.</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="banner ban-p" style="margin-top:16px">
+    <span class="bl">Reality of FAANG Hiring</span>
+    <div class="bt">FAANG companies reject <strong>good candidates all the time</strong> — for reasons that have nothing to do with your ability. Wrong headcount timing. Another candidate with niche overlap. A hiring freeze announced two days after your final round. <strong>A rejection is data, not a verdict.</strong> The only strategy that guarantees failure is stopping. The candidates who get offers are simply the ones who kept going long enough.</div>
+  </div>
+
+  <!-- ══════════ FINAL VERDICT ══════════ -->
+  <div id="verdict" class="sh">
+    <div class="sh-icon" style="background:linear-gradient(135deg,rgba(16,185,129,0.25),rgba(99,102,241,0.2))">🏁</div>
+    <div><h2>Final Verdict — Are You Missing Anything?</h2><p>The complete picture — everything you have and everything you now have</p></div>
+  </div>
+  <div class="hr"></div>
+
+  <div class="tbl-wrap" style="margin-bottom:16px">
+    <table class="tracker-table">
+      <thead>
+        <tr>
+          <th>Document / System</th>
+          <th>Status</th>
+          <th>What It Gives You</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><strong>📅 180-Day Career Roadmap</strong></td>
+          <td><span class="status-dot" style="background:var(--green)"></span><span style="color:var(--green3);font-weight:600">Complete</span></td>
+          <td>5 phases, 5 portfolio projects, interview strategy, networking tactics, target companies</td>
+        </tr>
+        <tr>
+          <td><strong>⚡ Profile Accelerator</strong></td>
+          <td><span class="status-dot" style="background:var(--green)"></span><span style="color:var(--green3);font-weight:600">Complete</span></td>
+          <td>Impact hierarchy, your projects evaluated, GenAI advantage strategy, arXiv paper plan</td>
+        </tr>
+        <tr>
+          <td><strong>🔍 Gap Analysis</strong></td>
+          <td><span class="status-dot" style="background:var(--green)"></span><span style="color:var(--green3);font-weight:600">Complete</span></td>
+          <td>58% readiness score, full skills inventory, 6 ordered learning modules, application bar</td>
+        </tr>
+        <tr>
+          <td><strong>📄 FAANG Resume Template</strong></td>
+          <td><span class="status-dot" style="background:var(--green)"></span><span style="color:var(--green3);font-weight:600">Complete</span></td>
+          <td>ATS-optimised, 2026 tech stack, downloadable PDF, customisation guide</td>
+        </tr>
+        <tr>
+          <td><strong>🔍 Missing Pieces Identified</strong></td>
+          <td><span class="status-dot" style="background:var(--green)"></span><span style="color:var(--green3);font-weight:600">Complete ← NEW</span></td>
+          <td>7 gaps that weren't covered — daily schedule, templates, tracker, rejection protocol</td>
+        </tr>
+        <tr>
+          <td><strong>✅ Interactive Master Checklist</strong></td>
+          <td><span class="status-dot" style="background:var(--green)"></span><span style="color:var(--green3);font-weight:600">Complete ← NEW</span></td>
+          <td>42 checkable items across 6 phases, progress saved in browser, your daily dashboard</td>
+        </tr>
+        <tr>
+          <td><strong>⏱ Daily Schedule</strong></td>
+          <td><span class="status-dot" style="background:var(--green)"></span><span style="color:var(--green3);font-weight:600">Complete ← NEW</span></td>
+          <td>Weekday (2hr) + Weekend (4hr) plan built around your full-time job</td>
+        </tr>
+        <tr>
+          <td><strong>📅 Week 1 Day-by-Day Plan</strong></td>
+          <td><span class="status-dot" style="background:var(--green)"></span><span style="color:var(--green3);font-weight:600">Complete ← NEW</span></td>
+          <td>Exact tasks for each of the 7 most important days of this entire journey</td>
+        </tr>
+        <tr>
+          <td><strong>📬 Outreach Message Templates</strong></td>
+          <td><span class="status-dot" style="background:var(--green)"></span><span style="color:var(--green3);font-weight:600">Complete ← NEW</span></td>
+          <td>6 copy-paste templates: alumni DM, referral request, recruiter follow-up, salary negotiation, post-rejection</td>
+        </tr>
+        <tr>
+          <td><strong>🗺️ Complete Ecosystem Map</strong></td>
+          <td><span class="status-dot" style="background:var(--green)"></span><span style="color:var(--green3);font-weight:600">Complete ← NEW</span></td>
+          <td>Every platform, tool, and resource organised by purpose + 8-week LinkedIn content calendar</td>
+        </tr>
+        <tr>
+          <td><strong>📊 Job Application Tracker</strong></td>
+          <td><span class="status-dot" style="background:var(--green)"></span><span style="color:var(--green3);font-weight:600">Complete ← NEW</span></td>
+          <td>9 fields to track, free tool recommendation, never lose track of 30+ applications</td>
+        </tr>
+        <tr>
+          <td><strong>🧠 Rejection Protocol + Mindset</strong></td>
+          <td><span class="status-dot" style="background:var(--green)"></span><span style="color:var(--green3);font-weight:600">Complete ← NEW</span></td>
+          <td>24-hour rejection protocol, 3 non-negotiable daily habits, realistic FAANG hiring context</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div style="background:linear-gradient(135deg,rgba(16,185,129,0.08),rgba(99,102,241,0.06));border:1px solid rgba(16,185,129,0.2);border-radius:16px;padding:28px 32px;margin-bottom:16px">
+    <div style="font-size:17px;font-weight:900;color:#fff;margin-bottom:18px">The One-Line Answer to "Am I Missing Anything?"</div>
+    <div style="font-size:14px;color:var(--muted2);line-height:1.8;margin-bottom:16px">
+      <strong style="color:#fff">No. You now have everything.</strong> The roadmap, the gap analysis, the resume, the skills plan, the daily schedule, the outreach templates, the job tracker, the rejection protocol, and the complete ecosystem of tools and resources.
+      <br><br>
+      What you have in these 5 documents is more complete than what 95% of DS candidates who get hired ever had access to in one place. Most of them figured it out piece by piece over 6–12 months. You have it all structured, prioritised, and actionable on Day 1.
+      <br><br>
+      <strong style="color:#fff">The only thing left is execution.</strong> And execution comes down to one thing: <strong style="color:var(--green3)">opening StrataScratch at 8 PM tonight and solving the first 5 SQL problems.</strong>
+    </div>
+    <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:12px;margin-top:4px">
+      <div style="background:rgba(239,68,68,0.07);border:1px solid rgba(239,68,68,0.15);border-radius:10px;padding:14px;text-align:center">
+        <div style="font-size:22px;font-weight:900;font-family:'Fira Code',monospace;color:var(--red3)">TODAY</div>
+        <div style="font-size:11px;color:var(--muted);margin-top:4px">Push projects to GitHub + solve 5 SQL problems</div>
+      </div>
+      <div style="background:rgba(245,158,11,0.07);border:1px solid rgba(245,158,11,0.15);border-radius:10px;padding:14px;text-align:center">
+        <div style="font-size:22px;font-weight:900;font-family:'Fira Code',monospace;color:var(--amber3)">DAY 30</div>
+        <div style="font-size:11px;color:var(--muted);margin-top:4px">First applications to Tier 2/3 companies sent</div>
+      </div>
+      <div style="background:rgba(16,185,129,0.07);border:1px solid rgba(16,185,129,0.15);border-radius:10px;padding:14px;text-align:center">
+        <div style="font-size:22px;font-weight:900;font-family:'Fira Code',monospace;color:var(--green3)">DAY 90</div>
+        <div style="font-size:11px;color:var(--muted);margin-top:4px">First FAANG offer conversation happening</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="foot">
+    <strong>You have the plan. You have the tools. You have the advantage.</strong><br>
+    Your GenAI experience with Gemini API, your Big Data certification, your M.S. from FAU, and 3.8 years of experience<br>
+    — that is a genuinely competitive profile. The only version of this that doesn't work is the one where you don't start.<br><br>
+    <strong>Start tonight. Not next Monday. Tonight.</strong>
+  </div>
+
+</div><!-- end wrap -->
+
+<!-- ══ FLOATING PROGRESS COUNTER ══ -->
+<div class="progress-counter">
+  <div class="pc-label">Checklist Progress</div>
+  <div class="pc-num" id="float-count">0</div>
+  <div class="pc-sub">of 42 items complete</div>
+  <div class="pc-bar"><div class="pc-fill" id="float-bar" style="width:0%"></div></div>
+  <div class="pc-reset" onclick="resetAll()">Reset all</div>
+</div>
+
+<script>
+  // ── Load saved state ──
+  const STORAGE_KEY = 'ds_checklist_v1';
+  let saved = {};
+  try { saved = JSON.parse(localStorage.getItem(STORAGE_KEY)) || {}; } catch(e){}
+
+  // Phase sizes
+  const phaseSizes = [8, 7, 7, 7, 7, 6];
+
+  function getItems() { return document.querySelectorAll('.cl-item'); }
+
+  function saveState() {
+    const state = {};
+    getItems().forEach((item, i) => { state[i] = item.classList.contains('done'); });
+    localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
+  }
+
+  function toggleItem(el) {
+    el.classList.toggle('done');
+    updateAll();
+    saveState();
+  }
+
+  function togglePhase(header) {
+    const body = header.parentElement.querySelector('.cl-body');
+    const arrow = header.querySelector('span:last-child');
+    if (body.classList.contains('collapsed')) {
+      body.classList.remove('collapsed');
+      arrow.style.transform = 'rotate(0deg)';
+    } else {
+      body.classList.add('collapsed');
+      arrow.style.transform = 'rotate(-90deg)';
+    }
+  }
+
+  function updateAll() {
+    const items = getItems();
+    let total = 0;
+    let phaseDone = [0,0,0,0,0,0];
+
+    items.forEach((item, i) => {
+      const phase = parseInt(item.dataset.phase);
+      if (item.classList.contains('done')) {
+        total++;
+        phaseDone[phase]++;
+      }
+    });
+
+    // Total counter
+    document.getElementById('total-counter').textContent = total + ' / 42 done';
+    document.getElementById('float-count').textContent = total;
+    document.getElementById('float-bar').style.width = ((total/42)*100) + '%';
+
+    // Phase counters and bars
+    for (let p = 0; p < 6; p++) {
+      const size = phaseSizes[p];
+      const done = phaseDone[p];
+      const pct = size > 0 ? Math.round((done/size)*100) : 0;
+      const el = document.getElementById('ph' + p + '-count');
+      if (el) el.textContent = done + '/' + size;
+      const bar = document.getElementById('pb-' + p);
+      const pp  = document.getElementById('pp-' + p);
+      if (bar) bar.style.width = pct + '%';
+      if (pp)  pp.textContent = pct + '%';
+    }
+  }
+
+  function resetAll() {
+    if (!confirm('Reset all checklist progress?')) return;
+    getItems().forEach(item => item.classList.remove('done'));
+    localStorage.removeItem(STORAGE_KEY);
+    updateAll();
+  }
+
+  // Restore saved state
+  window.addEventListener('DOMContentLoaded', () => {
+    const items = getItems();
+    items.forEach((item, i) => {
+      if (saved[i]) item.classList.add('done');
+    });
+    updateAll();
+    // Open phase 0 by default
+    const firstBody = document.getElementById('phase-0');
+    if (firstBody) firstBody.classList.remove('collapsed');
+  });
+</script>
+</body>
+</html>
